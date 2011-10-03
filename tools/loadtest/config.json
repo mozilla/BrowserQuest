@@ -1,6 +1,7 @@
 {
     "nb_clients": 50,
     "host": "localhost",
+    "port": 8000,
     "useBison": false,
     "moveInterval": 200,
     "chatInterval": 1000

@@ -21,6 +21,7 @@ fs.readFile('config.json', 'utf8', function(err, json_string) {
     var config = JSON.parse(json_string);
         NB_CLIENTS = config.nb_clients,
         HOST = config.host,
+        PORT = config.port,
         clients = [],
         count = 0;
     
@@ -102,7 +103,7 @@ fs.readFile('config.json', 'utf8', function(err, json_string) {
             setTimeout(automove, 1000);
         });
 
-        client.connect("ws://"+HOST+":8000", 'echo-protocol');
+        client.connect("ws://"+HOST+":"+PORT, 'echo-protocol');
 
         return client;
     };
