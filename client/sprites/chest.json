@@ -1,0 +1,1 @@
+{	"id": "chest",	"width": 16,	"height": 16,	"animations": {		"idle_down": {			"length": 1,			"row": 0		}	},	"offset_x": 0,	"offset_y": 0}

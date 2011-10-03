@@ -1,0 +1,1 @@
+{	"id": "guard",	"width": 25,	"height": 24,	"animations": {		"idle_down": {			"length": 2,			"row": 0		}	},	"offset_x": -5,	"offset_y": -8}

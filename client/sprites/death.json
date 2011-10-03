@@ -1,0 +1,1 @@
+{	"id": "death",	"width": 24,	"height": 24,	"animations": {		"death": {			"length": 6,			"row": 0		}	},	"offset_x": -4,	"offset_y": -4}

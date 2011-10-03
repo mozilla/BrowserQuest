@@ -1,0 +1,1 @@
+{	"id": "sorcerer",	"width": 26,	"height": 26,	"animations": {		"idle_down": {			"length": 6,			"row": 0		}	},	"offset_x": -5,	"offset_y": -9}

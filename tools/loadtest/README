@@ -1,0 +1,16 @@
+Load testing tool
+-----------------
+
+* Spawns bot players which move randomly and send chat messages.
+
+* Usage:
+  cd tools/loadtest/
+  node main.js
+
+* Change settings in tools/loadtest/config.json
+
+* Required npm modules:
+─ bison
+─ log
+─ underscore
+─ websocket

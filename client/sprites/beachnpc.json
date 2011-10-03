@@ -1,0 +1,1 @@
+{	"id": "beachnpc",	"width": 24,	"height": 24,	"animations": {		"idle_down": {			"length": 2,			"row": 0		}	},	"offset_x": -4,	"offset_y": -8}
