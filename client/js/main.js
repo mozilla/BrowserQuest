@@ -268,7 +268,12 @@ define(['jquery', 'app'], function($, App) {
                         app.hideChat();
                         return false;
                     }
-                };
+                }
+                
+                if(key === 27) {
+                    app.hideChat();
+                    return false;
+                }
             });
 
             $('#nameinput').keypress(function(event) {
