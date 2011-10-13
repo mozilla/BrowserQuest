@@ -3,7 +3,6 @@
 #lists {-moz-transition:0.5s left ease-in-out;-webkit-transition:0.5s left ease-in-out;-o-transition:0.5s left ease-in-out;-ms-transition:0.5s left ease-in-out;transition:0.5s left ease-in-out;position:relative;}
 #achievements-count {float:right;color:#fff;}
 #achievements-count div {display:inline-block;}
-#achievement-notification #coinsparks, .upscaled #achievement-notification #coinsparks {-moz-animation:none;-webkit-animation:none;-o-animation:none;-ms-animation:none;}
 #achievement-notification .coin {-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
 .upscaled #achievements li {bacground-position:inherit;}
 
