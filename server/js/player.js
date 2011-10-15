@@ -5,6 +5,7 @@ var cls = require("./lib/class"),
     Utils = require("./utils"),
     Properties = require("./properties"),
     Formulas = require("./formulas"),
+    check = require("./format").check,
     Types = require("../../shared/js/gametypes");
 
 module.exports = Player = Character.extend({
@@ -16,8 +17,10 @@ module.exports = Player = Character.extend({
 
         this._super(this.connection.id, "player", Types.Entities.WARRIOR, 0, 0, "");
 
+        this.hasEnteredGame = false;
         this.haters = {};
         this.lastCheckpoint = null;
+        this.formatChecker = new FormatChecker();
         
         this.server.incrementPlayerCount();
         
@@ -25,6 +28,21 @@ module.exports = Player = Character.extend({
             var action = parseInt(message[0]);
             
             log.debug("Received: "+message);
+            if(!check(message)) {
+                self.connection.close("Invalid "+Types.getMessageTypeAsString(action)+" message format: "+message);
+                return;
+            } else {
+                log.debug("Received: "+message);
+            }
+            
+            if(!self.hasEnteredGame && action !== Types.Messages.HELLO) { // HELLO must be the first message
+                self.connection.close("Invalid handshake message: "+message);
+                return;
+            }
+            if(self.hasEnteredGame && action === Types.Messages.HELLO) { // HELLO can be sent only once
+                self.connection.close("Cannot initiate handshake twice: "+message);
+                return;
+            }
             
             if(action === Types.Messages.HELLO) {
                 var name = Utils.sanitize(message[1]);
@@ -45,6 +63,7 @@ module.exports = Player = Character.extend({
                 self.server.enter_callback(self);
 
                 self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints]);
+                self.hasEnteredGame = true;
             }
             else if(action === Types.Messages.WHO) {
                 message.shift();

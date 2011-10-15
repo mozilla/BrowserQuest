@@ -293,6 +293,19 @@ Types.getRandomItemKind = function(item) {
     return itemKinds[i];
 };
 
+Types.getMessageTypeAsString = function(type) {
+    var typeName;
+    _.each(Types.Messages, function(value, name) {
+        if(value === type) {
+            typeName = name;
+        }
+    });
+    if(!typeName) {
+        typeName = "UNKNOWN";
+    }
+    return typeName;
+};
+
 if(!(typeof exports === 'undefined')) {
     module.exports = Types;
 }

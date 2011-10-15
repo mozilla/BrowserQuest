@@ -53,8 +53,10 @@ var Server = cls.Class.extend({
 
 
 var Connection = cls.Class.extend({
-    init: function() {
-        
+    init: function(id, connection, server) {
+        this._connection = connection;
+        this._server = server;
+        this.id = id;
     },
     
     onClose: function(callback) {
@@ -71,6 +73,11 @@ var Connection = cls.Class.extend({
     
     send: function(message) {
         throw "Not implemented";
+    },
+    
+    close: function(logError) {
+        log.error("Closing connection to "+this._connection.remoteAddress+". Error: "+logError);
+        this._connection.close();
     }
 });
 
@@ -193,9 +200,7 @@ WS.worlizeWebSocketConnection = Connection.extend({
     init: function(id, connection, server) {
         var self = this;
         
-        this._connection = connection;
-        this._server = server;
-        this.id = id;
+        this._super(id, connection, server);
         
         this._connection.on('message', function(message) {
             if(self.listen_callback) {
@@ -203,11 +208,16 @@ WS.worlizeWebSocketConnection = Connection.extend({
                     if(useBison) {
                         self.listen_callback(BISON.decode(message.utf8Data));
                     } else {
-                        self.listen_callback(JSON.parse(message.utf8Data));
+                        try {
+                            self.listen_callback(JSON.parse(message.utf8Data));
+                        } catch(e) {
+                            if(e instanceof SyntaxError) {
+                                self.close("Received message was not valid JSON.");
+                            } else {
+                                throw e;
+                            }
+                        }
                     }
-                }
-                else if(message.type === 'binary') {
-                    self.listen_callback(message.binaryData);
                 }
             }
         });
@@ -240,9 +250,7 @@ WS.miksagoWebSocketConnection = Connection.extend({
     init: function(id, connection, server) {
         var self = this;
         
-        this._connection = connection;
-        this._server = server;
-        this.id = id;
+        this._super(id, connection, server);
         
         this._connection.addListener("message", function(message) {
             if(self.listen_callback) {
