@@ -249,6 +249,12 @@ define(['jquery', 'storage'], function($, Storage) {
         	    this.toggleInstructions();
         	    $('#helpbutton').removeClass('active');
         	}
+        	if($('body').hasClass('credits')) {
+        	    this.closeInGameCredits();
+        	}
+        	if($('body').hasClass('about')) {
+        	    this.closeInGameAbout();
+        	}
         },
 
         showAchievementNotification: function(id, name) {
@@ -350,6 +356,10 @@ define(['jquery', 'storage'], function($, Storage) {
                 if(!this.game.player) {
                     $('body').toggleClass('death');
                 }
+                if($('body').hasClass('about')) {
+                    this.closeInGameAbout();
+                    $('#helpbutton').removeClass('active');
+                }
             } else {
                 if(currentState !== 'animate') {
                     if(currentState === 'credits') {
@@ -361,12 +371,48 @@ define(['jquery', 'storage'], function($, Storage) {
                 }
             }
         },
+        
+        toggleAbout: function() {
+            var currentState = $('#parchment').attr('class');
+
+            if(this.game.started) {
+                $('#parchment').removeClass().addClass('about');
+                $('body').toggleClass('about');
+                if(!this.game.player) {
+                    $('body').toggleClass('death');
+                }
+                if($('body').hasClass('credits')) {
+                    this.closeInGameCredits();
+                }
+            } else {
+                if(currentState !== 'animate') {
+                    if(currentState === 'about') {
+                        if(localStorage && localStorage.data) {
+                            this.animateParchment(currentState, 'loadcharacter');
+                        } else {
+                            this.animateParchment(currentState, 'createcharacter');
+                        }
+                    } else {
+            	        this.animateParchment(currentState, 'about');
+            	        this.previousState = currentState;
+            	    }
+                }
+            }
+        },
 
         closeInGameCredits: function() {
             $('body').removeClass('credits');
             if(!this.game.player) {
                 $('body').addClass('death');
             }
+        },
+        
+        closeInGameAbout: function() {
+            $('body').removeClass('about');
+            if(!this.game.player) {
+                $('body').addClass('death');
+            }
+            $('#helpbutton').removeClass('active');
         },
 
         openPopup: function(type, url) {
@@ -404,6 +450,9 @@ define(['jquery', 'storage'], function($, Storage) {
                 $parchment.removeClass(origin).addClass(destination);
             } else {
                 if(this.isParchmentReady) {
+                    if(this.isTablet) {
+                        duration = 0;
+                    }
                     this.isParchmentReady = !this.isParchmentReady;
         
                     $parchment.toggleClass('animate');

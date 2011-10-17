@@ -11,6 +11,18 @@ define(['jquery', 'app'], function($, App) {
                 if($('#parchment').hasClass('credits')) {
                     app.toggleCredits();
                 }
+                
+                if($('#parchment').hasClass('about')) {
+                    app.toggleAbout();
+                }
+            });
+            
+            $('#credits').click(function() {
+                    app.toggleCredits();
+            });
+            
+            $('#about').click(function() {
+                    app.toggleAbout();
             });
 	
         	$('.barbutton').click(function() {
@@ -26,7 +38,7 @@ define(['jquery', 'app'], function($, App) {
         	});
 	
         	$('#helpbutton').click(function() {
-                app.toggleInstructions();
+                app.toggleAbout();
         	});
 	
         	$('#achievementsbutton').click(function() {
@@ -60,6 +72,10 @@ define(['jquery', 'app'], function($, App) {
 	
         	$('#cancel span').click(function() {
         	    app.animateParchment('confirmation', 'loadcharacter');
+        	});
+        	
+        	$('.ribbon').click(function() {
+        	    app.toggleAbout();
         	});
 
             $('#nameinput').bind("keyup", function() {
@@ -126,6 +142,8 @@ define(['jquery', 'app'], function($, App) {
                 app.tryStartingGame(name);
             });
         
+            document.addEventListener("touchstart", function() {},false);
+        
             log.info("App initialized.");
         
             initGame();
@@ -191,9 +209,6 @@ define(['jquery', 'app'], function($, App) {
                     app.setMouseCoordinates(event.originalEvent.touches[0]);
                 	game.click();
                 	app.hideWindows();
-                	if($('body').hasClass('credits')) {
-                	    app.closeInGameCredits();
-                	}
                 });
             } else {
                 $('#foreground').click(function(event) {
@@ -203,9 +218,6 @@ define(['jquery', 'app'], function($, App) {
                 	    game.click();
                 	}
                 	app.hideWindows();
-                	if($('body').hasClass('credits')) {
-                	    app.closeInGameCredits();
-                	}
                     // $('#chatinput').focus();
                 });
             }
@@ -221,6 +233,14 @@ define(['jquery', 'app'], function($, App) {
                         app.closeInGameCredits();
                     } else {
                         app.toggleCredits();
+                    }
+                }
+                
+                if($('#parchment').hasClass('about')) {
+                    if(game.started) {
+                        app.closeInGameAbout();
+                    } else {
+                        app.toggleAbout();
                     }
                 }
             });
