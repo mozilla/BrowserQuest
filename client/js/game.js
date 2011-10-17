@@ -392,12 +392,23 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         addEntity: function(entity) {
+            var self = this;
+            
             if(this.entities[entity.id] === undefined) {
                 this.entities[entity.id] = entity;
                 this.registerEntityPosition(entity);
-                if(!(entity instanceof Item && entity.wasDropped)) {
+                
+                if(!(entity instanceof Item && entity.wasDropped)
+                && !(this.renderer.mobile || this.renderer.tablet)) {
                     entity.fadeIn(this.currentTime);
                 }
+                
+                entity.onDirty(function(e) {
+                    if(self.camera.isVisible(e)) {
+                        e.dirtyRect = self.renderer.getEntityBoundingRect(e);
+                        self.checkOtherDirtyRects(e.dirtyRect);
+                    }
+                });
             }
             else {
                 log.error("This entity already exists : " + entity.id + " ("+entity.kind+")");
@@ -635,7 +646,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
     
         tick: function() {
             this.currentTime = new Date().getTime();
-            
+
             if(this.started) {
                 this.updateCursorLogic();
                 this.updater.update();
@@ -727,6 +738,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.audioManager.updateMusic();
             
                 self.addEntity(self.player);
+                self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
 
                 setTimeout(function() {
                     self.tryUnlockingAchievement("STILL_ALIVE");
@@ -759,6 +771,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.selectedX = x;
                     self.selectedY = y;
                     self.selectedCellVisible = true;
+
+                    if(self.renderer.mobile || self.renderer.tablet) {
+        	            self.drawTarget = true;
+        	            self.clearTarget = true;
+        	            self.renderer.targetRect = self.renderer.getTargetBoundingRect();
+        	            self.checkOtherDirtyRects(self.renderer.targetRect);
+        	        }
                 });
                 
                 self.player.onCheckAggro(function() {
@@ -915,7 +934,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.checkUndergroundAchievement();
                         
                         if(self.renderer.mobile || self.renderer.tablet) {
-                            // When rendering with dirty rects, clear the whole screen on entering a door.
+                            // When rendering with dirty rects, clear the whole screen when entering a door.
                             self.renderer.clearScreen(self.renderer.context);
                         }
                         
@@ -1527,7 +1546,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         });
                     }
                 }
-            }, 2);
+            }, this.renderer.mobile ? 0 : 2);
         },
     
         /**
@@ -1710,28 +1729,30 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var mouse = this.getMouseGridPosition(),
                 x = mouse.x,
                 y = mouse.y;
-        
-            this.hoveringCollidingTile = this.map.isColliding(x, y);
-            this.hoveringPlateauTile = this.player.isOnPlateau ? !this.map.isPlateau(x, y) : this.map.isPlateau(x, y);
-            this.hoveringMob = this.isMobAt(x, y);
-            this.hoveringItem = this.isItemAt(x, y);
-            this.hoveringNpc = this.isNpcAt(x, y);
-            this.hoveringChest = this.isChestAt(x, y);
-        
-            if(this.hoveringMob || this.hoveringNpc || this.hoveringChest) {
-                var entity = this.getEntityAt(x, y);
             
-                if(!entity.isHighlighted && this.renderer.supportsSilhouettes) {
-                    if(this.lastHovered) {
-                        this.lastHovered.setHighlight(false);
+            if(!this.renderer.mobile && !this.renderer.tablet) {
+                this.hoveringCollidingTile = this.map.isColliding(x, y);
+                this.hoveringPlateauTile = this.player.isOnPlateau ? !this.map.isPlateau(x, y) : this.map.isPlateau(x, y);
+                this.hoveringMob = this.isMobAt(x, y);
+                this.hoveringItem = this.isItemAt(x, y);
+                this.hoveringNpc = this.isNpcAt(x, y);
+                this.hoveringChest = this.isChestAt(x, y);
+        
+                if(this.hoveringMob || this.hoveringNpc || this.hoveringChest) {
+                    var entity = this.getEntityAt(x, y);
+            
+                    if(!entity.isHighlighted && this.renderer.supportsSilhouettes) {
+                        if(this.lastHovered) {
+                            this.lastHovered.setHighlight(false);
+                        }
+                        this.lastHovered = entity;
+                        entity.setHighlight(true);
                     }
-                    this.lastHovered = entity;
-                    entity.setHighlight(true);
                 }
-            }
-            else if(this.lastHovered) {
-                this.lastHovered.setHighlight(false);
-                this.lastHovered = null;
+                else if(this.lastHovered) {
+                    this.lastHovered.setHighlight(false);
+                    this.lastHovered = null;
+                }
             }
         },
     
@@ -1852,6 +1873,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
                 this.renderer.clearScreen(this.renderer.context);
                 this.endZoning();
+                
+                // Force immediate drawing of all visible entities in the new zone
+                this.forEachVisibleEntityByDepth(function(entity) {
+                    entity.setDirty();
+                });
             }
             else {
                 this.currentZoning = new Transition();
@@ -1940,6 +1966,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.sendHello(this.player);
         
             this.storage.incrementRevives();
+            
+            if(this.renderer.mobile || this.renderer.tablet) {
+                this.renderer.clearScreen(this.renderer.context);
+            }
         
             log.debug("Finished restart");
         },
@@ -2087,6 +2117,36 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(music) {
                 if(music.name === 'cave') {
                     this.tryUnlockingAchievement("UNDERGROUND");
+                }
+            }
+        },
+        
+        checkOtherDirtyRects: function(r1) {
+            var r = this.renderer;
+            
+            this.forEachVisibleEntityByDepth(function(e2) {
+                if(!e2.isDirty) {
+                    var r2 = r.getEntityBoundingRect(e2);
+                    if(r.isIntersecting(r1, r2)) {
+                        e2.setDirty();
+                    }
+                }
+            });
+            
+            this.forEachAnimatedTile(function(tile) {
+                if(!tile.isDirty) {
+                    var r2 = r.getTileBoundingRect(tile);
+                    if(r.isIntersecting(r1, r2)) {
+                        tile.isDirty = true;
+                    }
+                }
+            });
+            
+            if(!this.drawTarget && this.selectedCellVisible) {
+                var targetRect = r.getTargetBoundingRect();
+                if(r.isIntersecting(r1, targetRect)) {
+                    this.drawTarget = true;
+                    this.renderer.targetRect = targetRect;
                 }
             }
         }

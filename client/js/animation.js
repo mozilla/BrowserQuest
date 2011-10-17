@@ -53,6 +53,9 @@ define(function() {
             if(this.isTimeToAnimate(time)) {
                 this.lastTime = time;
                 this.tick();
+                return true;
+            } else {
+                return false;
             }
         },
     
