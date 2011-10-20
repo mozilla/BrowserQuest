@@ -183,7 +183,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             this.invincibleTimeout = setTimeout(function() {
                 self.stopInvincibility();
                 self.idle();
-            }, 15000);
+            }, 30000);
         },
     
         stopInvincibility: function() {

@@ -6,6 +6,7 @@ var Properties = {
         drops: {
             flask: 40,
             burger: 10,
+            firepotion: 5
         },
         hp: 25,
         armor: 1,
@@ -17,6 +18,7 @@ var Properties = {
             flask: 40,
             mailarmor: 10,
             axe: 20,
+            firepotion: 5
         },
         hp: 110,
         armor: 2,
@@ -28,6 +30,7 @@ var Properties = {
             flask: 50,
             leatherarmor: 20,
             axe: 10,
+            firepotion: 5
         },
         hp: 90,
         armor: 2,
@@ -39,7 +42,8 @@ var Properties = {
             burger: 10,
             flask: 50,
             platearmor: 20,
-            morningstar: 20
+            morningstar: 20,
+            firepotion: 5
         },
         hp: 200,
         armor: 3,
@@ -50,7 +54,8 @@ var Properties = {
         drops: {
             flask: 30,
             redarmor: 40,
-            redsword: 30
+            redsword: 30,
+            firepotion: 5
         },
         hp: 250,
         armor: 2,
@@ -61,7 +66,8 @@ var Properties = {
         drops: {
             flask: 50,
             axe: 20,
-            leatherarmor: 10
+            leatherarmor: 10,
+            firepotion: 5
         },
         hp: 60,
         armor: 2,
@@ -72,7 +78,8 @@ var Properties = {
         drops: {
             flask: 50,
             mailarmor: 10,
-            morningstar: 10
+            morningstar: 10,
+            firepotion: 5
         },
         hp: 150,
         armor: 3,
@@ -83,7 +90,8 @@ var Properties = {
         drops: {
             flask: 60,
             platearmor: 15,
-            bluesword: 15
+            bluesword: 15,
+            firepotion: 5
         },
         hp: 200,
         armor: 3,
@@ -94,7 +102,8 @@ var Properties = {
         drops: {
             flask: 50,
             redarmor: 20,
-            redsword: 10
+            redsword: 10,
+            firepotion: 5
         },
         hp: 200,
         armor: 3,
@@ -104,7 +113,8 @@ var Properties = {
     bat: {
         drops: {
             flask: 50,
-            axe: 10
+            axe: 10,
+            firepotion: 5
         },
         hp: 80,
         armor: 2,
@@ -114,7 +124,8 @@ var Properties = {
     wizard: {
         drops: {
             flask: 50,
-            platearmor: 20
+            platearmor: 20,
+            firepotion: 5
         },
         hp: 100,
         armor: 2,
