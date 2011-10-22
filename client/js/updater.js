@@ -216,7 +216,7 @@ define(['character'], function(Character) {
                 if(tile.animate(t)) {
                     tile.isDirty = true;
                     tile.dirtyRect = self.game.renderer.getTileBoundingRect(tile);
-                    self.game.checkOtherDirtyRects(tile.dirtyRect);
+                    self.game.checkOtherDirtyRects(tile.dirtyRect, tile, tile.x, tile.y);
                 }
             });
         },

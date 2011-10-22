@@ -406,7 +406,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 entity.onDirty(function(e) {
                     if(self.camera.isVisible(e)) {
                         e.dirtyRect = self.renderer.getEntityBoundingRect(e);
-                        self.checkOtherDirtyRects(e.dirtyRect);
+                        self.checkOtherDirtyRects(e.dirtyRect, e, e.gridX, e.gridY);
                     }
                 });
             }
@@ -496,7 +496,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.animatedTiles = [];
             this.forEachVisibleTile(function (id, index) {
                 if(m.isAnimatedTile(id)) {
-                    self.animatedTiles.push(new AnimatedTile(id, m.getTileAnimationLength(id), m.getTileAnimationDelay(id), index));
+                    var tile = new AnimatedTile(id, m.getTileAnimationLength(id), m.getTileAnimationDelay(id), index),
+                        pos = self.map.tileIndexToGridPosition(tile.index);
+                    
+                    tile.x = pos.x;
+                    tile.y = pos.y;
+                    self.animatedTiles.push(tile);
                 }
             });
             //log.info("Initialized animated tiles.");
@@ -652,15 +657,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 this.updater.update();
                 this.renderer.renderFrame();
             }
-            
+
             if(!this.isStopped) {
                 requestAnimFrame(this.tick.bind(this));
             }
         },
-    
+
         start: function() {
             this.tick();
-            this.hasNeverStarted = false; 
+            this.hasNeverStarted = false;
             log.info("Game loop started.");
         },
 
@@ -776,7 +781,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         	            self.drawTarget = true;
         	            self.clearTarget = true;
         	            self.renderer.targetRect = self.renderer.getTargetBoundingRect();
-        	            self.checkOtherDirtyRects(self.renderer.targetRect);
+        	            self.checkOtherDirtyRects(self.renderer.targetRect, null, self.selectedX, self.selectedY);
         	        }
                 });
                 
@@ -2121,10 +2126,23 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
         
-        checkOtherDirtyRects: function(r1) {
+        forEachEntityAround: function(x, y, r, callback) {
+            for(var i = x-r, max_i = x+r; i <= max_i; i += 1) {
+                for(var j = y-r, max_j = y+r; j <= max_j; j += 1) {
+                    _.each(this.renderingGrid[j][i], function(entity) {
+                        callback(entity);
+                    });
+                }
+            }
+        },
+        
+        checkOtherDirtyRects: function(r1, source, x, y) {
             var r = this.renderer;
             
-            this.forEachVisibleEntityByDepth(function(e2) {
+            this.forEachEntityAround(x, y, 2, function(e2) {
+                if(source && source.id && e2.id === source.id) {
+                    return;
+                }
                 if(!e2.isDirty) {
                     var r2 = r.getEntityBoundingRect(e2);
                     if(r.isIntersecting(r1, r2)) {
@@ -2133,14 +2151,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
             });
             
-            this.forEachAnimatedTile(function(tile) {
-                if(!tile.isDirty) {
-                    var r2 = r.getTileBoundingRect(tile);
-                    if(r.isIntersecting(r1, r2)) {
-                        tile.isDirty = true;
+            if(source && !(source.hasOwnProperty("index"))) {
+                this.forEachAnimatedTile(function(tile) {
+                    if(!tile.isDirty) {
+                        var r2 = r.getTileBoundingRect(tile);
+                        if(r.isIntersecting(r1, r2)) {
+                            tile.isDirty = true;
+                        }
                     }
-                }
-            });
+                });
+            }
             
             if(!this.drawTarget && this.selectedCellVisible) {
                 var targetRect = r.getTargetBoundingRect();
