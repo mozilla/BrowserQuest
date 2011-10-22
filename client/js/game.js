@@ -447,7 +447,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             for(var i=0; i < this.map.height; i += 1) {
                 this.entityGrid[i] = [];
                 for(var j=0; j < this.map.width; j += 1) {
-                    this.entityGrid[i][j] = null;
+                    this.entityGrid[i][j] = {};
                 }
             }
             log.info("Initialized the entity grid.");
@@ -503,8 +503,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
     
-        removeFromEntityGrid: function(x, y) {
-            this.entityGrid[y][x] = null;
+        removeFromEntityGrid: function(entity, x, y) {
+            if(this.entityGrid[y][x][entity.id]) {
+                delete this.entityGrid[y][x][entity.id];
+            }
         },
     
         removeFromPathingGrid: function(x, y) {
@@ -520,12 +522,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          */
         registerEntityDualPosition: function(entity) {
             if(entity) {
-                this.entityGrid[entity.gridY][entity.gridX] = entity;
+                this.entityGrid[entity.gridY][entity.gridX][entity.id] = entity;
             
                 this.addToRenderingGrid(entity, entity.gridX, entity.gridY);
             
                 if(entity.nextGridX >= 0 && entity.nextGridY >= 0) {
-                    this.entityGrid[entity.nextGridY][entity.nextGridX] = entity;
+                    this.entityGrid[entity.nextGridY][entity.nextGridX][entity.id] = entity;
                     if(!(entity instanceof Player)) {
                         this.pathingGrid[entity.nextGridY][entity.nextGridX] = 1;
                     }
@@ -540,13 +542,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          */
         unregisterEntityPosition: function(entity) {
             if(entity) {
-                this.removeFromEntityGrid(entity.gridX, entity.gridY);
+                this.removeFromEntityGrid(entity, entity.gridX, entity.gridY);
                 this.removeFromPathingGrid(entity.gridX, entity.gridY);
             
                 this.removeFromRenderingGrid(entity, entity.gridX, entity.gridY);
             
                 if(entity.nextGridX >= 0 && entity.nextGridY >= 0) {
-                    this.removeFromEntityGrid(entity.nextGridX, entity.nextGridY);
+                    this.removeFromEntityGrid(entity, entity.nextGridX, entity.nextGridY);
                     this.removeFromPathingGrid(entity.nextGridX, entity.nextGridY);
                 }
             }
@@ -558,7 +560,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         
             if(entity) {
                 if(entity instanceof Character || entity instanceof Chest) {
-                    this.entityGrid[y][x] = entity;
+                    this.entityGrid[y][x][entity.id] = entity;
                     if(!(entity instanceof Player)) {
                         this.pathingGrid[y][x] = 1;
                     }
@@ -1117,7 +1119,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                         // Upon death, this entity is removed from both grids, allowing the player
                                         // to click very fast in order to loot the dropped item and not be blocked.
                                         // The entity is completely removed only after the death animation has ended.
-                                        self.removeFromEntityGrid(entity.gridX, entity.gridY);
+                                        self.removeFromEntityGrid(entity, entity.gridX, entity.gridY);
                                         self.removeFromPathingGrid(entity.gridX, entity.gridY);
                                     
                                         self.updateCursor();
@@ -1587,8 +1589,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 return null;
             }
             
-            var entity = this.entityGrid[y][x];
-            if(!entity) {
+            var entities = this.entityGrid[y][x],
+                entity;
+            if(_.size(entities) > 0) {
+                entity = entities[_.keys(entities)[0]];
+            } else {
                 entity = this.itemGrid[y][x];
             }
             return entity;
