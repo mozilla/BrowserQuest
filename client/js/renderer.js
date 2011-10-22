@@ -484,7 +484,7 @@ function(Camera, Item, Character, Player) {
                 rect.x = (entity.x + spr.offsetX - this.camera.x) * s;
                 rect.y = (entity.y + spr.offsetY - this.camera.y) * s;
                 rect.w = spr.width * s;
-                rect.h = spr.width * s;
+                rect.h = spr.height * s;
                 rect.left = rect.x;
                 rect.right = rect.x + rect.w;
                 rect.top = rect.y;
