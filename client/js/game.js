@@ -34,6 +34,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.currentCursor = null;
             this.mouse = { x: 0, y: 0 };
             this.zoningQueue = [];
+            this.previousClickPosition = {};
     
             this.selectedX = 0;
             this.selectedY = 0;
@@ -1016,6 +1017,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             log.info(chest.id + " was removed");
                             self.removeEntity(chest);
                             self.removeFromRenderingGrid(chest, chest.gridX, chest.gridY);
+                            self.previousClickPosition = {};
                         });
                     });
                 });
@@ -1152,6 +1154,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
                     if(entity) {
                         log.info("Despawning " + Types.getKindAsString(entity.kind) + " (" + entity.id+ ")");
+                        
+                        if(entity.gridX === self.previousClickPosition.x
+                        && entity.gridY === self.previousClickPosition.y) {
+                            self.previousClickPosition = {};
+                        }
+                        
                         if(entity instanceof Item) {
                             self.removeItem(entity);
                         } else if(entity instanceof Character) {
@@ -1475,6 +1483,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         
             if(npc) {
                 msg = npc.talk();
+                this.previousClickPosition = {};
                 if(msg) {
                     this.createBubble(npc.id, msg);
                     this.assignBubbleTo(npc);
@@ -1745,6 +1754,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function() {
             var pos = this.getMouseGridPosition(),
                 entity;
+                
+            if(pos.x === this.previousClickPosition.x
+            && pos.y === this.previousClickPosition.y) {
+                return;
+            } else {
+                this.previousClickPosition = pos;
+            }
 	    
     	    if(this.started
     	    && !this.isZoning()
