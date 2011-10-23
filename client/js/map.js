@@ -186,14 +186,14 @@ define(['jquery', 'area'], function($, Area) {
             }
 
             _.each(this.collisions, function(tileIndex) {
-                var pos = self.tileIndexToGridPosition(tileIndex);
-                self.grid[pos.y][pos.x+1] = 1;
+                var pos = self.tileIndexToGridPosition(tileIndex+1);
+                self.grid[pos.y][pos.x] = 1;
             });
 
             _.each(this.blocking, function(tileIndex) {
-                var pos = self.tileIndexToGridPosition(tileIndex);
-                if(self.grid[pos.y] !== undefined && self.grid[pos.y][pos.x + 1] !== undefined) {
-                    self.grid[pos.y][pos.x+1] = 1;
+                var pos = self.tileIndexToGridPosition(tileIndex+1);
+                if(self.grid[pos.y] !== undefined) {
+                    self.grid[pos.y][pos.x] = 1;
                 }
             });
             log.info("Collision grid generated.");

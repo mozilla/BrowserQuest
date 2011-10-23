@@ -20,14 +20,14 @@ function generateCollisionGrid() {
     }
 
     _.each(mapData.collisions, function(tileIndex) {
-        var pos = tileIndexToGridPosition(tileIndex);
-        mapData.grid[pos.y][pos.x+1] = 1;
+        var pos = tileIndexToGridPosition(tileIndex+1);
+        mapData.grid[pos.y][pos.x] = 1;
     });
-
+    
     _.each(mapData.blocking, function(tileIndex) {
-        var pos = tileIndexToGridPosition(tileIndex);
-        if(mapData.grid[pos.y] !== undefined && mapData.grid[pos.y][pos.x + 1] !== undefined) {
-            mapData.grid[pos.y][pos.x+1] = 1;
+        var pos = tileIndexToGridPosition(tileIndex+1);
+        if(mapData.grid[pos.y] !== undefined) {
+            mapData.grid[pos.y][pos.x] = 1;
         }
     });
 }
