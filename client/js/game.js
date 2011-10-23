@@ -327,10 +327,20 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         setSpriteScale: function(scale) {
+            var self = this;
+            
             if(this.renderer.upscaledRendering) {
                 this.sprites = this.spritesets[0];
             } else {
                 this.sprites = this.spritesets[scale - 1];
+                
+                _.each(this.entities, function(entity) {
+                    entity.sprite = null;
+                    entity.setSprite(self.sprites[entity.getSpriteName()]);
+                });
+                this.initHurtSprites();
+                this.initShadows();
+                this.initCursors();
             }
         },
     
