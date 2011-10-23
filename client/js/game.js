@@ -33,6 +33,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.itemGrid = null;
             this.currentCursor = null;
             this.mouse = { x: 0, y: 0 };
+            this.zoningQueue = [];
     
             this.selectedX = 0;
             this.selectedY = 0;
@@ -793,9 +794,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                 
                     if(self.isZoningTile(self.player.gridX, self.player.gridY)) {
-                        if(!self.isZoning()) {
-                            self.startZoningFrom(self.player.gridX, self.player.gridY);
-                        }
+                        self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
                     }
                 
                     self.player.forEachAttacker(function(attacker) {
@@ -1748,7 +1747,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 entity;
 	    
     	    if(this.started
-    	    && !this.isZoning() 
+    	    && !this.isZoning()
+    	    && !this.isZoningTile(this.player.nextGridX, this.player.nextGridY)
     	    && !this.player.isDead
     	    && !this.hoveringCollidingTile
     	    && !this.hoveringPlateauTile) {
@@ -1864,10 +1864,24 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.bubbleManager.clean();
             this.client.sendZone();
         },
+        
+        enqueueZoningFrom: function(x, y) {
+            this.zoningQueue.push({x: x, y: y});
+            
+            if(this.zoningQueue.length === 1) {
+                this.startZoningFrom(x, y);
+            }
+        },
     
         endZoning: function() {
             this.currentZoning = null;
             this.resetZone();
+            this.zoningQueue.shift();
+            
+            if(this.zoningQueue.length > 0) {
+                var pos = this.zoningQueue[0];
+                this.startZoningFrom(pos.x, pos.y);
+            }
         },
     
         isZoning: function() {
