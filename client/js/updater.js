@@ -1,14 +1,16 @@
 
-define(['character'], function(Character) {
+define(['character', 'timer'], function(Character, Timer) {
 
     var Updater = Class.extend({
         init: function(game) {
             this.game = game;
+            this.playerAggroTimer = new Timer(1000);
         },
 
         update: function() {
             this.updateZoning();
             this.updateCharacters();
+            this.updatePlayerAggro();
             this.updateTransitions();
             this.updateAnimations();
             this.updateAnimatedTiles();
@@ -30,6 +32,16 @@ define(['character'], function(Character) {
                     self.updateEntityFading(entity);
                 }
             });
+        },
+        
+        updatePlayerAggro: function() {
+            var t = this.game.currentTime,
+                player = this.game.player;
+            
+            // Check player aggro every 1s when not moving nor attacking
+            if(player && !player.isMoving() && !player.isAttacking()  && this.playerAggroTimer.isOver(t)) {
+                player.checkAggro();
+            }
         },
     
         updateEntityFading: function(entity) {
