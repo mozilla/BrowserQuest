@@ -1124,7 +1124,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                                         entity.forEachAttacker(function(attacker) {
                                             attacker.disengage();
-                                            attacker.idle();
                                         });
                                     
                                         // Upon death, this entity is removed from both grids, allowing the player
