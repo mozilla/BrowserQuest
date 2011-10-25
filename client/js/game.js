@@ -1809,14 +1809,21 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         onCharacterUpdate: function(character) {
             var time = this.currentTime;
         
-            if(character.isAttacking() && character.canAttack(time)) {
-                character.hit();
-                if(character.id === this.playerId) {
-                    this.client.sendHit(character.target);
-                    this.audioManager.playSound("hit");
-                }
-                if(character.hasTarget() && character.target.id === this.playerId && !this.player.invincible) {
-                    this.client.sendHurt(character);
+            if(character.isAttacking()) {
+                if(character.canAttack(time)) {
+                    character.hit();
+                    if(character.id === this.playerId) {
+                        this.client.sendHit(character.target);
+                        this.audioManager.playSound("hit");
+                    }
+                    if(character.hasTarget() && character.target.id === this.playerId && !this.player.invincible) {
+                        this.client.sendHurt(character);
+                    }
+                } else {
+                    var target = character.target;
+                    if(target && !character.isAdjacentNonDiagonal(target) && !target.isMoving()) {
+                        character.follow(character.target);
+                    }
                 }
             }
         },
