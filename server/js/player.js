@@ -109,8 +109,8 @@ module.exports = Player = Character.extend({
                     
                     if(dmg > 0) {
                         mob.receiveDamage(dmg, self.id);
-                        self.server.handleHurtEntity(mob, self, dmg);
                         self.server.handleMobHate(mob.id, self.id, dmg);
+                        self.server.handleHurtEntity(mob, self, dmg);
                     }
                 }
             }
