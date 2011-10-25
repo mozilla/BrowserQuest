@@ -903,16 +903,23 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 
                     if(self.map.isDoor(x, y)) {
                         var dest = self.map.getDoorDestination(x, y);
+                            isPortal = Math.abs(y - dest.y) < 5;
                     
                         self.player.setGridPosition(dest.x, dest.y);
                         self.player.turnTo(dest.orientation);
                         self.client.sendTeleport(dest.x, dest.y);
+                        
                         if(self.renderer.mobile && dest.cameraX && dest.cameraY) {
                             self.camera.setGridPosition(dest.cameraX, dest.cameraY);
+                            self.resetZone();
                         } else {
-                            self.camera.focusEntity(self.player);
+                            if(isPortal) {
+                                self.assignBubbleTo(self.player);
+                            } else {
+                                self.camera.focusEntity(self.player);
+                                self.resetZone();
+                            }
                         }
-                        self.resetZone();
                         
                         if(_.size(self.player.attackers) > 0) {
                             setTimeout(function() { self.tryUnlockingAchievement("COWARD"); }, 500);
@@ -1432,8 +1439,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 this.unregisterEntityPosition(character);
 
                 character.setGridPosition(x, y);
-
+                
                 this.registerEntityPosition(character);
+                this.assignBubbleTo(character);
             } else {
                 log.debug("Teleport out of bounds: "+x+", "+y);
             }
@@ -1921,6 +1929,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         resetZone: function() {
+            this.bubbleManager.clean();
             this.initAnimatedTiles();
             this.renderer.renderStaticCanvases();
         },
