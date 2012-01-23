@@ -26,7 +26,10 @@ define(function() {
             if((time - this.lastTime) > this.speed) {
         	    this.tick();
         	    this.lastTime = time;
-        	}
+        	    return true;
+            } else {
+                return false;
+            }
         }
     });
     

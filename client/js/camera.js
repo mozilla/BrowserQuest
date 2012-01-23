@@ -55,6 +55,15 @@ define(function() {
                 }
             }
         },
+        
+        isVisible: function(entity) {
+            if(entity.gridY >= this.gridY && entity.gridY < this.gridY + this.gridH
+            && entity.gridX >= this.gridX && entity.gridX < this.gridX + this.gridW) {
+                return true;
+            } else {
+                return false;
+            }
+        },
     
         focusEntity: function(entity) {
             var w = this.gridW - 2,

@@ -149,8 +149,8 @@ function(Camera, Item, Character, Player) {
             this.context.save();
             this.context.lineWidth = 2*this.scale;
             this.context.strokeStyle = color;
-            this.context.translate(x, y);
-            this.context.strokeRect(0, 0, this.tilesize * this.scale, this.tilesize * this.scale);
+            this.context.translate(x+2, y+2);
+            this.context.strokeRect(0, 0, (this.tilesize * this.scale) - 4, (this.tilesize * this.scale) - 4);
             this.context.restore();
         },
 
@@ -217,15 +217,15 @@ function(Camera, Item, Character, Player) {
         
             if(this.game.selectedCellVisible) {
                 if(this.mobile || this.tablet) {
-                    var x = this.game.selectedX,
-                        y = this.game.selectedY;
-                
-                    if(this.lastTargetPos) {
-                        this.clearScaledRect(this.context, this.lastTargetPos.x, this.lastTargetPos.y, 18, 18);
+                    if(this.game.drawTarget) {
+                        var x = this.game.selectedX,
+                            y = this.game.selectedY;
+                        
+                        this.drawCellHighlight(this.game.selectedX, this.game.selectedY, "rgb(51, 255, 0)");
+                        this.lastTargetPos = { x: x,
+                                               y: y };
+                        this.game.drawTarget = false;
                     }
-                    this.drawCellHighlight(this.game.selectedX, this.game.selectedY, "rgb(51, 255, 0)");
-                    this.lastTargetPos = { x: x * this.tilesize - 1,
-                                           y: y * this.tilesize - 1 };
                 } else {
                     if(sprite && anim) {
                         var	frame = anim.currentFrame,
@@ -408,36 +408,136 @@ function(Camera, Item, Character, Player) {
             }
         },
 
-        drawEntities: function() {
+        drawEntities: function(dirtyOnly) {
             var self = this;
         
             this.game.forEachVisibleEntityByDepth(function(entity) {
                 if(entity.isLoaded) {
-                    self.drawEntity(entity);
+                    if(dirtyOnly) {
+                        if(entity.isDirty) {
+                            self.drawEntity(entity);
+                            
+                            entity.isDirty = false;
+                            entity.oldDirtyRect = entity.dirtyRect;
+                            entity.dirtyRect = null;
+                        }
+                    } else {
+                        self.drawEntity(entity);
+                    }
                 }
             });
+        },
+        
+        drawDirtyEntities: function() {
+            this.drawEntities(true);
+        },
+        
+        clearDirtyRect: function(r) {
+            this.context.clearRect(r.x, r.y, r.w, r.h);
         },
     
         clearDirtyRects: function() {
-            var self = this;
-        
-            //self.context.fillStyle = "rgba(255, 0, 0, 0.3)";
+            var self = this,
+                count = 0;
+            
             this.game.forEachVisibleEntityByDepth(function(entity) {
-                var s = self.scale,
-                    spr = entity.sprite;
-            
-                if(spr) {
-                    var x = (entity.x + spr.offsetX - self.camera.x) * s,
-                        y = (entity.y + spr.offsetY - self.camera.y) * s,
-                        w = spr.width * s,
-                        h = spr.width * s;
-            
-                    self.context.clearRect(x, y, w, h);
-                    //self.context.fillRect(x, y, w, h);
+                if(entity.isDirty && entity.oldDirtyRect) {
+                    self.clearDirtyRect(entity.oldDirtyRect);
+                    count += 1;
                 }
             });
+            
+            this.game.forEachAnimatedTile(function(tile) {
+                if(tile.isDirty) {
+                    self.clearDirtyRect(tile.dirtyRect);
+                    count += 1;
+                }
+            });
+            
+            if(this.game.clearTarget && this.lastTargetPos) {
+                var last = this.lastTargetPos;
+                    rect = this.getTargetBoundingRect(last.x, last.y);
+                
+                this.clearDirtyRect(rect);
+                this.game.clearTarget = false;
+                count += 1;
+            }
+            
+            if(count > 0) {
+                //log.debug("count:"+count);
+            }
         },
-
+        
+        getEntityBoundingRect: function(entity) {
+            var rect = {},
+                s = this.scale,
+                spr;
+                
+            if(entity instanceof Player && entity.hasWeapon()) {
+                var weapon = this.game.sprites[entity.getWeaponName()];
+                spr = weapon;
+            } else {
+                spr = entity.sprite;
+            }
+    
+            if(spr) {
+                rect.x = (entity.x + spr.offsetX - this.camera.x) * s;
+                rect.y = (entity.y + spr.offsetY - this.camera.y) * s;
+                rect.w = spr.width * s;
+                rect.h = spr.height * s;
+                rect.left = rect.x;
+                rect.right = rect.x + rect.w;
+                rect.top = rect.y;
+                rect.bottom = rect.y + rect.h;
+            }
+            return rect;
+        },
+        
+        getTileBoundingRect: function(tile) {
+            var rect = {},
+                gridW = this.game.map.width,
+                s = this.scale,
+                ts = this.tilesize,
+                cellid = tile.index;
+            
+            rect.x = ((getX(cellid + 1, gridW) * ts) - this.camera.x) * s;
+            rect.y = ((Math.floor(cellid / gridW) * ts) - this.camera.y) * s;
+            rect.w = ts * s;
+            rect.h = ts * s;
+            rect.left = rect.x;
+            rect.right = rect.x + rect.w;
+            rect.top = rect.y;
+            rect.bottom = rect.y + rect.h;
+            
+            return rect;
+        },
+        
+        getTargetBoundingRect: function(x, y) {
+            var rect = {},
+                s = this.scale,
+                ts = this.tilesize,
+                tx = x || this.game.selectedX,
+                ty = y || this.game.selectedY;
+            
+            rect.x = ((tx * ts) - this.camera.x) * s;
+            rect.y = ((ty * ts) - this.camera.y) * s;
+            rect.w = ts * s;
+            rect.h = ts * s;
+            rect.left = rect.x;
+            rect.right = rect.x + rect.w;
+            rect.top = rect.y;
+            rect.bottom = rect.y + rect.h;
+            
+            return rect;
+        },
+        
+        isIntersecting: function(rect1, rect2) {
+            return !((rect2.left > rect1.right) ||
+                     (rect2.right < rect1.left) ||
+                     (rect2.top > rect1.bottom) ||
+                     (rect2.bottom < rect1.top));
+        },
+        
         drawEntityName: function(entity) {
             this.context.save();
             if(entity.name && entity instanceof Player) {
@@ -463,19 +563,27 @@ function(Camera, Item, Character, Player) {
             });
         },
     
-        drawAnimatedTiles: function() {
+        drawAnimatedTiles: function(dirtyOnly) {
             var self = this,
                 m = this.game.map,
                 tilesetwidth = this.tileset.width / m.tilesize;
         
             this.animatedTileCount = 0;
             this.game.forEachAnimatedTile(function (tile) {
-                if(self.mobile || self.tablet) {
-                    self.clearTile(self.context, m.width, tile.index);
+                if(dirtyOnly) {
+                    if(tile.isDirty) {
+                        self.drawTile(self.context, tile.id, self.tileset, tilesetwidth, m.width, tile.index);
+                        tile.isDirty = false;
+                    }
+                } else {
+                    self.drawTile(self.context, tile.id, self.tileset, tilesetwidth, m.width, tile.index);
+                    self.animatedTileCount += 1;
                 }
-                self.drawTile(self.context, tile.id, self.tileset, tilesetwidth, m.width, tile.index);
-                self.animatedTileCount += 1;
             });
+        },
+        
+        drawDirtyAnimatedTiles: function() {
+            this.drawAnimatedTiles(true);
         },
     
         drawHighTiles: function(ctx) {
@@ -634,19 +742,11 @@ function(Camera, Item, Character, Player) {
 
             this.context.save();
                 this.setCameraView(this.context);
-                this.drawAnimatedTiles();
-            
-                if(this.game.started) {
-                    this.drawSelectedCell();
-                }
-
-                //this.drawOccupiedCells();
-                //this.drawPathingCells();
-                this.drawEntities();
+                
+                this.drawDirtyAnimatedTiles();
+                this.drawSelectedCell();
+                this.drawDirtyEntities();
             this.context.restore();
-        
-            // Overlay UI elements
-            // this.drawFPS();
         }
     });
 

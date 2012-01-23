@@ -203,7 +203,9 @@ define(['character', 'timer'], function(Character, Timer) {
                 var anim = entity.currentAnimation;
                 
                 if(anim) {
-                    anim.update(t);
+                    if(anim.update(t)) {
+                        entity.setDirty();
+                    }
                 }
             });
         
@@ -219,10 +221,15 @@ define(['character', 'timer'], function(Character, Timer) {
         },
     
         updateAnimatedTiles: function() {
-            var t = this.game.currentTime;
+            var self = this,
+                t = this.game.currentTime;
         
             this.game.forEachAnimatedTile(function (tile) {
-                tile.animate(t);
+                if(tile.animate(t)) {
+                    tile.isDirty = true;
+                    tile.dirtyRect = self.game.renderer.getTileBoundingRect(tile);
+                    self.game.checkOtherDirtyRects(tile.dirtyRect, tile, tile.x, tile.y);
+                }
             });
         },
     

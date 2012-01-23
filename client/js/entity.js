@@ -24,6 +24,7 @@ define(function() {
             this.isHighlighted = false;
             this.visible = true;
             this.isFading = false;
+            this.setDirty();
     	},
 	
     	setName: function(name) {
@@ -228,6 +229,17 @@ define(function() {
                 clearInterval(this.blinking);
             }
             this.setVisible(true);
+        },
+        
+        setDirty: function() {
+            this.isDirty = true;
+            if(this.dirty_callback) {
+                this.dirty_callback(this);
+            }
+        },
+        
+        onDirty: function(dirty_callback) {
+            this.dirty_callback = dirty_callback;
         }
     });
     
