@@ -59,26 +59,31 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
     	    canvas.width = width;
     	    canvas.height = height;
     	    ctx.drawImage(this.image, 0, 0, width, height);
-    	    spriteData = ctx.getImageData(0, 0, width, height);
-    
-    	    data = spriteData.data;
-    
-    	    for(var i=0; i < data.length; i += 4) {
-    	        data[i] = 255;
-    	        data[i+1] = data[i+2] = 75;
+    	    
+    	    try {
+        	    spriteData = ctx.getImageData(0, 0, width, height);
+
+        	    data = spriteData.data;
+
+        	    for(var i=0; i < data.length; i += 4) {
+        	        data[i] = 255;
+        	        data[i+1] = data[i+2] = 75;
+        	    }
+        	    spriteData.data = data;
+
+        	    ctx.putImageData(spriteData, 0, 0);
+
+        	    self.whiteSprite = { 
+                    image: canvas,
+            	    isLoaded: true,
+            	    offsetX: self.offsetX,
+            	    offsetY: self.offsetY,
+            	    width: self.width,
+            	    height: self.height
+            	};
+    	    } catch(e) {
+    	        log.error("Error getting image data for sprite : "+this.name);
     	    }
-    	    spriteData.data = data;
-    
-    	    ctx.putImageData(spriteData, 0, 0);
-    
-    	    this.whiteSprite = { 
-                image: canvas,
-        	    isLoaded: true,
-        	    offsetX: this.offsetX,
-        	    offsetY: this.offsetY,
-        	    width: this.width,
-        	    height: this.height
-        	};
         },
 	
     	getHurtSprite: function() {
