@@ -115,14 +115,14 @@ define(['jquery', 'app'], function($, App) {
             $('.twitter').click(function() {
                 var url = $(this).attr('href');
 
-               app.openPopup('twitter', url);
+               //app.openPopup('twitter', url);
                return false;
             });
 
             $('.facebook').click(function() {
                 var url = $(this).attr('href');
 
-               app.openPopup('facebook', url);
+               //app.openPopup('facebook', url);
                return false;
             });
         
