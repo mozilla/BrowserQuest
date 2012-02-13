@@ -226,7 +226,7 @@ footer, header, hgroup, menu, nav, section {
     #noscript {height:50px;background:#d83939;width:100%;color:#eee;font-size:20px;font-family:'GraphicPixel', arial, sans-serif;text-align:center;line-height:50px;border-bottom:1px solid #000;}
 
     #instructions, #achievements, #lists, #about, #credits, .ribbon, .play, .play div, .barbutton {-webkit-tap-highlight-color:transparent;}
-    #nameinput::-webkit-input-placeholder  {color:#373737;}
+    #nameinput::-webkit-input-placeholder  {color:#fff;}
 
 /* Magic Parchment */
 
@@ -1196,4 +1196,7 @@ footer, header, hgroup, menu, nav, section {
     .tablet .animate .parchment-left, .tablet .animate .parchment-right, .tablet .animate .parchment-middle {-webkit-animation:none;-moz-animation:none;-o-animation:none;-ms-animation:none;}
     .tablet #instructions, .tablet #achievements, .tablet #lists {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
     .tablet #achievements li.unlocked .achievement-sharing {display:block;}
-    .tablet #coinsparks {display:none;}
+    .tablet #coinsparks {display:none; -moz-animation:none;}
+    
+    .tablet #logo, .tablet #parchment, .tablet #container {-moz-transition:none;}
+    .tablet #achievement-notification .name, .tablet #achievement-notification .title, .tablet #achievement-notification .coin, .tablet #achievement-notification {-moz-transition:none;}
