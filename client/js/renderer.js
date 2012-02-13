@@ -1,6 +1,6 @@
 
-define(['camera', 'item', 'character', 'player'], 
-function(Camera, Item, Character, Player) {
+define(['camera', 'item', 'character', 'player', 'timer'], 
+function(Camera, Item, Character, Player, Timer) {
 
     var Renderer = Class.extend({
         init: function(game, canvas, background, foreground) {
@@ -31,6 +31,8 @@ function(Camera, Item, Character, Player) {
             this.highTileCount = 0;
         
             this.tablet = Detect.isTablet(window.innerWidth);
+            
+            this.fixFlickeringTimer = new Timer(100);
         },
     
         getWidth: function() {
@@ -739,6 +741,7 @@ function(Camera, Item, Character, Player) {
     
         renderFrameMobile: function() {
             this.clearDirtyRects();
+            this.preventFlickeringBug();
 
             this.context.save();
                 this.setCameraView(this.context);
@@ -747,6 +750,14 @@ function(Camera, Item, Character, Player) {
                 this.drawSelectedCell();
                 this.drawDirtyEntities();
             this.context.restore();
+        },
+        
+        preventFlickeringBug: function() {
+            if(this.fixFlickeringTimer.isOver(this.game.currentTime)) {
+                this.background.fillRect(0, 0, 0, 0);
+                this.context.fillRect(0, 0, 0, 0);
+                this.foreground.fillRect(0, 0, 0, 0);
+            }
         }
     });
 
