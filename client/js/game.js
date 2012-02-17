@@ -415,12 +415,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     entity.fadeIn(this.currentTime);
                 }
                 
-                entity.onDirty(function(e) {
-                    if(self.camera.isVisible(e)) {
-                        e.dirtyRect = self.renderer.getEntityBoundingRect(e);
-                        self.checkOtherDirtyRects(e.dirtyRect, e, e.gridX, e.gridY);
-                    }
-                });
+                if(this.renderer.mobile || this.renderer.tablet) {
+                    entity.onDirty(function(e) {
+                        if(self.camera.isVisible(e)) {
+                            e.dirtyRect = self.renderer.getEntityBoundingRect(e);
+                            self.checkOtherDirtyRects(e.dirtyRect, e, e.gridX, e.gridY);
+                        }
+                    });
+                }
             }
             else {
                 log.error("This entity already exists : " + entity.id + " ("+entity.kind+")");

@@ -228,7 +228,10 @@ define(['character', 'timer'], function(Character, Timer) {
                 if(tile.animate(t)) {
                     tile.isDirty = true;
                     tile.dirtyRect = self.game.renderer.getTileBoundingRect(tile);
-                    self.game.checkOtherDirtyRects(tile.dirtyRect, tile, tile.x, tile.y);
+
+                    if(self.game.renderer.mobile || self.game.renderer.tablet) {
+                        self.game.checkOtherDirtyRects(tile.dirtyRect, tile, tile.x, tile.y);
+                    }
                 }
             });
         },
