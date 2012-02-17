@@ -978,6 +978,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.client.sendOpen(self.player.target);
                         self.audioManager.playSound("chest");
                     }
+                    
+                    self.player.forEachAttacker(function(attacker) {
+                        if(!attacker.isAdjacentNonDiagonal(self.player)) {
+                            attacker.follow(self.player);
+                        }
+                    });
                 
                     self.unregisterEntityPosition(self.player);
                     self.registerEntityPosition(self.player);
@@ -1799,21 +1805,20 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         click: function() {
             var pos = this.getMouseGridPosition(),
                 entity;
-                
+            
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
             } else {
                 this.previousClickPosition = pos;
             }
-	    
+	        
     	    if(this.started
     	    && !this.isZoning()
     	    && !this.isZoningTile(this.player.nextGridX, this.player.nextGridY)
     	    && !this.player.isDead
     	    && !this.hoveringCollidingTile
     	    && !this.hoveringPlateauTile) {
-	        
         	    entity = this.getEntityAt(pos.x, pos.y);
     	    
         	    if(entity instanceof Mob) {
@@ -1853,11 +1858,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                     if(character.hasTarget() && character.target.id === this.playerId && !this.player.invincible) {
                         this.client.sendHurt(character);
-                    }
-                } else {
-                    var target = character.target;
-                    if(target && !character.isAdjacentNonDiagonal(target) && !target.isMoving()) {
-                        character.follow(character.target);
                     }
                 }
             }
