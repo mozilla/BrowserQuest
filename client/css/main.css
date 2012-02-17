@@ -1171,6 +1171,8 @@ footer, header, hgroup, menu, nav, section {
 
         #instructions, #achievements, #lists, #about {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
 
+        #respawn { background-position: -204px -1398px; background-size: 844px auto;}
+
         footer {display:none;}
 	}
 
