@@ -21,8 +21,9 @@ var _ = require('underscore'),
             this.formats[Types.Messages.CHECK] = ['n']
         },
         
-        check: function(message) {
-            var type = message[0],
+        check: function(msg) {
+            var message = msg.slice(0),
+                type = message[0],
                 format = this.formats[type];
             
             message.shift();

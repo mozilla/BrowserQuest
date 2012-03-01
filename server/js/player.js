@@ -31,8 +31,6 @@ module.exports = Player = Character.extend({
             if(!check(message)) {
                 self.connection.close("Invalid "+Types.getMessageTypeAsString(action)+" message format: "+message);
                 return;
-            } else {
-                log.debug("Received: "+message);
             }
             
             if(!self.hasEnteredGame && action !== Types.Messages.HELLO) { // HELLO must be the first message
