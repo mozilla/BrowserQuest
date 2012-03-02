@@ -210,7 +210,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 COWARD: {
                     id: 8,
                     name: "Coward",
-                    desc: "Succesfully escape an enemy"
+                    desc: "Successfully escape an enemy"
                 },
                 TOMB_RAIDER: {
                     id: 9,
