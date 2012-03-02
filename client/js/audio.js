@@ -94,6 +94,9 @@ define(['area'], function(Area) {
         },*/
     
         getSound: function(name) {
+            if(!this.sounds[name]) {
+                return null;
+            }
             var sound = _.detect(this.sounds[name], function(sound) {
                 return sound.ended || sound.paused;
             });
