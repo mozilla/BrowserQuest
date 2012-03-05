@@ -46,6 +46,18 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.setAttackRate(900);
             }
         }),
+        
+        Deathknight: Mob.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.DEATHKNIGHT);
+                this.atkSpeed = 50;
+        		this.moveSpeed = 220;
+        		this.walkSpeed = 100;
+        		this.idleSpeed = 450;
+        		this.setAttackRate(800);
+        		this.aggroRange = 3;
+            }
+        }),
 
         Goblin: Mob.extend({
             init: function(id) {
@@ -123,6 +135,7 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.idleSpeed = 400;
                 this.atkRate = 2000;
                 this.attackCooldown = new Timer(this.atkRate);
+        		this.aggroRange = 3;
             }
         })
     };

@@ -46,6 +46,7 @@ Types = {
         SNAKE: 11,
         SKELETON2: 12,
         BOSS: 13,
+        DEATHKNIGHT: 14,
         
         // Armors
         FIREFOX: 20,
@@ -108,6 +109,7 @@ var kinds = {
     goblin: [Types.Entities.GOBLIN, "mob"],
     ogre: [Types.Entities.OGRE, "mob"],
     spectre: [Types.Entities.SPECTRE, "mob"],
+    deathknight: [Types.Entities.DEATHKNIGHT, "mob"],
     crab: [Types.Entities.CRAB, "mob"],
     snake: [Types.Entities.SNAKE, "mob"],
     bat: [Types.Entities.BAT, "mob"],

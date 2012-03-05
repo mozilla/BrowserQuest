@@ -39,6 +39,10 @@ define(['mobs', 'items', 'npcs', 'warrior', 'chest'], function(Mobs, Items, NPCs
     EntityFactory.builders[Types.Entities.SPECTRE] = function(id) {
         return new Mobs.Spectre(id);
     };
+    
+    EntityFactory.builders[Types.Entities.DEATHKNIGHT] = function(id) {
+        return new Mobs.Deathknight(id);
+    };
 
     EntityFactory.builders[Types.Entities.GOBLIN] = function(id) {
         return new Mobs.Goblin(id);

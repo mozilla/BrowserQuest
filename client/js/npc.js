@@ -29,7 +29,7 @@ define(['character'], function(Character) {
             "It's all happening in a single web page! Isn't it crazy?",
             "It's all made possible thanks to WebSockets.",
             "I don't know much about it, after all I'm just a program.",
-            'Why don&#x27;t you read this <a href="">blog post</a> and learn all about it?'
+            'Why don&#x27;t you read this <a target="_blank" href="">blog post</a> and learn all about it?'
         ],
     
         "villager": [

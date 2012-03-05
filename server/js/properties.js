@@ -62,6 +62,16 @@ var Properties = {
         weapon: 4
     },
     
+    deathknight: {
+        drops: {
+            burger: 95,
+            firepotion: 5
+        },
+        hp: 250,
+        armor: 3,
+        weapon: 3
+    },
+    
     crab: {
         drops: {
             flask: 50,
@@ -136,7 +146,7 @@ var Properties = {
         drops: {
             goldensword: 100
         },
-        hp: 1000,
+        hp: 600,
         armor: 6,
         weapon: 7
     }
