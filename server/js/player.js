@@ -18,6 +18,7 @@ module.exports = Player = Character.extend({
         this._super(this.connection.id, "player", Types.Entities.WARRIOR, 0, 0, "");
 
         this.hasEnteredGame = false;
+        this.isDead = false;
         this.haters = {};
         this.lastCheckpoint = null;
         this.formatChecker = new FormatChecker();
@@ -37,7 +38,7 @@ module.exports = Player = Character.extend({
                 self.connection.close("Invalid handshake message: "+message);
                 return;
             }
-            if(self.hasEnteredGame && action === Types.Messages.HELLO) { // HELLO can be sent only once
+            if(self.hasEnteredGame && !self.isDead && action === Types.Messages.HELLO) { // HELLO can be sent only once
                 self.connection.close("Cannot initiate handshake twice: "+message);
                 return;
             }
@@ -62,6 +63,7 @@ module.exports = Player = Character.extend({
 
                 self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints]);
                 self.hasEnteredGame = true;
+                self.isDead = false;
             }
             else if(action === Types.Messages.WHO) {
                 message.shift();
@@ -136,6 +138,10 @@ module.exports = Player = Character.extend({
                 if(mob && self.hitPoints > 0) {
                     self.hitPoints -= Formulas.dmg(mob.weaponLevel, self.armorLevel);
                     self.server.handleHurtEntity(self);
+                    
+                    if(self.hitPoints <= 0) {
+                        self.isDead = true;
+                    }
                 }
             }
             else if(action === Types.Messages.LOOT) {
