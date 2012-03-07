@@ -7,6 +7,11 @@ define(['jquery', 'app'], function($, App) {
         	app = new App();
             app.center();
         
+            if(Detect.isChromeOnWindows()) {
+                // Workaround for graphical glitches on text
+                $('body').addClass('chromewin');
+            }
+        
             $('body').click(function(event) {
                 if($('#parchment').hasClass('credits')) {
                     app.toggleCredits();
@@ -129,7 +134,7 @@ define(['jquery', 'app'], function($, App) {
             var data = app.storage.data;
     		if(data.hasAlreadyPlayed) {
     		    if(data.player.name && data.player.name !== "") {
-    		        $('#playername').html(data.player.name);
+		            $('#playername').html(data.player.name);
     		        $('#playerimage').attr('src', data.player.image);
     		    }
     		}

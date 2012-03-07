@@ -70,6 +70,18 @@ footer, header, hgroup, menu, nav, section {
         font-style: normal;
 
     }
+    
+    @font-face {
+        font-family: 'AdvoCut';
+        src: url('../fonts/advocut-webfont.eot');
+        src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
+             url('../fonts/advocut-webfont.woff') format('woff'),
+             url('../fonts/advocut-webfont.ttf') format('truetype'),
+             url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+
+    }
 
 	.gp {font-family: 'GraphicPixel', sans-serif;}
 
@@ -200,7 +212,7 @@ footer, header, hgroup, menu, nav, section {
     footer {font-family:'GraphicPixel';position:absolute;bottom:5%;left:0;text-align:center;width:100%;z-index:20000;}
     
     .intro footer {color:#c6c0a3;opacity:1;}
-    footer {color:#8b8b8b;opacity:0.7;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+    footer {color:#8b8b8b;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
     footer:hover {opacity:1;}
     footer div  {display:inline-block;}
     #sharing a {display:block;float:right;background-size:844px;position:relative;top:-2px;}
@@ -1202,3 +1214,9 @@ footer, header, hgroup, menu, nav, section {
     
     .tablet #logo, .tablet #parchment, .tablet #container {-moz-transition:none;}
     .tablet #achievement-notification .name, .tablet #achievement-notification .title, .tablet #achievement-notification .coin, .tablet #achievement-notification {-moz-transition:none;}
+    
+/* Workarounds for chrome windows bugs */
+
+    .chromewin #parchment, .chromewin #parchment input, .chromewin #notifications, .chromewin #instructions, .chromewin #achievements, .chromewin #achievement-notification, 
+    .chromewin #playercount, .chromewin #credits, .chromewin #loadcharacter, .chromewin #confirmation, .chromewin #death, .chromewin #error, .chromewin #about, 
+    .chromewin #parchment p, .chromewin #portrait p, .chromewin #noscript, .chromewin footer, .chromewin .bubble p {font-family:'AdvoCut';}

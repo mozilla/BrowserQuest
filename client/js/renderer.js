@@ -114,17 +114,17 @@ function(Camera, Item, Character, Player, Timer) {
         
             switch(this.scale) {
                 case 1:
-                    fontsize = 9; break;
-                case 2:
                     fontsize = 10; break;
+                case 2:
+                    fontsize = Detect.isChromeOnWindows() ? 10 : 13; break;
                 case 3:
-                    fontsize = 11;
+                    fontsize = 20;
             }
             this.setFontSize(fontsize);
         },
     
         setFontSize: function(size) {
-            var font = size+"pt GraphicPixel";
+            var font = size+"px GraphicPixel";
         
             this.context.font = font;
             this.background.font = font;
@@ -133,13 +133,24 @@ function(Camera, Item, Character, Player, Timer) {
         drawText: function(text, x, y, centered, color, strokeColor) {
             var ctx = this.context;
             
+            var strokeSize;
+        
+            switch(this.scale) {
+                case 1:
+                    strokeSize = 3; break;
+                case 2:
+                    strokeSize = 3; break;
+                case 3:
+                    strokeSize = 5;
+            }
+            
             if(text && x && y) {
                 ctx.save();
                 if(centered) {
                     ctx.textAlign = "center";
                 }
                 ctx.strokeStyle = strokeColor || "#373737";
-                ctx.lineWidth = 3;
+                ctx.lineWidth = strokeSize;
                 ctx.strokeText(text, x, y);
                 ctx.fillStyle = color || "white";
                 ctx.fillText(text, x, y);
@@ -634,8 +645,8 @@ function(Camera, Item, Character, Player, Timer) {
             var self = this;
         
             switch(this.scale) {
-                case 2: this.setFontSize(13); break;
-                case 3: this.setFontSize(20); break;
+                case 2: this.setFontSize(20); break;
+                case 3: this.setFontSize(30); break;
             }
             this.game.infoManager.forEachInfo(function(info) {
                 self.context.save();
