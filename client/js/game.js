@@ -704,10 +704,17 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         connect: function(started_callback) {
-            var self = this;
+            var self = this,
+                dispatcher = true; // always in dispatcher mode in the build version
     
             this.client = new GameClient(this.host, this.port);
-            this.client.connect(true);
+            
+            //>>excludeStart("prodHost", pragmas.prodHost);
+            var config = this.app.config.local || this.app.config.dev;
+            if(config) {
+                this.client.connect(config.dispatcher); // false if the client connects directly to a game server
+            }
+            //>>excludeEnd("prodHost");
             
             this.client.onDispatched(function(host, port) {
                 self.client.host = host;
