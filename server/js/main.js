@@ -77,6 +77,10 @@ function main(config) {
             onPopulationChange(); // initialize all counters to 0 when the server starts
         });
     }
+    
+    process.on('uncaughtException', function (e) {
+        log.error('uncaughtException: ' + e);
+    });
 }
 
 function getWorldDistribution(worlds) {
