@@ -76,7 +76,7 @@ var Connection = cls.Class.extend({
     },
     
     close: function(logError) {
-        log.error("Closing connection to "+this._connection.remoteAddress+". Error: "+logError);
+        log.info("Closing connection to "+this._connection.remoteAddress+". Error: "+logError);
         this._connection.close();
     }
 });

@@ -22,6 +22,7 @@ module.exports = Player = Character.extend({
         this.haters = {};
         this.lastCheckpoint = null;
         this.formatChecker = new FormatChecker();
+        this.disconnectTimeout = null;
         
         this.connection.listen(function(message) {
             var action = parseInt(message[0]);
@@ -40,6 +41,8 @@ module.exports = Player = Character.extend({
                 self.connection.close("Cannot initiate handshake twice: "+message);
                 return;
             }
+            
+            self.resetTimeout();
             
             if(action === Types.Messages.HELLO) {
                 var name = Utils.sanitize(message[1]);
@@ -341,5 +344,15 @@ module.exports = Player = Character.extend({
     
     onRequestPosition: function(callback) {
         this.requestpos_callback = callback;
+    },
+    
+    resetTimeout: function() {
+        clearTimeout(this.disconnectTimeout);
+        this.disconnectTimeout = setTimeout(this.timeout.bind(this), 1000 * 60 * 15); // 15 min.
+    },
+    
+    timeout: function() {
+        this.connection.send("timeout");
+        this.connection.close("Player was idle for too long");
     }
 });

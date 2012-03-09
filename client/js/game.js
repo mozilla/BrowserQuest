@@ -1414,6 +1414,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.nbplayers_callback(population);
                     }
                 });
+                
+                self.client.onDisconnected(function(message) {
+                    self.player.die();
+                    if(self.disconnect_callback) {
+                        self.disconnect_callback(message);
+                    }
+                });
             
                 self.gamestart_callback();
             
@@ -1787,7 +1794,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 x = mouse.x,
                 y = mouse.y;
             
-            if(!this.renderer.mobile && !this.renderer.tablet) {
+            if(this.player && !this.renderer.mobile && !this.renderer.tablet) {
                 this.hoveringCollidingTile = this.map.isColliding(x, y);
                 this.hoveringPlateauTile = this.player.isOnPlateau ? !this.map.isPlateau(x, y) : this.map.isPlateau(x, y);
                 this.hoveringMob = this.isMobAt(x, y);
@@ -1828,6 +1835,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
 	        
     	    if(this.started
+    	    && this.player
     	    && !this.isZoning()
     	    && !this.isZoningTile(this.player.nextGridX, this.player.nextGridY)
     	    && !this.player.isDead
@@ -2057,6 +2065,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
     
         onGameStart: function(callback) {
             this.gamestart_callback = callback;
+        },
+        
+        onDisconnect: function(callback) {
+            this.disconnect_callback = callback;
         },
     
         onPlayerDeath: function(callback) {
