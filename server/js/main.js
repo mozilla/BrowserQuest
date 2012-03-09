@@ -1,5 +1,6 @@
 
-var fs = require('fs');
+var fs = require('fs'),
+    Metrics = require('./metrics');
 
 
 function main(config) {
@@ -8,6 +9,7 @@ function main(config) {
         Log = require('log'),
         _ = require('underscore'),
         server = new ws.MultiVersionWebsocketServer(config.port),
+        metrics = config.metrics_enabled ? new Metrics(config) : null;
         worlds = [];
     
     switch(config.debug_level) {
@@ -19,32 +21,71 @@ function main(config) {
             log = new Log(Log.INFO); break;
     };
     
+    log.info("Starting BrowserQuest game server...");
+    
     server.onConnect(function(connection) {
-        var world = _.detect(worlds, function(world) {
-            return world.playerCount < config.nb_players_per_world;
-        });
-        if(world) {
-            world.connect_callback(new Player(connection, world));
+        var world, // the one in which the player will be spawned
+            connect = function() {
+                if(world) {
+                    world.connect_callback(new Player(connection, world));
+                    connection.send("go");
+                }
+            };
+        
+        if(config.metrics_enabled) {
+            metrics.getOpenWorldCount(function(open_world_count) {
+                // choose the least populated world among open worlds
+                world = _.min(_.first(worlds, open_world_count), function(w) { return w.playerCount; });
+                connect();
+            });
+        }
+        else {
+            // simply fill each world sequentially until they are full
+            world = _.detect(worlds, function(world) {
+                return world.playerCount < config.nb_players_per_world;
+            });
+            connect();
         }
     });
 
     server.onError(function() {
         log.error(Array.prototype.join.call(arguments, ", "));
     });
+    
+    var onPopulationChange = function() {
+        metrics.updatePlayerCounters(worlds);
+        metrics.updateWorldDistribution(getWorldDistribution(worlds));
+    };
 
     _.each(_.range(config.nb_worlds), function(i) {
         var world = new WorldServer('world'+ (i+1), config.nb_players_per_world, server);
         world.run(config.map_filepath);
         worlds.push(world);
+        
+        if(config.metrics_enabled) {
+            world.onPlayerAdded(onPopulationChange);
+            world.onPlayerRemoved(onPopulationChange);
+        }
     });
     
     server.onRequestStatus(function() {
-        var status = [];
-        _.each(worlds, function(world) {
-            status.push(world.playerCount);
-        });
-        return JSON.stringify(status);
+        return JSON.stringify(getWorldDistribution(worlds));
     });
+    
+    if(config.metrics_enabled) {
+        metrics.ready(function() {
+            onPopulationChange(); // initialize all counters to 0 when the server starts
+        });
+    }
+}
+
+function getWorldDistribution(worlds) {
+    var distribution = [];
+    
+    _.each(worlds, function(world) {
+        distribution.push(world.playerCount);
+    });
+    return distribution;
 }
 
 function getConfigFile(path, callback) {
@@ -58,9 +99,17 @@ function getConfigFile(path, callback) {
     });
 }
 
+var defaultConfigPath = './server/config.json',
+    customConfigPath = './server/config_local.json';
 
-getConfigFile('./server/config.json', function(defaultConfig) {
-    getConfigFile('./server/config_local.json', function(localConfig) {
+process.argv.forEach(function (val, index, array) {
+    if(index === 2) {
+        customConfigPath = val;
+    }
+});
+
+getConfigFile(defaultConfigPath, function(defaultConfig) {
+    getConfigFile(customConfigPath, function(localConfig) {
         if(localConfig) {
             main(localConfig);
         } else if(defaultConfig) {

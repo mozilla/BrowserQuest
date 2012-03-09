@@ -707,8 +707,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var self = this;
     
             this.client = new GameClient(this.host, this.port);
-            this.client.connect();
-    
+            this.client.connect(true);
+            
+            this.client.onDispatched(function(host, port) {
+                self.client.host = host;
+                self.client.port = port;
+                alert("host:"+host+ "  port:"+port);
+                self.client.connect(); // connect to actual game server
+            });
+            
             this.client.onConnected(function() {
                 log.info("Connected to server "+self.client.host+":"+self.client.port);
         

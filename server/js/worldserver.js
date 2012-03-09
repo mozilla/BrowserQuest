@@ -1,6 +1,5 @@
 
-var sys = require("sys"),
-    cls = require("./lib/class"),
+var cls = require("./lib/class"),
     _ = require("underscore"),
     Log = require('log'),
     Entity = require('./entity'),
@@ -61,7 +60,11 @@ module.exports = World = cls.Class.extend({
         });
         
         this.onPlayerEnter(function(player) {
-            log.info(player.name + " has joined "+ this.id);
+            log.info(player.name + " has joined "+ self.id);
+            
+            if(!player.hasEnteredGame) {
+                self.incrementPlayerCount();
+            }
             
             // Number of players in this world
             self.pushToPlayer(player, new Messages.Population(self.playerCount));
@@ -108,7 +111,16 @@ module.exports = World = cls.Class.extend({
             player.onExit(function() {
                 log.info(player.name + " has left the game.");
                 self.removePlayer(player);
+                self.decrementPlayerCount();
+                
+                if(self.removed_callback) {
+                    self.removed_callback();
+                }
             });
+            
+            if(self.added_callback) {
+                self.added_callback();
+            }
         });
         
         // Called when an entity is attacked by another entity
@@ -207,6 +219,14 @@ module.exports = World = cls.Class.extend({
     
     onPlayerEnter: function(callback) {
         this.enter_callback = callback;
+    },
+    
+    onPlayerAdded: function(callback) {
+        this.added_callback = callback;
+    },
+    
+    onPlayerRemoved: function(callback) {
+        this.removed_callback = callback;
     },
     
     onRegenTick: function(callback) {

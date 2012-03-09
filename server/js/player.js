@@ -23,8 +23,6 @@ module.exports = Player = Character.extend({
         this.lastCheckpoint = null;
         this.formatChecker = new FormatChecker();
         
-        this.server.incrementPlayerCount();
-        
         this.connection.listen(function(message) {
             var action = parseInt(message[0]);
             
@@ -206,7 +204,6 @@ module.exports = Player = Character.extend({
             if(self.exit_callback) {
                 self.exit_callback();
             }
-            self.server.decrementPlayerCount();
         });
     },
     

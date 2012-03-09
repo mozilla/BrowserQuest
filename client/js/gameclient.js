@@ -43,8 +43,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         disable: function() {
             this.isListening = false;
         },
-
-        connect: function() {
+        
+        connect: function(dispatcherMode) {
             var url = "ws://"+ this.host +":"+ this.port +"/",
                 self = this;
             
@@ -55,25 +55,39 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             } else {
                 this.connection = new WebSocket(url);
             }
-    
-            this.connection.onopen = function(e) {
-                if(self.connected_callback) {
-                    self.connected_callback();
-                }
-            };
+            
+            if(dispatcherMode) {
+                this.connection.onmessage = function(e) {
+                    var reply = JSON.parse(e.data);
 
-            this.connection.onmessage = function(e) {
-                self.receiveMessage(e.data);
-            };
-        
-            this.connection.onerror = function(e) {
-                log.error(e, true);
-            };
-        
-            this.connection.onclose = function() {
-                log.debug("Connection closed");
-                $('#container').addClass('error');
-            };
+                    if(reply.status === 'OK') {
+                        self.dispatched_callback(reply.host, reply.port);
+                    } else if(reply.status === 'FULL') {
+                        alert("BrowserQuest is currently at maximum player population. Please retry later.");
+                    } else {
+                        alert("Unknown error while connecting to BrowserQuest.");
+                    }
+                };
+            } else {
+                this.connection.onopen = function(e) {
+                    if(self.connected_callback) {
+                        self.connected_callback();
+                    }
+                };
+
+                this.connection.onmessage = function(e) {
+                    self.receiveMessage(e.data);
+                };
+
+                this.connection.onerror = function(e) {
+                    log.error(e, true);
+                };
+
+                this.connection.onclose = function() {
+                    log.debug("Connection closed");
+                    $('#container').addClass('error');
+                };
+            }
         },
 
         sendMessage: function(json) {
@@ -338,6 +352,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             if(this.blink_callback) {
                 this.blink_callback(id);
             }
+        },
+        
+        onDispatched: function(callback) {
+            this.dispatched_callback = callback;
         },
 
         onConnected: function(callback) {
