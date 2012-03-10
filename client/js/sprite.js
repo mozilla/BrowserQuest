@@ -137,6 +137,9 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
     	    };
 	    
     	    var isBlankPixel = function(i) {
+    	        if(i < 0 || i >= data.length) {
+    	            return true;
+    	        }
     	        return data[i] === 0 && data[i+1] === 0 && data[i+2] === 0 && data[i+3] === 0;
     	    };
 	    
