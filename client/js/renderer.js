@@ -573,7 +573,7 @@ function(Camera, Item, Character, Player, Timer) {
                 if(!m.isHighTile(id) && !m.isAnimatedTile(id)) { // Don't draw unnecessary tiles
                     self.drawTile(self.background, id, self.tileset, tilesetwidth, m.width, index);
                 }
-            });
+            }, 1);
         },
     
         drawAnimatedTiles: function(dirtyOnly) {
@@ -610,7 +610,7 @@ function(Camera, Item, Character, Player, Timer) {
                     self.drawTile(ctx, id, self.tileset, tilesetwidth, m.width, index);
                     self.highTileCount += 1;
                 }
-            });
+            }, 1);
         },
 
         drawBackground: function(ctx, color) {

@@ -517,7 +517,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     tile.y = pos.y;
                     self.animatedTiles.push(tile);
                 }
-            });
+            }, 1);
             //log.info("Initialized animated tiles.");
         },
     
@@ -1638,20 +1638,20 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         /**
          * 
          */    
-        forEachVisibleTileIndex: function(callback) {
+        forEachVisibleTileIndex: function(callback, extra) {
             var m = this.map;
         
             this.camera.forEachVisiblePosition(function(x, y) {
                 if(!m.isOutOfBounds(x, y)) {
                     callback(m.GridPositionToTileIndex(x, y) - 1);
                 }
-            });
+            }, extra);
         },
     
         /**
          * 
          */
-        forEachVisibleTile: function(callback) {
+        forEachVisibleTile: function(callback, extra) {
             var self = this,
                 m = this.map;
         
@@ -1664,11 +1664,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                     else {
                         if(_.isNaN(m.data[tileIndex]-1)) {
-                            throw Error("Tile number for x:"+x+" y:"+y+" is NaN");
+                            //throw Error("Tile number for index:"+tileIndex+" is NaN");
+                        } else {
+                            callback(m.data[tileIndex]-1, tileIndex);
                         }
-                        callback(m.data[tileIndex]-1, tileIndex);
                     }
-                });
+                }, extra);
             }
         },
     
