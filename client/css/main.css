@@ -532,7 +532,7 @@ footer, header, hgroup, menu, nav, section {
         .avatar {height:75px;width:39px;}
         #guillaume .avatar {float:right;background-position:-1062px -303px;margin-left:60px;}
         #franck .avatar {float:left;background-position:-1101px -303px;margin-right:60px;}
-        #seb {margin:270px auto 0 auto;width:38%;color:#373737;}
+        #seb {margin:270px auto 0 auto;width:52%;color:#373737;font-size:25px;}
         #seb a {color:#373737;text-decoration:none;}
         #seb a:hover {color:#397cd8;}
         #note {float:left;background-position:-1203px -336px;height:33px;width:30px;}
@@ -685,7 +685,7 @@ footer, header, hgroup, menu, nav, section {
         .avatar {height:50px;width:26px;}
         #guillaume .avatar {float:right;background-position:-708px -202px;margin-left:40px;}
         #franck .avatar {float:left;background-position:-734px -202px;margin-right:40px;}
-        #seb {margin:180px auto 0 auto;width:38%;color:#373737;font-size:20px;}
+        #seb {margin:180px auto 0 auto;width:51%;color:#373737;font-size:16px;}
         #seb a {color:#373737;text-decoration:none;}
         #seb a:hover {color:#397cd8;}
         #note {float:left;background-position:-802px -224px;height:22px;width:20px;}
@@ -837,7 +837,7 @@ footer, header, hgroup, menu, nav, section {
         .avatar {height:50px;width:26px;}
         #guillaume .avatar {float:right;background-position:-708px -202px;margin-left:40px;}
         #franck .avatar {float:left;background-position:-734px -202px;margin-right:40px;}
-        #seb {margin:180px auto 0 auto;width:38%;color:#373737;font-size:20px;}
+        #seb {margin:180px auto 0 auto;width:51%;color:#373737;font-size:16px;}
         #seb a {color:#373737;text-decoration:none;}
         #seb a:hover {color:#397cd8;}
         #note {float:left;background-position:-802px -224px;height:22px;width:20px;}
@@ -989,7 +989,7 @@ footer, header, hgroup, menu, nav, section {
         .avatar {height:25px;width:13px;}
         #guillaume .avatar {float:right;background-position:-354px -101px;margin-left:20px;}
         #franck .avatar {float:left;background-position:-367px -101px;margin-right:20px;}
-        #seb {margin:90px auto 0 auto;width:38%;color:#373737;font-size:10px;}
+        #seb {margin:90px auto 0 auto;width:61%;color:#373737;font-size:10px;}
         #seb a {color:#373737;text-decoration:none;}
         #seb a:hover {color:#397cd8;}
         #note {float:left;background-position:-401px -112px;height:11px;width:10px;}
