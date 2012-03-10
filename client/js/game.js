@@ -1299,7 +1299,29 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.client.onPlayerKillMob(function(kind) {
-                    self.showNotification("You killed a " + Types.getKindAsString(kind));
+                    var mobName = Types.getKindAsString(kind);
+                    
+                    if(mobName === 'skeleton2') {
+                        mobName = 'greater skeleton';
+                    }
+                    
+                    if(mobName === 'eye') {
+                        mobName = 'evil eye';
+                    }
+                    
+                    if(mobName === 'deathknight') {
+                        mobName = 'death knight';
+                    }
+                    
+                    if(mobName === 'boss') {
+                        self.showNotification("You killed the skeleton king");
+                    } else {
+                        if(_.include(['a', 'e', 'i', 'o', 'u'], mobName[0])) {
+                            self.showNotification("You killed an " + mobName);
+                        } else {
+                            self.showNotification("You killed a " + mobName);
+                        }
+                    }
                     
                     self.storage.incrementTotalKills();
                     self.tryUnlockingAchievement("HUNTER");
