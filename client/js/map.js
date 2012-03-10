@@ -100,7 +100,8 @@ define(['jquery', 'area'], function($, Area) {
                     y: door.ty,
                     orientation: (door.to === 'u' ? Types.Orientations.UP : Types.Orientations.DOWN),
                     cameraX: door.tcx,
-                    cameraY: door.tcy
+                    cameraY: door.tcy,
+                    portal: door.p === 1,
                 };
             });
         
@@ -272,7 +273,7 @@ define(['jquery', 'area'], function($, Area) {
         getDoorDestination: function(x, y) {
             return this.doors[this.GridPositionToTileIndex(x, y)];
         },
-    
+
         _getCheckpoints: function(map) {
             var checkpoints = [];
             _.each(map.checkpoints, function(cp) {

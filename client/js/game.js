@@ -943,7 +943,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 
                     if(self.map.isDoor(x, y)) {
                         var dest = self.map.getDoorDestination(x, y);
-                            isPortal = Math.abs(y - dest.y) < 5;
                     
                         self.player.setGridPosition(dest.x, dest.y);
                         self.player.turnTo(dest.orientation);
@@ -953,7 +952,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             self.camera.setGridPosition(dest.cameraX, dest.cameraY);
                             self.resetZone();
                         } else {
-                            if(isPortal) {
+                            if(dest.portal) {
                                 self.assignBubbleTo(self.player);
                             } else {
                                 self.camera.focusEntity(self.player);
@@ -978,8 +977,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             self.renderer.clearScreen(self.renderer.context);
                         }
                         
-                        //play the teleport sound
-                        if((self.player.gridX === 77 && self.player.gridY === 237) || (self.player.gridX === 82 && self.player.gridY === 234)) {
+                        if(dest.portal) {
                             self.audioManager.playSound("teleport");
                         }
                         
