@@ -1124,7 +1124,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                         self.registerEntityDualPosition(entity);
 
                                         entity.forEachAttacker(function(attacker) {
-                                            if(!attacker.isAdjacent(attacker.target)) {
+                                            if(attacker.isAdjacent(attacker.target)) {
+                                                attacker.lookAtTarget();
+                                            } else {
                                                 attacker.follow(entity);
                                             }
                                         });
