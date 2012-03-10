@@ -142,6 +142,9 @@ module.exports = Player = Character.extend({
                     
                     if(self.hitPoints <= 0) {
                         self.isDead = true;
+                        if(self.firepotionTimeout) {
+                            clearTimeout(self.firepotionTimeout);
+                        }
                     }
                 }
             }
@@ -157,6 +160,11 @@ module.exports = Player = Character.extend({
                         
                         if(kind === Types.Entities.FIREPOTION) {
                             self.updateHitPoints();
+                            self.broadcast(self.equip(Types.Entities.FIREFOX));
+                            self.firepotionTimeout = setTimeout(function() {
+                                self.broadcast(self.equip(self.armor)); // return to normal after 15 sec
+                                self.firepotionTimeout = null;
+                            }, 15000);
                             self.send(new Messages.HitPoints(self.maxHitPoints).serialize());
                         } else if(Types.isHealingItem(kind)) {
                             if(!self.hasFullHealth()) {
@@ -204,10 +212,16 @@ module.exports = Player = Character.extend({
         });
         
         this.connection.onClose(function() {
+            if(self.firepotionTimeout) {
+                clearTimeout(self.firepotionTimeout);
+            }
+            clearTimeout(self.disconnectTimeout);
             if(self.exit_callback) {
                 self.exit_callback();
             }
         });
+        
+        this.connection.sendUTF8("go"); // Notify client that the HELLO/WELCOME handshake can start
     },
     
     destroy: function() {
@@ -352,7 +366,7 @@ module.exports = Player = Character.extend({
     },
     
     timeout: function() {
-        this.connection.send("timeout");
+        this.connection.sendUTF8("timeout");
         this.connection.close("Player was idle for too long");
     }
 });

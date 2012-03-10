@@ -717,15 +717,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             //>>excludeEnd("prodHost");
             
             this.client.onDispatched(function(host, port) {
+                log.debug("Dispatched to game server "+host+ ":"+port);
+                
                 self.client.host = host;
                 self.client.port = port;
-                alert("host:"+host+ "  port:"+port);
                 self.client.connect(); // connect to actual game server
             });
             
             this.client.onConnected(function() {
-                log.info("Connected to server "+self.client.host+":"+self.client.port);
-        
+                log.info("Starting client/server handshake");
+                
                 self.player.name = self.username;
                 self.started = true;
             

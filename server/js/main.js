@@ -28,7 +28,6 @@ function main(config) {
             connect = function() {
                 if(world) {
                     world.connect_callback(new Player(connection, world));
-                    connection.send("go");
                 }
             };
         

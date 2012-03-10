@@ -70,12 +70,21 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 };
             } else {
                 this.connection.onopen = function(e) {
-                    if(self.connected_callback) {
-                        self.connected_callback();
-                    }
+                    log.info("Connected to server "+self.host+":"+self.port);
                 };
 
                 this.connection.onmessage = function(e) {
+                    if(e.data === "go") {
+                        if(self.connected_callback) {
+                            self.connected_callback();
+                        }
+                        return;
+                    }
+                    if(e.data === 'timeout') {
+                        self.isTimeout = true;
+                        return;
+                    }
+                    
                     self.receiveMessage(e.data);
                 };
 
@@ -129,10 +138,6 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                     } else {
                         // Only one action received
                         this.receiveAction(data);
-                    }
-                } else {
-                    if(data === 'timeout') {
-                        this.isTimeout = true;
                     }
                 }
             }

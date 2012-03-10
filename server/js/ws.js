@@ -75,6 +75,10 @@ var Connection = cls.Class.extend({
         throw "Not implemented";
     },
     
+    sendUTF8: function(data) {
+        throw "Not implemented";
+    },
+    
     close: function(logError) {
         log.info("Closing connection to "+this._connection.remoteAddress+". Error: "+logError);
         this._connection.close();
@@ -237,6 +241,10 @@ WS.worlizeWebSocketConnection = Connection.extend({
         } else {
             data = JSON.stringify(message);
         }
+        this.sendUTF8(data);
+    },
+    
+    sendUTF8: function(data) {
         this._connection.sendUTF(data);
     }
 });
@@ -277,6 +285,10 @@ WS.miksagoWebSocketConnection = Connection.extend({
         } else {
             data = JSON.stringify(message);
         }
+        this.sendUTF8(data);
+    },
+    
+    sendUTF8: function(data) {
         this._connection.send(data);
     }
 });
