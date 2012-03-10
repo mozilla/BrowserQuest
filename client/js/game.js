@@ -941,7 +941,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         }
                     }
                 
-                    if(self.map.isDoor(x, y)) {
+                    if(!self.player.hasTarget() && self.map.isDoor(x, y)) {
                         var dest = self.map.getDoorDestination(x, y);
                     
                         self.player.setGridPosition(dest.x, dest.y);
