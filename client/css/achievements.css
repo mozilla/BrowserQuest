@@ -4,7 +4,6 @@
 #achievements-count {float:right;color:#fff;}
 #achievements-count div {display:inline-block;}
 #achievement-notification .coin {-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
-.upscaled #achievements li {bacground-position:inherit;}
 
 @media screen and (min-width: 1501px) {
     .coin {width:72px;height:78px;}
