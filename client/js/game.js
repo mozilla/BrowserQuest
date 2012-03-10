@@ -946,6 +946,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         var dest = self.map.getDoorDestination(x, y);
                     
                         self.player.setGridPosition(dest.x, dest.y);
+                        self.player.nextGridX = dest.x;
+                        self.player.nextGridY = dest.y;
                         self.player.turnTo(dest.orientation);
                         self.client.sendTeleport(dest.x, dest.y);
                         
