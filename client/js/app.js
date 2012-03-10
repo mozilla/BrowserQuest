@@ -316,7 +316,7 @@ define(['jquery', 'storage'], function($, Storage) {
                 $a.find('a').click(function() {
                      var url = $(this).attr('href');
 
-                    //self.openPopup('twitter', url);
+                    self.openPopup('twitter', url);
                     return false;
                 });
     

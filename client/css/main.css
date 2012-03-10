@@ -209,21 +209,23 @@ footer, header, hgroup, menu, nav, section {
 
     #about .link a:hover {color:#d83939;}
 
-    footer {font-family:'GraphicPixel';position:absolute;bottom:5%;left:0;text-align:center;width:100%;z-index:20000;}
+    footer {font-family:'GraphicPixel';position:absolute;bottom:5%;left:0;text-align:center;width:100%;z-index:20000;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+    .upscaled.game footer {color:#8a8a8a;}
     
-    .intro footer {color:#c6c0a3;opacity:1;}
-    footer {color:#8b8b8b;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+    .intro footer {opacity:1;}
     footer:hover {opacity:1;}
     footer div  {display:inline-block;}
     #sharing a {display:block;float:right;background-size:844px;position:relative;top:-2px;}
-    #sharing .facebook {height:22px;width:10px;background-position:-802px -202px;margin:0 12px 0 16px;}
-    .intro #sharing .facebook {background-position:-760px -202px;}
-    #sharing .facebook:hover {background-position:-760px -224px;}
-    #sharing .twitter {height:22px;width:32px;background-position:-812px -202px;margin:0 12px 0 0;}
-    .intro #sharing .twitter {background-position:-770px -202px;}
+    #sharing .facebook {height:22px;width:22px;background-position:-822px -224px;margin:0 12px 0 12px;}
+    #sharing .facebook:hover {background-position:-822px -224px;}
+    #sharing .twitter {height:22px;width:32px;background-position:-770px -224px;margin:0 12px 0 0;}
     #sharing .twitter:hover {background-position:-770px -224px;}
+    #sharing .gplus {height:22px;width:22px;background:url('../img/common/gplus.png');margin:0 12px 0 0px;}
     #credits-link span {display:inline-block;margin-left:12px;}
     #credits-link span:hover {color:#fcda5c;cursor:pointer;}
+    
+    #sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
+    #sharing a:active {-moz-transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);transform:scale(1);}
 
     .close {position:absolute;z-index:20000;}
     .close:hover {cursor:pointer;}
@@ -535,7 +537,7 @@ footer, header, hgroup, menu, nav, section {
         #seb a:hover {color:#397cd8;}
         #note {float:left;background-position:-1203px -336px;height:33px;width:30px;}
         #close-credits {margin:45px auto 0 auto;text-align:center;clear:both;font-size:20px;color:#373737;}
-        #sharing {width:222px;}
+        #sharing {width:240px;}
         
         /*About*/
         #about h1 span.title {max-width:400px;display:inline-block;line-height:39px;margin-top:-90px;position:relative;}
@@ -688,7 +690,7 @@ footer, header, hgroup, menu, nav, section {
         #seb a:hover {color:#397cd8;}
         #note {float:left;background-position:-802px -224px;height:22px;width:20px;}
         #close-credits {margin:20px auto 0 auto;text-align:center;clear:both;font-size:14px;}
-        #sharing {width:194px;}
+        #sharing {width:202px;}
         
         /*About*/
         #about h1 span.title {max-width:400px;display:inline-block;line-height:24px;margin-top:-90px;position:relative;}
@@ -840,7 +842,7 @@ footer, header, hgroup, menu, nav, section {
         #seb a:hover {color:#397cd8;}
         #note {float:left;background-position:-802px -224px;height:22px;width:20px;}
         #close-credits {margin:20px auto 0 auto;text-align:center;clear:both;font-size:14px;}
-        #sharing {width:194px;}
+        #sharing {width:202px;}
         
         /*About*/
         #about h1 span.title {max-width:400px;display:inline-block;line-height:24px;margin-top:-90px;position:relative;}
@@ -992,7 +994,7 @@ footer, header, hgroup, menu, nav, section {
         #seb a:hover {color:#397cd8;}
         #note {float:left;background-position:-401px -112px;height:11px;width:10px;}
         #close-credits {margin:12px auto 0 auto;text-align:center;clear:both;font-size:10px;}
-        #sharing {width:194px;}
+        #sharing {width:202px;}
         
         /*About*/
         #about h1 span.title {max-width:400px;display:inline-block;line-height:24px;margin-top:-30px;position:relative;margin-bottom:-10px;}
