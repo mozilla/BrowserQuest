@@ -56,6 +56,14 @@ define(['mob', 'timer'], function(Mob, Timer) {
         		this.idleSpeed = 450;
         		this.setAttackRate(800);
         		this.aggroRange = 3;
+            },
+            
+            idle: function(orientation) {
+                if(!this.hasTarget()) {
+                    this._super(Types.Orientations.DOWN);
+                } else {
+                    this._super(orientation);
+                }
             }
         }),
 
@@ -136,6 +144,14 @@ define(['mob', 'timer'], function(Mob, Timer) {
                 this.atkRate = 2000;
                 this.attackCooldown = new Timer(this.atkRate);
         		this.aggroRange = 3;
+            },
+            
+            idle: function(orientation) {
+                if(!this.hasTarget()) {
+                    this._super(Types.Orientations.DOWN);
+                } else {
+                    this._super(orientation);
+                }
             }
         })
     };
