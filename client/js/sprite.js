@@ -73,13 +73,13 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
 
         	    ctx.putImageData(spriteData, 0, 0);
 
-        	    self.whiteSprite = { 
+        	    this.whiteSprite = { 
                     image: canvas,
             	    isLoaded: true,
-            	    offsetX: self.offsetX,
-            	    offsetY: self.offsetY,
-            	    width: self.width,
-            	    height: self.height
+            	    offsetX: this.offsetX,
+            	    offsetY: this.offsetY,
+            	    width: this.width,
+            	    height: this.height
             	};
     	    } catch(e) {
     	        log.error("Error getting image data for sprite : "+this.name);
