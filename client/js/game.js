@@ -1345,7 +1345,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.tryUnlockingAchievement("HERO");
                     }
                     
-                    self.audioManager.playSound("kill");
+                    self.audioManager.playSound("kill"+Math.floor(Math.random()*2+1));
                 });
             
                 self.client.onPlayerChangeHealth(function(points, isRegen) {
@@ -1582,8 +1582,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 if(msg) {
                     this.createBubble(npc.id, msg);
                     this.assignBubbleTo(npc);
+                    this.audioManager.playSound("npc");
                 } else {
                     this.destroyBubble(npc.id);
+                    this.audioManager.playSound("npc-end");
                 }
                 this.tryUnlockingAchievement("SMALL_TALK");
                 
@@ -1902,7 +1904,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     character.hit();
                     if(character.id === this.playerId) {
                         this.client.sendHit(character.target);
-                        this.audioManager.playSound("hit");
+                        this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
                     }
                     if(character.hasTarget() && character.target.id === this.playerId && !this.player.invincible) {
                         this.client.sendHurt(character);
