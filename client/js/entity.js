@@ -210,6 +210,14 @@ define(function() {
         
             return result;
         },
+        
+        forEachAdjacentNonDiagonalPosition: function(callback) {
+            callback(this.gridX - 1, this.gridY, Types.Orientations.LEFT);
+            callback(this.gridX, this.gridY - 1, Types.Orientations.UP);
+            callback(this.gridX + 1, this.gridY, Types.Orientations.RIGHT);
+            callback(this.gridX, this.gridY + 1, Types.Orientations.DOWN);
+            
+        },
     
         fadeIn: function(currentTime) {
             this.isFading = true;

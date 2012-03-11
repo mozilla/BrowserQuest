@@ -4,7 +4,7 @@ var Logger = function(level) {
 };
 
 Logger.prototype.info = function(message) {
-    if(this.level === "info") {
+    if(this.level === "debug" || this.level === "info") {
         if(window.console) {
             console.info(message);
         }
@@ -12,7 +12,7 @@ Logger.prototype.info = function(message) {
 };
 
 Logger.prototype.debug = function(message) {
-    if(this.level === "info" || this.level === "debug") {
+    if(this.level === "debug") {
         if(window.console) {
             console.log(message);
         }
@@ -30,4 +30,4 @@ Logger.prototype.error = function(message, stacktrace) {
     }
 };
    
-log = new Logger("info");
+log = new Logger("debug");

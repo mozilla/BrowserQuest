@@ -1097,7 +1097,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                                 self.addEntity(entity);
                         
-                                log.info("Spawned " + Types.getKindAsString(entity.kind) + " (" + entity.id + ") at "+entity.gridX+", "+entity.gridY);
+                                log.debug("Spawned " + Types.getKindAsString(entity.kind) + " (" + entity.id + ") at "+entity.gridX+", "+entity.gridY);
                         
                                 if(entity instanceof Character) {
                                     entity.onBeforeStep(function() {
@@ -1156,8 +1156,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                                         if(entity.hasTarget()) {
                                             ignored.push(entity.target);
+                                            
+                                            // also ignore other attackers of the target entity
+                                            entity.target.forEachAttacker(function(attacker) {
+                                                ignored.push(attacker);
+                                            });
                                         }
-                                
+                                        
                                         return self.findPath(entity, x, y, ignored);
                                     });
 
@@ -1821,7 +1826,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var mouse = this.getMouseGridPosition(),
                 x = mouse.x,
                 y = mouse.y;
-            
+
             if(this.player && !this.renderer.mobile && !this.renderer.tablet) {
                 this.hoveringCollidingTile = this.map.isColliding(x, y);
                 this.hoveringPlateauTile = this.player.isOnPlateau ? !this.map.isPlateau(x, y) : this.map.isPlateau(x, y);
@@ -1892,22 +1897,86 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         	    }
         	}
         },
+        
+        isMobOnSameTile: function(mob, x, y) {
+            var X = x || mob.gridX,
+                Y = y || mob.gridY,
+                list = this.entityGrid[Y][X],
+                result = false;
+            
+            _.each(list, function(entity) {
+                if(entity instanceof Mob && entity.id !== mob.id) {
+                    result = true;
+                }
+            });
+            return result;
+        },
+        
+        getFreeAdjacentNonDiagonalPosition: function(entity) {
+            var self = this,
+                result = null;
+            
+            entity.forEachAdjacentNonDiagonalPosition(function(x, y, orientation) {
+                if(!result && !self.map.isColliding(x, y) && !self.isMobAt(x, y)) {
+                    result = {x: x, y: y, o: orientation};
+                }
+            });
+            return result;
+        },
     
         /**
          * 
          */
         onCharacterUpdate: function(character) {
-            var time = this.currentTime;
+            var time = this.currentTime,
+                self = this;
+            
+            if(!character.isMoving() && character.previousTarget && character instanceof Mob) {
+                var t = character.previousTarget;
+                
+                if(this.getEntityById(t.id)) { // does it still exist?
+                    character.previousTarget = null;
+                    this.createAttackLink(character, t);
+                    return;
+                }
+            }
         
             if(character.isAttacking()) {
+                var target = character.target,
+                    isMoving = false;
+                
+                if(target && target instanceof Warrior) {
+                    target.forEachAttacker(function(attacker) {
+                        if(attacker.isAdjacentNonDiagonal(target) && self.isMobOnSameTile(attacker)) {
+                            var pos = self.getFreeAdjacentNonDiagonalPosition(target);
+                        
+                            // avoid stacking mobs on the same tile next to a player
+                            // by making them go to adjacent tiles if they are available
+                            if(pos && !target.adjacentTiles[pos.o]) {
+                                attacker.previousTarget = target;
+                                attacker.disengage();
+                                attacker.idle();
+                                self.makeCharacterGoTo(attacker, pos.x, pos.y); 
+                                target.adjacentTiles[pos.o] = true;
+                            
+                                if(attacker.id === character.id) {
+                                    isMoving = true;
+                                }
+                            }
+                        }
+                    });
+                }
+                
                 if(character.canAttack(time)) {
-                    character.hit();
-                    if(character.id === this.playerId) {
-                        this.client.sendHit(character.target);
-                        this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
-                    }
-                    if(character.hasTarget() && character.target.id === this.playerId && !this.player.invincible) {
-                        this.client.sendHurt(character);
+                    if(!isMoving) { // don't hit target if moving to another tile
+                        character.hit();
+                        if(character.id === this.playerId) {
+                            this.client.sendHit(character.target);
+                            this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
+                        }
+                        if(character.hasTarget() && character.target.id === this.playerId && !this.player.invincible) {
+                            this.client.sendHurt(character);
+                        }
                     }
                 }
             }

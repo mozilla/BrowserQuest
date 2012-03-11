@@ -23,6 +23,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
     		this.movement = new Transition();
     		this.path = null;
     		this.newDestination = null;
+    		this.adjacentTiles = {};
 		
     		// Combat
     		this.target = null;
@@ -104,8 +105,9 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
     	    this.animate("walk", this.walkSpeed);
     	},
     
-        moveTo_: function(x, y) {
+        moveTo_: function(x, y, callback) {
             this.destination = { gridX: x, gridY: y };
+            this.adjacentTiles = {};
         
             if(this.isMoving()) {
                 this.continueTo(x, y);
@@ -326,10 +328,10 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         /**
          * Makes the character follow another one.
          */
-        follow: function(followed) {
-            if(followed) {
+        follow: function(entity) {
+            if(entity) {
                 this.followingMode = true;
-                this.moveTo_(followed.gridX, followed.gridY);
+                this.moveTo_(entity.gridX, entity.gridY);
             }
         },
     
@@ -439,14 +441,18 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
          * @param {Character} character The target character.
          */
         setTarget: function(character) {
-            if(this.target !== character) { // If it's not already set as the target
-                if(this.hasTarget()) {
-                    this.removeTarget(); // Cleanly remove the previous one
+            if(character) {
+                if(this.target !== character) { // If it's not already set as the target
+                    if(this.hasTarget()) {
+                        this.removeTarget(); // Cleanly remove the previous one
+                    }
+                    this.unconfirmedTarget = null;
+                    this.target = character;
+                } else {
+                    log.debug(character.id + " is already the target of " + this.id);
                 }
-                this.unconfirmedTarget = null;
-                this.target = character;
-            } else {
-                log.debug(character.id + " is already the target of " + this.id);
+            } else {
+                log.error("target is null");
             }
         },
     
