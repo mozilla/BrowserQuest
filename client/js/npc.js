@@ -134,6 +134,21 @@ define(['character'], function(Character) {
             'Check out <a target="_blank" href="http://github.com/mozilla/BrowserQuest">the repository on Github</a>'
         ],
     
+        "beachnpc": [
+            "Don't mind me, I'm just here on vacation.",
+            "I have to say...",
+            "These giant crabs are somewhat annoying.",
+            "Could you please get rid of them for me?"
+        ],
+        
+        "desertnpc": [
+            "One does not simply walk into these mountains...",
+            "An ancient undead lord is said to dwell here.",
+            "Nobody knows exactly what he looks like...",
+            "...for none has lived to tell the tale.",
+            "It's not too late to turn around and go home, kid."
+        ],
+    
         "othernpc": [
             "lorem ipsum",
             "lorem ipsum"
