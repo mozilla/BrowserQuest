@@ -167,8 +167,19 @@ module.exports = Player = Character.extend({
                             }, 15000);
                             self.send(new Messages.HitPoints(self.maxHitPoints).serialize());
                         } else if(Types.isHealingItem(kind)) {
+                            var amount;
+                            
+                            switch(kind) {
+                                case Types.Entities.FLASK: 
+                                    amount = 40;
+                                    break;
+                                case Types.Entities.BURGER: 
+                                    amount = 100;
+                                    break;
+                            }
+                            
                             if(!self.hasFullHealth()) {
-                                self.regenHealthBy(40);
+                                self.regenHealthBy(amount);
                                 self.server.pushToPlayer(self, self.health());
                             }
                         } else if(Types.isArmor(kind) || Types.isWeapon(kind)) {
