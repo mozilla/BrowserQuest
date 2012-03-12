@@ -146,7 +146,7 @@ var Properties = {
         drops: {
             goldensword: 100
         },
-        hp: 600,
+        hp: 700,
         armor: 6,
         weapon: 7
     }
