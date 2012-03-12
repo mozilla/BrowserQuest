@@ -101,6 +101,7 @@ footer, header, hgroup, menu, nav, section {
     
     #achievements nav::selection {background:transparent;text-decoration:none;color:transparent;}
     #canvas {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;cursor:none;}
+    #bubbles {-webkit-user-select:none;}
     
     #foreground { 
        -webkit-tap-highlight-color:rgba(0,0,0,0);
