@@ -441,18 +441,14 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
          * @param {Character} character The target character.
          */
         setTarget: function(character) {
-            if(character) {
-                if(this.target !== character) { // If it's not already set as the target
-                    if(this.hasTarget()) {
-                        this.removeTarget(); // Cleanly remove the previous one
-                    }
-                    this.unconfirmedTarget = null;
-                    this.target = character;
-                } else {
-                    log.debug(character.id + " is already the target of " + this.id);
+            if(this.target !== character) { // If it's not already set as the target
+                if(this.hasTarget()) {
+                    this.removeTarget(); // Cleanly remove the previous one
                 }
-            } else {
-                log.error("target is null");
+                this.unconfirmedTarget = null;
+                this.target = character;
+            } else {
+                log.debug(character.id + " is already the target of " + this.id);
             }
         },
     

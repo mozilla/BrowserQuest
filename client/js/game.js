@@ -1132,7 +1132,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                         }
                                         
                                         entity.forEachAttacker(function(attacker) {
-                                            if(!attacker.isAdjacentNonDiagonal(entity)) {
+                                            if(!attacker.isAdjacentNonDiagonal(entity) && attacker.id !== self.playerId) {
                                                 attacker.follow(entity);
                                             }
                                         });
@@ -1176,6 +1176,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                         entity.forEachAttacker(function(attacker) {
                                             attacker.disengage();
                                         });
+                                        
+                                        if(self.player.target && self.player.target.id === entity.id) {
+                                            self.player.disengage();
+                                        }
                                     
                                         // Upon death, this entity is removed from both grids, allowing the player
                                         // to click very fast in order to loot the dropped item and not be blocked.
@@ -1470,7 +1474,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 attacker.removeTarget();
             }
             attacker.engage(target);
-            target.addAttacker(attacker);
+            
+            if(attacker.id !== this.playerId) {
+                target.addAttacker(attacker);
+            }
         },
 
         /**
