@@ -352,7 +352,9 @@ define(['jquery', 'storage'], function($, Storage) {
 
             if(this.game.started) {
                 $('#parchment').removeClass().addClass('credits');
+                
                 $('body').toggleClass('credits');
+                    
                 if(!this.game.player) {
                     $('body').toggleClass('death');
                 }
@@ -402,6 +404,7 @@ define(['jquery', 'storage'], function($, Storage) {
 
         closeInGameCredits: function() {
             $('body').removeClass('credits');
+            $('#parchment').removeClass('credits');
             if(!this.game.player) {
                 $('body').addClass('death');
             }
@@ -409,6 +412,7 @@ define(['jquery', 'storage'], function($, Storage) {
         
         closeInGameAbout: function() {
             $('body').removeClass('about');
+            $('#parchment').removeClass('about');
             if(!this.game.player) {
                 $('body').addClass('death');
             }

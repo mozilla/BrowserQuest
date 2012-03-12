@@ -21,15 +21,6 @@ define(['jquery', 'app'], function($, App) {
                     app.toggleAbout();
                 }
             });
-            
-            $('#credits').click(function(e) {
-                    app.toggleCredits();
-                    e.stopPropagation();
-            });
-            
-            $('#about').click(function() {
-                    app.toggleAbout();
-            });
 	
         	$('.barbutton').click(function() {
         	    $(this).toggleClass('active');
@@ -235,13 +226,12 @@ define(['jquery', 'app'], function($, App) {
 
             $('body').unbind('click');
             $('body').click(function(event) {
-                if(game.started && !game.renderer.mobile && game.player) {
-                    game.click();
-                }
+                var hasClosedParchment = false;
                 
                 if($('#parchment').hasClass('credits')) {
                     if(game.started) {
                         app.closeInGameCredits();
+                        hasClosedParchment = true;
                     } else {
                         app.toggleCredits();
                     }
@@ -250,9 +240,14 @@ define(['jquery', 'app'], function($, App) {
                 if($('#parchment').hasClass('about')) {
                     if(game.started) {
                         app.closeInGameAbout();
+                        hasClosedParchment = true;
                     } else {
                         app.toggleAbout();
                     }
+                }
+                
+                if(game.started && !game.renderer.mobile && game.player && !hasClosedParchment) {
+                    game.click();
                 }
             });
             
