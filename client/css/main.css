@@ -203,7 +203,7 @@ footer, header, hgroup, menu, nav, section {
     .intro #credits, .intro #about {top:55%;}
     #credits h1 a {color:#fcda5c;text-decoration:none;}
     #authors div a {display:block;color:#fff;text-decoration:none;}
-    #authors div a:hover {color:#fcda5c;}
+    #authors div a:hover, #credits h1 a:hover {color:#93C1FF;}
     #seb {clear:both;}
 
     #portrait {display:none;}
@@ -524,6 +524,7 @@ footer, header, hgroup, menu, nav, section {
         .parchment-middle {height:546px;background-position:-114px -882px;width:1038px;margin-left:-519px;}
         
         #credits h1, #about h1 {margin-top:35px;font-weight:normal;}
+        #credits h1 a {font-size:36px;}
         .game #credits h1, .game #about h1 {margin-top:52px;}
         #credits h1 span.title {max-width:300px;display:inline-block;line-height:39px;margin-top:-90px;position:relative;top:36px;}
         #authors {clear:both;margin-top:100px;}
@@ -677,6 +678,7 @@ footer, header, hgroup, menu, nav, section {
         .parchment-middle {height:364px;background-position:-76px -588px;width:692px;margin-left:-346px;}
 
         #credits h1, #about h1 {margin-top:25px;font-weight:normal;}
+        #credits h1 a {font-size:24px;}
         .game #credits h1, .game #about h1 {margin-top:40px;}
         #credits h1 span.title {max-width:200px;display:inline-block;line-height:26px;margin-top:-60px;position:relative;top:24px;}
         #authors {clear:both;margin-top:70px;}
@@ -830,6 +832,7 @@ footer, header, hgroup, menu, nav, section {
         .parchment-middle {height:364px;background-position:-76px -588px;width:692px;margin-left:-346px;}
 
         #credits h1, #about h1 {margin-top:25px;font-weight:normal;}
+        #credits h1 a {font-size:24px;}
         #credits h1 span.title {max-width:200px;display:inline-block;line-height:26px;margin-top:-60px;position:relative;top:24px;}
         #authors {clear:both;margin-top:70px;}
         #guillaume, #franck {width:47%;line-height:26px;}
@@ -975,6 +978,7 @@ footer, header, hgroup, menu, nav, section {
 		
 		/*Credits*/
         #credits, #death, #about {width:422px;height:182px;top:50%;margin-left:-211px;margin-top:-91px;font-size:10px;}
+        #credits h1 a {font-size:12px;}
         .parchment-left, .parchment-right, .parchment-middle {background-size:422px;}
         .parchment-left {width:38px;height:182px;background-position:0 -294px;}
         .parchment-right {width:38px;height:182px;background-position:-384px -294px;}
