@@ -43,6 +43,7 @@ function main(config) {
             world = _.detect(worlds, function(world) {
                 return world.playerCount < config.nb_players_per_world;
             });
+            world.updatePopulation();
             connect();
         }
     });
@@ -54,6 +55,9 @@ function main(config) {
     var onPopulationChange = function() {
         metrics.updatePlayerCounters(worlds);
         metrics.updateWorldDistribution(getWorldDistribution(worlds));
+        _.each(worlds, function(world) {
+            world.updatePopulation(metrics.totalPopulation);
+        });
     };
 
     _.each(_.range(config.nb_worlds), function(i) {

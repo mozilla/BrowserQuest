@@ -625,7 +625,6 @@ module.exports = World = cls.Class.extend({
     
     setPlayerCount: function(count) {
         this.playerCount = count;
-        this.pushBroadcast(new Messages.Population(this.playerCount));
     },
     
     incrementPlayerCount: function() {
@@ -849,5 +848,9 @@ module.exports = World = cls.Class.extend({
                 area.addToArea(mob);
             }
         });
+    },
+    
+    updatePopulation: function(totalPlayers) {
+        this.pushBroadcast(new Messages.Population(this.playerCount, totalPlayers ? totalPlayers : this.playerCount));
     }
 });

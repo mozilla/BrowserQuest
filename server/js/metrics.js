@@ -11,6 +11,7 @@ module.exports = Metrics = Class.extend({
         this.client = new memcache.Client(config.memcached_port, config.memcached_host),
         this.client.connect();
         this.isReady = false;
+        this.totalPopulation = 0;
         
         this.client.on('connect', function() {
             log.info("Metrics enabled: memcached client connected to "+config.memcached_host+":"+config.memcached_port);
@@ -45,6 +46,7 @@ module.exports = Metrics = Class.extend({
                         numServers -= 1;
                         if(numServers === 0) {
                             self.client.set('total_players', total_players);
+                            self.totalPopulation = total_players;
                         }
                     });
                 });

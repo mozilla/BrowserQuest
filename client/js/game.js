@@ -1447,9 +1447,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.audioManager.playSound("chat");
                 });
             
-                self.client.onPopulationChange(function(population) {
+                self.client.onPopulationChange(function(worldPlayers, totalPlayers) {
                     if(self.nbplayers_callback) {
-                        self.nbplayers_callback(population);
+                        self.nbplayers_callback(worldPlayers, totalPlayers);
                     }
                 });
                 

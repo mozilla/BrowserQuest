@@ -156,12 +156,14 @@ Messages.Damage = Message.extend({
 });
 
 Messages.Population = Message.extend({
-    init: function(count) {
-        this.count = count;
+    init: function(world, total) {
+        this.world = world;
+        this.total = total;
     },
     serialize: function() {
         return [Types.Messages.POPULATION,
-                this.count];
+                this.world,
+                this.total];
     }
 });
 

@@ -196,8 +196,11 @@ define(['jquery', 'app'], function($, App) {
     		    $('#hitpoints').toggleClass('invincible');
     		});
 
-    		game.onNbPlayersChange(function(population) {
-    		    $("#playercount").find("span.count").text(population);
+    		game.onNbPlayersChange(function(worldPlayers, totalPlayers) {
+    		    $("#playercount").find("span.count").text(worldPlayers);
+    		    
+    		    $("#instance-population").find("span").text(worldPlayers);
+    		    $("#world-population").find("span").text(totalPlayers);
     		});
 	
     		game.onAchievementUnlock(function(id, name, description) {
