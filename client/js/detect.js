@@ -21,4 +21,8 @@ Detect.isTablet = function(screenWidth) {
 
 Detect.isChromeOnWindows = function() {
     return Detect.userAgentContains('Chrome') && Detect.userAgentContains('Windows');
-}
+};
+
+Detect.canPlayMP3 = function() {
+    return Modernizr.audio.mp3;
+};

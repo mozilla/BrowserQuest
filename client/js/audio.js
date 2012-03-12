@@ -6,7 +6,7 @@ define(['area'], function(Area) {
             var self = this;
         
             this.enabled = true;
-            this.extension = "ogg";
+            this.extension = Detect.canPlayMP3() ? "mp3" : "ogg";
             this.sounds = {};
             this.game = game;
             this.currentMusic = null;
@@ -26,7 +26,9 @@ define(['area'], function(Area) {
             };
         
             log.info("Loading audio files...");
-            _.each(this.musicNames, function(name) { self.loadMusic(name, handleLoaded) });
+            if(!this.game.renderer.mobile) { // disable music on mobile devices
+                _.each(this.musicNames, function(name) { self.loadMusic(name, handleLoaded) });
+            }
             _.each(this.soundNames, function(name) { self.loadSound(name, handleLoaded) });
         },
     
