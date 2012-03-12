@@ -471,7 +471,9 @@ module.exports = World = cls.Class.extend({
             mob.increaseHateFor(playerId, hatePoints);
             player.addHater(mob);
             
-            this.chooseMobTarget(mob);
+            if(mob.hitPoints > 0) { // only choose a target if still alive
+                this.chooseMobTarget(mob);
+            }
         }
     },
     
