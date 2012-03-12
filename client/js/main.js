@@ -49,6 +49,14 @@ define(['jquery', 'app'], function($, App) {
         	$('#instructions').click(function() {
                 app.hideWindows();
         	});
+        	
+        	$('#playercount').click(function() {
+        	    app.togglePopulationInfo();
+        	});
+        	
+        	$('#population').click(function() {
+        	    app.togglePopulationInfo();
+        	});
 	
         	$('.clickable').click(function(event) {
                 event.stopPropagation();

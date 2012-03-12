@@ -418,6 +418,10 @@ define(['jquery', 'storage'], function($, Storage) {
             }
             $('#helpbutton').removeClass('active');
         },
+        
+        togglePopulationInfo: function() {
+            $('#population').toggleClass('visible');
+        },
 
         openPopup: function(type, url) {
             var h = $(window).height(),
