@@ -95,10 +95,24 @@ define(['jquery', 'area'], function($, Area) {
                 self = this;
 
             _.each(map.doors, function(door) {
+                var o;
+                
+                switch(door.to) {
+                    case 'u': o = Types.Orientations.UP;
+                        break;
+                    case 'd': o = Types.Orientations.DOWN;
+                        break;
+                    case 'l': o = Types.Orientations.LEFT;
+                        break;
+                    case 'r': o = Types.Orientations.RIGHT;
+                        break;
+                    default : o = Types.Orientations.DOWN;
+                }
+                
                 doors[self.GridPositionToTileIndex(door.x, door.y)] = {
                     x: door.tx,
                     y: door.ty,
-                    orientation: (door.to === 'u' ? Types.Orientations.UP : Types.Orientations.DOWN),
+                    orientation: o,
                     cameraX: door.tcx,
                     cameraY: door.tcy,
                     portal: door.p === 1,
