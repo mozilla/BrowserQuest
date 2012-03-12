@@ -233,11 +233,15 @@ define(['jquery', 'storage'], function($, Storage) {
             var getIconPath = function(spriteName) {
                     return 'img/'+ scale +'/item-' + spriteName + '.png';
                 },
-                weapon = getIconPath(this.game.player.getWeaponName()),
-                armor = getIconPath(this.game.player.getSpriteName());
+                weapon = this.game.player.getWeaponName(),
+                armor = this.game.player.getSpriteName(),
+                weaponPath = getIconPath(weapon),
+                armorPath = getIconPath(armor);
 
-            $('#weapon').css('background-image', 'url("' + weapon + '")');
-            $('#armor').css('background-image', 'url("' + armor + '")');
+            $('#weapon').css('background-image', 'url("' + weaponPath + '")');
+            if(armor !== 'firefox') {
+                $('#armor').css('background-image', 'url("' + armorPath + '")');
+            }
         },
 
         hideWindows: function() {

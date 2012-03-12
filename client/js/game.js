@@ -908,9 +908,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             self.player.loot(item);
                             self.client.sendLoot(item); // Notify the server that this item has been looted
                             self.removeItem(item);
-                            if(self.equipment_callback) {
-                                self.equipment_callback();
-                            }
                             self.showNotification(item.getLootMessage());
                         
                             if(item.type === "armor") {
@@ -1061,6 +1058,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.storage.savePlayer(self.renderer.getPlayerImage(),
                                                 self.player.getSpriteName(),
                                                 self.player.getWeaponName());
+                    }
+                    if(self.equipment_callback) {
+                        self.equipment_callback();
                     }
                 });
                 
