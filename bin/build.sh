@@ -16,7 +16,7 @@ node ../../bin/r.js -o build.js
 cd $CURDIR
 
 echo "Removing unnecessary js files from the build directory"
-find $BUILDDIR/js -type f -not \( -name "game.js" -o -name "home.js" -o -name "log.js" -o -name "require-jquery.js" -o -name "mapworker.js" -o -name "detect.js" -o -name "underscore.min.js" -o -name "text.js" \) -delete
+find $BUILDDIR/js -type f -not \( -name "game.js" -o -name "home.js" -o -name "log.js" -o -name "require-jquery.js" -o -name "modernizr.js" -o -name "css3-mediaqueries.js" -o -name "mapworker.js" -o -name "detect.js" -o -name "underscore.min.js" -o -name "text.js" \) -delete
 
 echo "Removing sprites directory"
 rm -rf $BUILDDIR/sprites
