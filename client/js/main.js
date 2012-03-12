@@ -22,8 +22,9 @@ define(['jquery', 'app'], function($, App) {
                 }
             });
             
-            $('#credits').click(function() {
+            $('#credits').click(function(e) {
                     app.toggleCredits();
+                    e.stopPropagation();
             });
             
             $('#about').click(function() {
