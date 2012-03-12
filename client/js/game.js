@@ -705,7 +705,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         connect: function(started_callback) {
             var self = this,
-                dispatcher = true; // always in dispatcher mode in the build version
+                connecting = false; // always in dispatcher mode in the build version
     
             this.client = new GameClient(this.host, this.port);
             
@@ -713,8 +713,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var config = this.app.config.local || this.app.config.dev;
             if(config) {
                 this.client.connect(config.dispatcher); // false if the client connects directly to a game server
+                connecting = true;
             }
             //>>excludeEnd("prodHost");
+            
+            //>>includeStart("prodHost", pragmas.prodHost);
+            if(!connecting) {
+                this.client.connect(true); // always use the dispatcher in production
+            }
+            //>>includeEnd("prodHost");
             
             this.client.onDispatched(function(host, port) {
                 log.debug("Dispatched to game server "+host+ ":"+port);
@@ -1933,7 +1940,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 target = character.target;
             
             if(attacker && target && target instanceof Player) {
-                if(attacker.getDistanceToEntity(target) === 0) {
+                if(!target.isMoving() && attacker.getDistanceToEntity(target) === 0) {
                     var pos;
                     
                     switch(target.orientation) {
@@ -1964,6 +1971,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     // avoid stacking mobs on the same tile next to a player
                     // by making them go to adjacent tiles if they are available
                     if(pos && !target.adjacentTiles[pos.o]) {
+                        if(this.player.target && attacker.id === this.player.target.id) {
+                            return false; // never unstack the player's target
+                        }
+                        
                         attacker.previousTarget = target;
                         attacker.disengage();
                         attacker.idle();
