@@ -624,7 +624,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             var self = this;
         
             this.loadSprites();
-            this.loadAudio();
             this.setUpdater(new Updater(this));
             this.camera = this.renderer.camera;
         
@@ -635,6 +634,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.ready = true;
                     log.debug('All sprites loaded.');
                             
+                    self.loadAudio();
+                    
                     self.initMusicAreas();
                     self.initAchievements();
                     self.initCursors();
@@ -657,7 +658,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
                     self.initPlayer();
                     self.setCursor("hand");
-            	
+                    
                     self.connect(started_callback);
                 
                     clearInterval(wait);

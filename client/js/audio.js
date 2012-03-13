@@ -11,25 +11,35 @@ define(['area'], function(Area) {
             this.game = game;
             this.currentMusic = null;
             this.areas = [];
-            this.musicNames = ["village", "beach", "forest", "desert", "cave", "lavaland", "boss"];
+            this.musicNames = ["village", "beach", "forest", "cave", "desert", "lavaland", "boss"];
             this.soundNames = ["loot", "hit1", "hit2", "hurt", "heal", "chat", "revive", "death", "firefox", "achievement", "kill1", "kill2", "noloot", "teleport", "chest", "npc", "npc-end"];
-        
-            var handleLoaded = function(path, e) {
-                if(e.type === "canplaythrough") {
-                    log.debug(path + " starts loading.");
-                } else if(e.type === "error") {
-                    log.error("Error: "+ path +" could not be loaded.");
-                    self.sounds[name] = null;
-                } else {
-                    log.info("loadSound: "+ e.type+": "+e.detail);
+            
+            var loadSoundFiles = function() {
+                var counter = _.size(self.soundNames);
+                log.info("Loading sound files...");
+                _.each(self.soundNames, function(name) { self.loadSound(name, function() {
+                        counter -= 1;
+                        if(counter === 0) {
+                            loadMusicFiles();
+                        }
+                    });
+                });
+            };
+            
+            var loadMusicFiles = function() {
+                if(!self.game.renderer.mobile) { // disable music on mobile devices
+                    log.info("Loading music files...");
+                    // Load the village music first, as players always start here
+                    self.loadMusic(self.musicNames.shift(), function() {
+                        // Then, load all the other music files
+                        _.each(self.musicNames, function(name) {
+                            self.loadMusic(name);
+                        });
+                    });
                 }
             };
         
-            log.info("Loading audio files...");
-            if(!this.game.renderer.mobile) { // disable music on mobile devices
-                _.each(this.musicNames, function(name) { self.loadMusic(name, handleLoaded) });
-            }
-            _.each(this.soundNames, function(name) { self.loadSound(name, handleLoaded) });
+            loadSoundFiles();
         },
     
         toggle: function() {
@@ -53,16 +63,18 @@ define(['area'], function(Area) {
             var path = basePath + name + "." + this.extension,
                 sound = document.createElement('audio'),
                 self = this;
-        
-            if(loaded_callback) {
-                sound.addEventListener('canplaythrough', function (e) {
-                    this.removeEventListener('canplaythrough', arguments.callee, false)
-                    loaded_callback(path, e);
-                }, false);
-                sound.addEventListener('error', function (e) {
-                    loaded_callback(path, e);
-                }, false);
-            }
+            
+            sound.addEventListener('canplaythrough', function (e) {
+                this.removeEventListener('canplaythrough', arguments.callee, false);
+                log.debug(path + " is ready to play.");
+                if(loaded_callback) {
+                    loaded_callback();
+                }
+            }, false);
+            sound.addEventListener('error', function (e) {
+                log.error("Error: "+ path +" could not be loaded.");
+                self.sounds[name] = null;
+            }, false);
         
             sound.preload = "auto";
             sound.autobuffer = true;
