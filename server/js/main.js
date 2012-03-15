@@ -10,7 +10,20 @@ function main(config) {
         _ = require('underscore'),
         server = new ws.MultiVersionWebsocketServer(config.port),
         metrics = config.metrics_enabled ? new Metrics(config) : null;
-        worlds = [];
+        worlds = [],
+        lastTotalPlayers = 0,
+        checkPopulationInterval = setInterval(function() {
+            if(metrics.isReady) {
+                metrics.getTotalPlayers(function(totalPlayers) {
+                    if(totalPlayers !== lastTotalPlayers) {
+                        lastTotalPlayers = totalPlayers;
+                        _.each(worlds, function(world) {
+                            world.updatePopulation(totalPlayers);
+                        });
+                    }
+                });
+            }
+        }, 1000);
     
     switch(config.debug_level) {
         case "error":
@@ -53,11 +66,12 @@ function main(config) {
     });
     
     var onPopulationChange = function() {
-        metrics.updatePlayerCounters(worlds);
-        metrics.updateWorldDistribution(getWorldDistribution(worlds));
-        _.each(worlds, function(world) {
-            world.updatePopulation(metrics.totalPopulation);
+        metrics.updatePlayerCounters(worlds, function(totalPlayers) {
+            _.each(worlds, function(world) {
+                world.updatePopulation(totalPlayers);
+            });
         });
+        metrics.updateWorldDistribution(getWorldDistribution(worlds));
     };
 
     _.each(_.range(config.nb_worlds), function(i) {

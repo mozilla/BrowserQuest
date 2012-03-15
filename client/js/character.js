@@ -355,7 +355,6 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         },
     
         disengage: function() {
-            log.debug(this.id + " has disengaged from the fight.");
             this.attackingMode = false;
             this.followingMode = false;
             this.removeTarget();
@@ -463,8 +462,6 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
                     this.target.removeAttacker(this);
                 }
                 this.target = null;
-            } else {
-                log.debug(this.id + " has no target");
             }
         },
     

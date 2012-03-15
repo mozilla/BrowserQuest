@@ -11,7 +11,6 @@ module.exports = Metrics = Class.extend({
         this.client = new memcache.Client(config.memcached_port, config.memcached_host),
         this.client.connect();
         this.isReady = false;
-        this.totalPopulation = 0;
         
         this.client.on('connect', function() {
             log.info("Metrics enabled: memcached client connected to "+config.memcached_host+":"+config.memcached_port);
@@ -26,7 +25,7 @@ module.exports = Metrics = Class.extend({
         this.ready_callback = callback;
     },
     
-    updatePlayerCounters: function(worlds) {
+    updatePlayerCounters: function(worlds, updatedCallback) {
         var self = this,
             config = this.config,
             numServers = _.size(config.game_servers),
@@ -45,8 +44,11 @@ module.exports = Metrics = Class.extend({
                         total_players += count;
                         numServers -= 1;
                         if(numServers === 0) {
-                            self.client.set('total_players', total_players);
-                            self.totalPopulation = total_players;
+                            self.client.set('total_players', total_players, function() {
+                                if(updatedCallback) {
+                                    updatedCallback(total_players);
+                                }
+                            });
                         }
                     });
                 });
@@ -62,6 +64,12 @@ module.exports = Metrics = Class.extend({
     
     getOpenWorldCount: function(callback) {
         this.client.get('world_count_'+this.config.server_name, function(error, result) {
+            callback(result);
+        });
+    },
+    
+    getTotalPlayers: function(callback) {
+        this.client.get('total_players', function(error, result) {
             callback(result);
         });
     }
