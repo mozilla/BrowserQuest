@@ -167,6 +167,7 @@ footer, header, hgroup, menu, nav, section {
     .barbutton {background:url('../img/1/barsheet.png');image-rendering:-moz-crispt-edges;position:absolute;}
     
     #chatbox {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;left:50%;z-index:5;-moz-transition:0.2s bottom ease;-webkit-transition:0.2s bottom ease;-o-transition:0.2s bottom ease;-ms-transition:0.2s bottom ease;transition:0.2s bottom ease;}
+    .bubble p {-moz-user-select:none;-webkit-user-select:none;}
     
     #instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
     #instructions.active, #achievements.active {opacity:1;pointer-events:auto;}
@@ -1222,6 +1223,7 @@ footer, header, hgroup, menu, nav, section {
         #respawn { background-position: -204px -1398px; background-size: 844px auto;}
 
         footer {display:none;}
+        #bubbles {overflow:hidden;}
 	}
 
 	@media screen and (max-width: 800px) and (orientation: portrait) {
