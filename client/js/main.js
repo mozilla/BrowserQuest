@@ -148,6 +148,10 @@ define(['jquery', 'app'], function($, App) {
             });
         
             document.addEventListener("touchstart", function() {},false);
+            
+            $('#resize-check').bind("transitionend", app.resizeUi.bind(app));
+            $('#resize-check').bind("webkitTransitionEnd", app.resizeUi.bind(app));
+            $('#resize-check').bind("oTransitionEnd", app.resizeUi.bind(app));
         
             log.info("App initialized.");
         
@@ -387,14 +391,6 @@ define(['jquery', 'app'], function($, App) {
                         $chat.focus();
                         return false;
                     }
-                }
-            });
-            
-            $(window).resize(function() {
-                if(game && game.started) {
-                    game.resize();
-                    app.initHealthBar();
-                    game.updateBars();
                 }
             });
             

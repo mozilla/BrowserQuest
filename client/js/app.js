@@ -513,6 +513,14 @@ define(['jquery', 'storage'], function($, Storage) {
 
         resetMessageTimer: function() {
             clearTimeout(this.messageTimer);
+        },
+        
+        resizeUi: function() {
+            if(this.game && this.game.started) {
+                this.game.resize();
+                this.initHealthBar();
+                this.game.updateBars();
+            }
         }
     });
 

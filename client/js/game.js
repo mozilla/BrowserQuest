@@ -2244,14 +2244,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 y = this.camera.y,
                 currentScale = this.renderer.scale,
                 newScale = this.renderer.getScaleFactor();
-        
-            if(currentScale !== newScale || this.renderer.mobile) {
+    
                 this.renderer.rescale(newScale);
                 this.camera = this.renderer.camera;
                 this.camera.setPosition(x, y);
 
                 this.renderer.renderStaticCanvases();
-            }
         },
     
         updateBars: function() {
