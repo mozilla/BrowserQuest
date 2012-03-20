@@ -129,7 +129,7 @@ footer, header, hgroup, menu, nav, section {
         
     #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, #tilt, .parchment-left, .parchment-middle, .parchment-right, .avatar, .facebook, .twitter, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background:url('../img/1/spritesheet.png');image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;}
     
-    #moztab {height:49px;width:118px;position:fixed;top:0;right:15%;background:url('../img/1/spritesheet.png') no-repeat -229px -204px;z-index:10000;display:block;}
+    #moztab {height:49px;width:118px;position:fixed;top:0;right:15%;background:url('../img/1/spritesheet.png') no-repeat -229px -204px;display:block;}
 
     #vignetting {height:100%;width:100%;position:absolute;top:0;left:0;pointer-events:none;}
     #logosparks {display:block;position:absolute;top:0;left:0;}
@@ -215,7 +215,7 @@ footer, header, hgroup, menu, nav, section {
 
     #about .link a:hover {color:#d83939;}
 
-    footer {font-family:'GraphicPixel';position:absolute;bottom:5%;left:0;text-align:center;width:100%;z-index:20000;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+    footer {font-family:'GraphicPixel';position:absolute;bottom:5%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
     .upscaled.game footer {color:#8a8a8a;}
     
     .intro footer {opacity:1;}
@@ -734,7 +734,7 @@ footer, header, hgroup, menu, nav, section {
         #resize-check {height:2px;}
 	}
 	
-	@media screen and (max-height: 850px) {
+	@media screen and (max-height: 870px) {
 
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
 	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('../img/2/barsheet.png');}
