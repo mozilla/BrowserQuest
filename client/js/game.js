@@ -2355,9 +2355,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         forEachEntityAround: function(x, y, r, callback) {
             for(var i = x-r, max_i = x+r; i <= max_i; i += 1) {
                 for(var j = y-r, max_j = y+r; j <= max_j; j += 1) {
-                    _.each(this.renderingGrid[j][i], function(entity) {
-                        callback(entity);
-                    });
+                    if(!this.map.isOutOfBounds(i, j)) {
+                        _.each(this.renderingGrid[j][i], function(entity) {
+                            callback(entity);
+                        });
+                    }
                 }
             }
         },
