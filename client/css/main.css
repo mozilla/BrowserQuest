@@ -101,7 +101,7 @@ footer, header, hgroup, menu, nav, section {
     
     #achievements nav::selection {background:transparent;text-decoration:none;color:transparent;}
     #canvas {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;cursor:none;}
-    #bubbles {-webkit-user-select:none;}
+    #bubbles {-webkit-user-select:none;-moz-user-select:none;}
     
     #foreground { 
        -webkit-tap-highlight-color:rgba(0,0,0,0);
@@ -1051,54 +1051,6 @@ footer, header, hgroup, menu, nav, section {
 	}
 
 	@media screen and (max-width: 800px) {
-		#canvasborder {padding:5px;background:none;}
-		#oarchment {position:relative;}
-		#parchment input {-moz-animation:none;-webkit-animation:none;-o-animation:none;-ms-animation:none;#eee}
-		#logosparks {display:none;}
-		
-		#foreground { cursor: default; }
-		
-		/*Death & Respawn*/
-
-		#respawn {width:204px;height:54px;margin:30px auto 0 auto;background-position: -204px -1398px;background-size:844px;}
-		#respawn:active {background-position:-408px -1398px;}
-		
-		/*GUI Bar*/
-		#healthbar {height:26px;background-position:0 -34px;width:204px;top:6px;background-size:960px;z-index:20;}
-		#hitpoints {width:0px;height:22px;top:8px;left:22px;z-index:10;position:absolute;}
-
-        #armor, #weapon {width:32px;height:32px;position:absolute;background-size:192px;background-position:-64px;}
-        #weapon {left:208px;top:2px;}
-        #armor {left:242px;top:2px;}
-
-        #notifications {display:none;}
-
-        #playercount {font-size:20px;left:270px;top:8px;width:114px;text-align:center;}
-        #playercount span {display:none;}
-        #playercount span.count {display:inline;}
-        #population {display:none;}
-
-        .barbutton {background-size:960px;height:30px;width:28px;}
-        #chatbutton {background-position:-204px -34px;top:2px;left:360px;}
-        #chatbutton:hover {background-position:-232px -34px;}
-        #chatbutton.active {background-position:-260px -34px;}
-        #achievementsbutton {background-position:-288px -34px;top:2px;left:390px;}
-        #achievementsbutton:hover, #achievementsbutton.blink {background-position:-316px -34px;}
-        #achievementsbutton.active {background-position:-344px -34px;}
-        #helpbutton {background-position:-372px -34px;top:2px;left:420px;}
-        #helpbutton:hover {background-position:-400px -34px;}
-        #helpbutton.active {background-position:-428px -34px;}
-        #mutebutton {background-position:-456px -34px;top:2px;left:450px;}
-        #mutebutton:hover {background-position:-484px -34px;}
-        #mutebutton.active {background-position:-512px -34px;}
-
-		#chatbox {height:32px;width:480px;background-size:960px;background-position:0 -64px;margin-left:-240px;bottom:2px;}
-		#chatbox.active {bottom:34px;}
-		#chatbox input {font-size:20px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:7px 0;}
-        #resize-check {height:1px;}
-	}
-
-	@media screen and (max-width: 600px) {
 
         body {border-top:0px;}
         .intro #container, .game #logo, .game #parchment {display:none;}
