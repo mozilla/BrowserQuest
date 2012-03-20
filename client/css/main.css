@@ -156,7 +156,7 @@ footer, header, hgroup, menu, nav, section {
     #notifications div {position:absolute;-moz-transition:none;-webkit-transition:none;top:0;width:100%;}
     #notifications div.top {-moz-transition:0.5s top ease;-webkit-transition:0.5s top ease;-o-transition:0.5s top ease;-ms-transition:0.5s top ease;transition:0.5s top ease;}
     #notifications div.top #message1 {opacity:0;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
-    #notifications span {display:block;text-align:center;width:100%;opacity:1;}
+    #notifications span {display:block;text-align:center;width:100%;opacity:1;-moz-user-select:none;-webkit-user-select:none;}
     
     #playercount {font-family:'GraphicPixel';color:#e3e3e3;position:absolute;}
     #playercount:hover {cursor:pointer;color:#FCE045;}
