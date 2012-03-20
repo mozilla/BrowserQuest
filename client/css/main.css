@@ -656,6 +656,7 @@ footer, header, hgroup, menu, nav, section {
         #notifications {width:392px;margin-left:-196px;font-size:16px;color:#eee;top:2px;height:30px;}
         #notifications div.top {top:-30px;}
         #notifications span {line-height:30px;height:30px;}
+        .windows #notifications span {line-height:34px;}
 
         #playercount {font-size:16px;left:717px;top:10px;width:114px;text-align:center;}
         #population {background-size:960px;right:70px;bottom:44px;width:262px;background-position:-480px -96px;font-size:14px;line-height:20px;}
@@ -711,6 +712,7 @@ footer, header, hgroup, menu, nav, section {
         #close-about {margin:153px auto 0 auto;text-align:center;clear:both;font-size:14px;color:#373737;}
         #about #game-desc {font-size:18px;text-align:center;max-width:70%;margin:25px auto;line-height:24px;}
         #about .left p, #about .right p {font-size:14px;text-align:left;line-height:20px;padding:0;margin-top:-8px;}
+        .windows #about .left p, .windows #about .right p {font-size:13px;text-align:left;line-height:20px;padding:0;margin-top:-10px;}
         #about .left {width:31%;float:left;margin-left:12%;}
         #about .right {width:37%;float:right;margin-right:12%;}
         #about .left .img {height:60px;width:54px;float:left;background-position:-708px -344px;margin-right:14px;}
@@ -813,6 +815,7 @@ footer, header, hgroup, menu, nav, section {
         #notifications {width:392px;margin-left:-196px;font-size:16px;color:#eee;top:2px;height:30px;}
         #notifications div.top {top:-30px;}
         #notifications span {line-height:30px;height:30px;}
+        .windows #notifications span {line-height:34px;}
 
         #playercount {font-size:16px;left:717px;top:10px;width:114px;text-align:center;}
         #population {background-size:960px;right:70px;bottom:44px;width:262px;background-position:-480px -96px;font-size:14px;line-height:20px;}
@@ -867,6 +870,7 @@ footer, header, hgroup, menu, nav, section {
         #close-about {margin:153px auto 0 auto;text-align:center;clear:both;font-size:14px;color:#373737;}
         #about #game-desc {font-size:18px;text-align:center;max-width:70%;margin:25px auto;line-height:24px;}
         #about .left p, #about .right p {font-size:14px;text-align:left;line-height:20px;padding:0;margin-top:-8px;}
+        .windows #about .left p, .windows #about .right p {font-size:13px;text-align:left;line-height:20px;padding:0;margin-top:-10px;}
         #about .left {width:31%;float:left;margin-left:12%;}
         #about .right {width:37%;float:right;margin-right:12%;}
         #about .left .img {height:60px;width:54px;float:left;background-position:-708px -344px;margin-right:14px;}
@@ -1242,6 +1246,6 @@ footer, header, hgroup, menu, nav, section {
     
 /* Workarounds for chrome windows bugs */
 
-    .chromewin #parchment, .chromewin #parchment input, .chromewin #notifications, .chromewin #instructions, .chromewin #achievements, .chromewin #achievement-notification, 
-    .chromewin #playercount, .chromewin #credits, .chromewin #loadcharacter, .chromewin #confirmation, .chromewin #death, .chromewin #error, .chromewin #about, 
-    .chromewin #parchment p, .chromewin #portrait p, .chromewin #noscript, .chromewin footer, .chromewin .bubble p, .chromewin #population {font-family:'AdvoCut';}
+    .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
+    .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, 
+    .windows #parchment p, .windows #portrait p, .windows #noscript, .windows footer, .windows .bubble p, .windows #population {font-family:'AdvoCut';}

@@ -116,7 +116,7 @@ function(Camera, Item, Character, Player, Timer) {
                 case 1:
                     fontsize = 10; break;
                 case 2:
-                    fontsize = Detect.isChromeOnWindows() ? 10 : 13; break;
+                    fontsize = Detect.isWindows() ? 10 : 13; break;
                 case 3:
                     fontsize = 20;
             }

@@ -7,9 +7,9 @@ define(['jquery', 'app'], function($, App) {
         	app = new App();
             app.center();
         
-            if(Detect.isChromeOnWindows()) {
+            if(Detect.isWindows()) {
                 // Workaround for graphical glitches on text
-                $('body').addClass('chromewin');
+                $('body').addClass('windows');
             }
         
             $('body').click(function(event) {
