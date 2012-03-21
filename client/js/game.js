@@ -750,13 +750,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     return _.include(knownIds, entity.id) || entity.id === self.player.id;
                 });
             
-                /*
-                log.debug("list ("+_.size(list)+"): "+list);
-                log.debug("entityIds ("+_.size(entityIds)+"): "+entityIds);
-                log.debug("knownIds ("+_.size(knownIds)+"): "+knownIds);
-                log.debug("obsolete ("+_.size(self.obsoleteEntities)+"): "+_.pluck(self.obsoleteEntities, 'id'));
-                log.debug("newIds ("+_.size(newIds)+"): "+newIds);*/
-            
                 // Destroy entities outside of the player's zone group
                 self.removeObsoleteEntities();
                 
@@ -889,11 +882,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 
                     self.audioManager.updateMusic();
                 });
-            
-                /*
-                self.player.onBlocked(function(entity) {
-                    log.debug("Player blocked by "+entity.id);
-                });*/
             
                 self.player.onStopPathing(function(x, y) {
                     if(self.player.hasTarget()) {
@@ -2017,7 +2005,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             this.client.sendHit(character.target);
                             this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
                         }
-                        if(character.hasTarget() && character.target.id === this.playerId && !this.player.invincible) {
+                        
+                        if(character.hasTarget() && character.target.id === this.playerId && this.player && !this.player.invincible) {
                             this.client.sendHurt(character);
                         }
                     }
