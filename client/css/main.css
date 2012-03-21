@@ -100,8 +100,10 @@ footer, header, hgroup, menu, nav, section {
 	#background, #foreground { margin:0; padding:0;}
     
     #achievements nav::selection {background:transparent;text-decoration:none;color:transparent;}
-    #canvas {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;cursor:none;}
+    #canvas {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
     #bubbles {-webkit-user-select:none;-moz-user-select:none;}
+    
+    .started #canvas {cursor:none;}
     
     #foreground { 
        -webkit-tap-highlight-color:rgba(0,0,0,0);
