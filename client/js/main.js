@@ -181,7 +181,7 @@ define(['jquery', 'app'], function($, App) {
     		});
     		
     		game.onDisconnect(function(message) {
-    		    $('#death').find('p').html(message+".<br><br>Please reload the page.");
+    		    $('#death').find('p').html(message+"<em>Please reload the page.</em>");
     		    $('#respawn').hide();
     		});
 	
