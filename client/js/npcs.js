@@ -38,6 +38,12 @@ define(['npc'], function(Npc) {
                 this._super(id, Types.Entities.VILLAGER, 1);
             }
         }),
+        
+        Coder: Npc.extend({
+            init: function(id) {
+                this._super(id, Types.Entities.CODER, 1);
+            }
+        }),
 
         Scientist: Npc.extend({
             init: function(id) {
