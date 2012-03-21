@@ -1443,7 +1443,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
                 
                 self.client.onDisconnected(function(message) {
-                    self.player.die();
+                    if(self.player) {
+                        self.player.die();
+                    }
                     if(self.disconnect_callback) {
                         self.disconnect_callback(message);
                     }
