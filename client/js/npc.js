@@ -135,9 +135,9 @@ define(['character'], function(Character) {
         ],
         
         "coder": [
-            "Welcome to BrowserQuest!",
-            "Want to see the source code?",
-            'Check out <a target="_blank" href="http://github.com/mozilla/BrowserQuest">the repository on GitHub</a>'
+            "Hi! Do you know that you can also play BrowserQuest from your tablet or mobile?",
+            "That's the beauty of HTML5!",
+            "Give it a try..."
         ],
     
         "beachnpc": [
