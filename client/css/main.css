@@ -100,7 +100,7 @@ footer, header, hgroup, menu, nav, section {
 	#background, #foreground { margin:0; padding:0;}
     
     #achievements nav::selection {background:transparent;text-decoration:none;color:transparent;}
-    #canvas, #bar-container, #bubbles, #chatbox, #canvasborder, #foreground, #background, footer, #container {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
+    #canvas, #bar-container, #bubbles, #chatbox, #canvasborder, #foreground, #background, footer, #container, #achievement-notification {-moz-user-select:none;-webkit-user-select:none;-o-user-select:none;-ms-user-select:none;}
     
     .started #canvas {cursor:none;}
     
