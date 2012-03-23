@@ -245,7 +245,7 @@ footer, header, hgroup, menu, nav, section {
 	.bubble {background:rgba(45,45,45,0.8);padding:0px 12px 0px 12px;border-radius:8px;color:rgba(255,255,255,0.8);display:inline-block;text-align:center;position:absolute;}
 	.thingy {height:10px;width:11px;background:url('../img/common/thingy.png');margin:0 auto;margin-top:-10px;top:10px;position:relative;}
     
-    #noscript {height:50px;background:#d83939;width:100%;color:#eee;font-size:20px;font-family:'GraphicPixel', arial, sans-serif;text-align:center;line-height:50px;border-bottom:1px solid #000;}
+    .alert {height:50px;background:#d83939;width:100%;color:#eee;font-size:20px;font-family:'GraphicPixel', arial, sans-serif;text-align:center;line-height:50px;border-bottom:1px solid #000;}
 
     #instructions, #achievements, #lists, #about, #credits, .ribbon, .play, .play div, .barbutton {-webkit-tap-highlight-color:transparent;}
     #nameinput::-webkit-input-placeholder  {color:#fff;}
@@ -1220,4 +1220,4 @@ footer, header, hgroup, menu, nav, section {
 
     .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
     .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, 
-    .windows #parchment p, .windows #portrait p, .windows #noscript, .windows footer, .windows .bubble p, .windows #population {font-family:'AdvoCut';}
+    .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows .bubble p, .windows #population {font-family:'AdvoCut';}

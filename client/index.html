@@ -44,7 +44,7 @@ An HTML5 mini-MMORPG by Little Workshop http://www.littleworkshop.fr
     <![endif]-->
 	<body class="intro">
 	    <noscript>
-	       <div id="noscript">
+	       <div class="alert">
 	           You need to enable JavaScript to play BrowserQuest.
 	       </div>
 	    </noscript>
@@ -337,7 +337,15 @@ An HTML5 mini-MMORPG by Little Workshop http://www.littleworkshop.fr
                 document.querySelector('body').className += ' upscaled';
             }
             
-            if(localStorage && localStorage.data) {
+            if(!Modernizr.localstorage) {
+                var alert = document.createElement("div");
+                    alert.className = 'alert';
+                    alertMsg = document.createTextNode("You need to enable cookies/localStorage to play BrowserQuest");
+                    alert.appendChild(alertMsg);
+
+                target = document.getElementById("intro");
+                document.body.insertBefore(alert, target);
+            } else if(localStorage && localStorage.data) {
                 parchment.className = "loadcharacter";
             }
         </script>

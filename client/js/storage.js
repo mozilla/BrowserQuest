@@ -31,7 +31,7 @@ define(function() {
         },
     
         hasLocalStorage: function() {
-            return window.localStorage && window.localStorage !== null;
+            return Modernizr.localstorage;
         },
     
         save: function() {
