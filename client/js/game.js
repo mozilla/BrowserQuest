@@ -1229,10 +1229,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         if(entity instanceof Item) {
                             self.removeItem(entity);
                         } else if(entity instanceof Character) {
+                            entity.forEachAttacker(function(attacker) {
+                                if(attacker.canReachTarget()) {
+                                    attacker.hit();
+                    	        }
+                            });
                             entity.die();
                         } else if(entity instanceof Chest) {
                             entity.open();
                         }
+                        
                         entity.clean();
                     }
                 });

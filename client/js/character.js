@@ -492,7 +492,14 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
          * 
          */
         canAttack: function(time) {
-            if(this.hasTarget() && this.isAdjacentNonDiagonal(this.target) && this.attackCooldown.isOver(time)) {
+            if(this.canReachTarget() && this.attackCooldown.isOver(time)) {
+                return true;
+            }
+            return false;
+        },
+        
+        canReachTarget: function() {
+            if(this.hasTarget() && this.isAdjacentNonDiagonal(this.target)) {
                 return true;
             }
             return false;
