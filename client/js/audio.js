@@ -20,7 +20,9 @@ define(['area'], function(Area) {
                 _.each(self.soundNames, function(name) { self.loadSound(name, function() {
                         counter -= 1;
                         if(counter === 0) {
-                            loadMusicFiles();
+                            if(!Detect.isSafari()) { // Disable music on Safari - See bug 738008
+                                loadMusicFiles();
+                            }
                         }
                     });
                 });
@@ -39,7 +41,11 @@ define(['area'], function(Area) {
                 }
             };
         
-            loadSoundFiles();
+            if(!(Detect.isSafari() && Detect.isWindows())) {
+                loadSoundFiles();
+            } else {
+                this.enabled = false; // Disable audio on Safari Windows
+            }
         },
     
         toggle: function() {
@@ -97,15 +103,6 @@ define(['area'], function(Area) {
             music.loop = true;
             music.addEventListener('ended', function() { music.play() }, false);
         },
-    
-        /*
-        isLoaded: function() {
-            var self = this;
-            if(_.any(this.musicNames, function(name) { return !_.include(_.keys(self.sounds), name) })) {
-                return false;
-            }
-            return true;
-        },*/
     
         getSound: function(name) {
             if(!this.sounds[name]) {

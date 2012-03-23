@@ -30,3 +30,7 @@ Detect.isChromeOnWindows = function() {
 Detect.canPlayMP3 = function() {
     return Modernizr.audio.mp3;
 };
+
+Detect.isSafari = function() {
+    return Detect.userAgentContains('Safari') && !Detect.userAgentContains('Chrome');
+};
