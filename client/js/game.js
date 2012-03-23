@@ -448,7 +448,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
     
         removeItem: function(item) {
             if(item) {
-                this.itemGrid[item.gridY][item.gridX] = null;
+                this.removeFromItemGrid(item, item.gridX, item.gridY);
                 this.removeFromRenderingGrid(item, item.gridX, item.gridY);
                 delete this.entities[item.id];
             } else {
@@ -494,7 +494,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             for(var i=0; i < this.map.height; i += 1) {
                 this.itemGrid[i] = [];
                 for(var j=0; j < this.map.width; j += 1) {
-                    this.itemGrid[i][j] = null;
+                    this.itemGrid[i][j] = {};
                 }
             }
             log.info("Initialized the item grid.");
@@ -536,6 +536,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         removeFromEntityGrid: function(entity, x, y) {
             if(this.entityGrid[y][x][entity.id]) {
                 delete this.entityGrid[y][x][entity.id];
+            }
+        },
+        
+        removeFromItemGrid: function(item, x, y) {
+            if(item && this.itemGrid[y][x][item.id]) {
+                delete this.itemGrid[y][x][item.id];
             }
         },
     
@@ -596,7 +602,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                 }
                 if(entity instanceof Item) {
-                    this.itemGrid[y][x] = entity;
+                    this.itemGrid[y][x][entity.id] = entity;
                 }
             
                 this.addToRenderingGrid(entity, x, y);
@@ -1705,11 +1711,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
             
             var entities = this.entityGrid[y][x],
-                entity;
+                entity = null;
             if(_.size(entities) > 0) {
                 entity = entities[_.keys(entities)[0]];
             } else {
-                entity = this.itemGrid[y][x];
+                entity = this.getItemAt(x, y);
             }
             return entity;
         },
@@ -1742,7 +1748,23 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(this.map.isOutOfBounds(x, y) || !this.itemGrid) {
                 return null;
             }
-            return this.itemGrid[y][x];
+            var items = this.itemGrid[y][x],
+                item = null;
+
+            if(_.size(items) > 0) {
+                // If there are potions/burgers stacked with equipment items on the same tile, always get expendable items first.
+                _.each(items, function(i) {
+                    if(Types.isExpendableItem(i.kind)) {
+                        item = i;
+                    };
+                });
+
+                // Else, get the first item of the stack
+                if(!item) {
+                    item = items[_.keys(items)[0]];
+                }
+            }
+            return item;
         },
     
         /**

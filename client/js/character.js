@@ -248,11 +248,6 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
         onStep: function(callback) {
             this.step_callback = callback;
         },
-    
-        /*
-        onBlocked: function(callback) {
-            this.blocked_callback = callback;
-        },*/
 
     	isMoving: function() {
     		return !(this.path === null);

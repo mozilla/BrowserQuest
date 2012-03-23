@@ -56,8 +56,6 @@ Types = {
         PLATEARMOR: 24,
         REDARMOR: 25,
         GOLDENARMOR: 26,
-        //PLATESHIELD: 27,
-        //PLATECLOAK: 28,
         
         // Objects
         FLASK: 35,
@@ -178,8 +176,6 @@ Types.rankedArmors = [
     Types.Entities.LEATHERARMOR,
     Types.Entities.MAILARMOR,
     Types.Entities.PLATEARMOR,
-    //Types.Entities.PLATECLOAK,
-    //Types.Entities.PLATESHIELD,
     Types.Entities.REDARMOR,
     Types.Entities.GOLDENARMOR
 ];
@@ -233,6 +229,12 @@ Types.isItem = function(kind) {
 Types.isHealingItem = function(kind) {
     return kind === Types.Entities.FLASK 
         || kind === Types.Entities.BURGER;
+};
+
+Types.isExpendableItem = function(kind) {
+    return Types.isHealingItem(kind)
+        || kind === Types.Entities.FIREPOTION
+        || kind === Types.Entities.CAKE;
 };
 
 Types.getKindFromString = function(kind) {
