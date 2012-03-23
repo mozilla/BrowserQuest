@@ -880,7 +880,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 
                     self.updatePlayerCheckpoint();
                 
-                    self.audioManager.updateMusic();
+                    if(!self.player.isDead) {
+                        self.audioManager.updateMusic();
+                    }
                 });
             
                 self.player.onStopPathing(function(x, y) {
