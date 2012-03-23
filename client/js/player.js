@@ -71,6 +71,19 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         setSpriteName: function(name) {
             this.spriteName = name;
         },
+        
+        getArmorName: function() {
+            var sprite = this.getArmorSprite();
+            return sprite.id;
+        },
+        
+        getArmorSprite: function() {
+            if(this.invincible) {
+                return this.currentArmorSprite;
+            } else {
+                return this.sprite;
+            }
+        },
     
         getWeaponName: function() {
             return this.weaponName;

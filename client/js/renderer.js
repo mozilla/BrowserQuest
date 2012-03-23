@@ -670,7 +670,7 @@ function(Camera, Item, Character, Player, Timer) {
     	        ctx = canvas.getContext('2d'),
     	        os = this.upscaledRendering ? 1 : this.scale,
     	        player = this.game.player,
-    	        sprite = player.sprite,
+    	        sprite = player.getArmorSprite(),
     	        spriteAnim = sprite.animationData["idle_down"],
     	        // character
     	        row = spriteAnim.row,

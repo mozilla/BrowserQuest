@@ -1051,11 +1051,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.player.onSwitchItem(function() {
-                    if(self.player.getSpriteName() !== "firefox") {
-                        self.storage.savePlayer(self.renderer.getPlayerImage(),
-                                                self.player.getSpriteName(),
-                                                self.player.getWeaponName());
-                    }
+                    self.storage.savePlayer(self.renderer.getPlayerImage(),
+                                            self.player.getArmorName(),
+                                            self.player.getWeaponName());
                     if(self.equipment_callback) {
                         self.equipment_callback();
                     }
