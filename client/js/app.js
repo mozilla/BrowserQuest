@@ -517,11 +517,16 @@ define(['jquery', 'storage'], function($, Storage) {
         },
         
         resizeUi: function() {
-            if(this.game && this.game.started) {
-                this.game.resize();
-                this.initHealthBar();
-                this.game.updateBars();
-            }
+            if(this.game) {
+                if(this.game.started) {
+                    this.game.resize();
+                    this.initHealthBar();
+                    this.game.updateBars();
+                } else {
+                    var newScale = this.game.renderer.getScaleFactor();
+                    this.game.renderer.rescale(newScale);
+                }
+            } 
         }
     });
 
