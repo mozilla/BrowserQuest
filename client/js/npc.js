@@ -135,7 +135,7 @@ define(['character'], function(Character) {
         ],
         
         "coder": [
-            "Hi! Do you know that you can also play BrowserQuest from your tablet or mobile?",
+            "Hi! Do you know that you can also play BrowserQuest on your tablet or mobile?",
             "That's the beauty of HTML5!",
             "Give it a try..."
         ],
