@@ -214,7 +214,7 @@ function(Camera, Item, Character, Player, Timer) {
             if(grid && this.game.debugPathing) {
                 for(var y=0; y < grid.length; y += 1) {
                     for(var x=0; x < grid[y].length; x += 1) {
-                        if(grid[y][x] === 1) {
+                        if(grid[y][x] === 1 && this.game.camera.isVisiblePosition(x, y)) {
                             this.drawCellHighlight(x, y, "rgba(50, 50, 255, 0.5)");
                         }
                     }

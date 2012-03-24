@@ -1109,40 +1109,44 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                     });
 
                                     entity.onStep(function() {
-                                        self.registerEntityDualPosition(entity);
+                                        if(!entity.isDying) {
+                                            self.registerEntityDualPosition(entity);
 
-                                        entity.forEachAttacker(function(attacker) {
-                                            if(attacker.isAdjacent(attacker.target)) {
-                                                attacker.lookAtTarget();
-                                            } else {
-                                                attacker.follow(entity);
-                                            }
-                                        });
+                                            entity.forEachAttacker(function(attacker) {
+                                                if(attacker.isAdjacent(attacker.target)) {
+                                                    attacker.lookAtTarget();
+                                                } else {
+                                                    attacker.follow(entity);
+                                                }
+                                            });
+                                        }
                                     });
 
                                     entity.onStopPathing(function(x, y) {
-                                        if(entity.hasTarget() && entity.isAdjacent(entity.target)) {
-                                            entity.lookAtTarget();
-                                        }
+                                        if(!entity.isDying) {
+                                            if(entity.hasTarget() && entity.isAdjacent(entity.target)) {
+                                                entity.lookAtTarget();
+                                            }
                                 
-                                        if(entity instanceof Player) {
-                                            var gridX = entity.destination.gridX,
-                                                gridY = entity.destination.gridY;
+                                            if(entity instanceof Player) {
+                                                var gridX = entity.destination.gridX,
+                                                    gridY = entity.destination.gridY;
 
-                                            if(self.map.isDoor(gridX, gridY)) {
-                                                var dest = self.map.getDoorDestination(gridX, gridY);
-                                                entity.setGridPosition(dest.x, dest.y);
+                                                if(self.map.isDoor(gridX, gridY)) {
+                                                    var dest = self.map.getDoorDestination(gridX, gridY);
+                                                    entity.setGridPosition(dest.x, dest.y);
+                                                }
                                             }
-                                        }
                                         
-                                        entity.forEachAttacker(function(attacker) {
-                                            if(!attacker.isAdjacentNonDiagonal(entity) && attacker.id !== self.playerId) {
-                                                attacker.follow(entity);
-                                            }
-                                        });
+                                            entity.forEachAttacker(function(attacker) {
+                                                if(!attacker.isAdjacentNonDiagonal(entity) && attacker.id !== self.playerId) {
+                                                    attacker.follow(entity);
+                                                }
+                                            });
                                 
-                                        self.unregisterEntityPosition(entity);
-                                        self.registerEntityPosition(entity);
+                                            self.unregisterEntityPosition(entity);
+                                            self.registerEntityPosition(entity);
+                                        }
                                     });
 
                                     entity.onRequestPath(function(x, y) {
@@ -1169,6 +1173,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                             self.deathpositions[entity.id] = {x: entity.gridX, y: entity.gridY};
                                         }
 
+                                        entity.isDying = true;
                                         entity.setSprite(self.sprites[entity instanceof Mobs.Rat ? "rat" : "death"]);
                                         entity.animate("death", 120, 1, function() {
                                             log.info(entity.id + " was removed");

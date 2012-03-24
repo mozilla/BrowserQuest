@@ -67,16 +67,18 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
     	animate: function(animation, speed, count, onEndCount) {
     	    var oriented = ['atk', 'walk', 'idle'];
     	        o = this.orientation;
-
-        	this.flipSpriteX = false;
-    	    this.flipSpriteY = false;
+            
+            if(!(this.currentAnimation && this.currentAnimation.name === "death")) { // don't change animation if the character is dying
+            	this.flipSpriteX = false;
+        	    this.flipSpriteY = false;
 	    
-    	    if(_.indexOf(oriented, animation) >= 0) {
-    	        animation += "_" + (o === Types.Orientations.LEFT ? "right" : Types.getOrientationAsString(o));
-    	        this.flipSpriteX = (this.orientation === Types.Orientations.LEFT) ? true : false;
-    	    }
+        	    if(_.indexOf(oriented, animation) >= 0) {
+        	        animation += "_" + (o === Types.Orientations.LEFT ? "right" : Types.getOrientationAsString(o));
+        	        this.flipSpriteX = (this.orientation === Types.Orientations.LEFT) ? true : false;
+        	    }
 
-    		this.setAnimation(animation, speed, count, onEndCount);
+        		this.setAnimation(animation, speed, count, onEndCount);
+        	}
     	},
     
         turnTo: function(orientation) {

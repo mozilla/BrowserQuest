@@ -57,8 +57,12 @@ define(function() {
         },
         
         isVisible: function(entity) {
-            if(entity.gridY >= this.gridY && entity.gridY < this.gridY + this.gridH
-            && entity.gridX >= this.gridX && entity.gridX < this.gridX + this.gridW) {
+            return this.isVisiblePosition(entity.gridX, entity.gridY);
+        },
+        
+        isVisiblePosition: function(x, y) {
+            if(y >= this.gridY && y < this.gridY + this.gridH
+            && x >= this.gridX && x < this.gridX + this.gridW) {
                 return true;
             } else {
                 return false;
