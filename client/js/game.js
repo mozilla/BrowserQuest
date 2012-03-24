@@ -985,7 +985,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             self.audioManager.playSound("teleport");
                         }
                         
-                        self.audioManager.fadeOutCurrentMusic();
+                        if(!self.player.isDead) {
+                            self.audioManager.updateMusic();
+                        }
                     }
                 
                     if(self.player.target instanceof Npc) {

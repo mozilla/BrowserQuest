@@ -150,6 +150,9 @@ define(['area'], function(Area) {
         
                 if(music) {
                     if(!this.isCurrentMusic(music)) {
+                        if(this.currentMusic) {
+                            this.fadeOutCurrentMusic();
+                        }
                         this.playMusic(music);
                     }
                 } else {
@@ -184,6 +187,7 @@ define(['area'], function(Area) {
         fadeOutMusic: function(music, ended_callback) {
             var self = this;
             if(music && !music.sound.fadingOut) {
+                this.clearFadeIn(music);
                 music.sound.fadingOut = setInterval(function() {
                     var step = 0.02;
                         volume = music.sound.volume - step;
@@ -211,8 +215,7 @@ define(['area'], function(Area) {
                         music.sound.volume = volume;
                     } else {
                         music.sound.volume = 1;
-                        clearInterval(music.sound.fadingIn);
-                        music.sound.fadingIn = null;
+                        self.clearFadeIn(music);
                     }
                 }, 30);
             }
@@ -222,6 +225,13 @@ define(['area'], function(Area) {
             if(music.sound.fadingOut) {
                 clearInterval(music.sound.fadingOut);
                 music.sound.fadingOut = null;
+            }
+        },
+        
+        clearFadeIn: function(music) {
+            if(music.sound.fadingIn) {
+                clearInterval(music.sound.fadingIn);
+                music.sound.fadingIn = null;
             }
         },
     
