@@ -211,6 +211,10 @@ define(function() {
             return result;
         },
         
+        isDiagonallyAdjacent: function(entity) {
+            return this.isAdjacent(entity) && !this.isAdjacentNonDiagonal(entity);
+        },
+        
         forEachAdjacentNonDiagonalPosition: function(callback) {
             callback(this.gridX - 1, this.gridY, Types.Orientations.LEFT);
             callback(this.gridX, this.gridY - 1, Types.Orientations.UP);

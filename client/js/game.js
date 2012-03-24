@@ -2032,7 +2032,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 
                 if(character.canAttack(time)) {
                     if(!isMoving) { // don't hit target if moving to a different tile.
+                        if(character.hasTarget() && character.getOrientationTo(character.target) !== character.orientation) {
+                            character.lookAtTarget();
+                        }
+                        
                         character.hit();
+                        
                         if(character.id === this.playerId) {
                             this.client.sendHit(character.target);
                         }
@@ -2044,6 +2049,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         if(character.hasTarget() && character.target.id === this.playerId && this.player && !this.player.invincible) {
                             this.client.sendHurt(character);
                         }
+                    }
+                } else {
+                    if(character.hasTarget()
+                    && character.isDiagonallyAdjacent(character.target)
+                    && character.target instanceof Player
+                    && !character.target.isMoving()) {
+                        character.follow(character.target);
                     }
                 }
             }
