@@ -1189,6 +1189,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                         self.removeFromEntityGrid(entity, entity.gridX, entity.gridY);
                                         self.removeFromPathingGrid(entity.gridX, entity.gridY);
                                     
+                                        if(self.camera.isVisible(entity)) {
+                                            self.audioManager.playSound("kill"+Math.floor(Math.random()*2+1));
+                                        }
+                                    
                                         self.updateCursor();
                                     });
 
@@ -1358,8 +1362,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     if(kind === Types.Entities.BOSS) {
                         self.tryUnlockingAchievement("HERO");
                     }
-                    
-                    self.audioManager.playSound("kill"+Math.floor(Math.random()*2+1));
                 });
             
                 self.client.onPlayerChangeHealth(function(points, isRegen) {
@@ -2033,6 +2035,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         character.hit();
                         if(character.id === this.playerId) {
                             this.client.sendHit(character.target);
+                        }
+                        
+                        if(character instanceof Player && this.camera.isVisible(character)) {
                             this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
                         }
                         
