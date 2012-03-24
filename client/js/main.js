@@ -11,6 +11,11 @@ define(['jquery', 'app'], function($, App) {
                 // Workaround for graphical glitches on text
                 $('body').addClass('windows');
             }
+            
+            if(Detect.isOpera()) {
+                // Fix for no pointer events
+                $('body').addClass('opera');
+            }
         
             $('body').click(function(event) {
                 if($('#parchment').hasClass('credits')) {

@@ -34,3 +34,7 @@ Detect.canPlayMP3 = function() {
 Detect.isSafari = function() {
     return Detect.userAgentContains('Safari') && !Detect.userAgentContains('Chrome');
 };
+
+Detect.isOpera = function() {
+    return Detect.userAgentContains('Opera');
+};

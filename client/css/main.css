@@ -1220,3 +1220,13 @@ footer, header, hgroup, menu, nav, section {
     .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
     .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, 
     .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows .bubble p, .windows #population {font-family:'AdvoCut';}
+
+/* Workarounds for opera's lack of pointer-events support */
+
+    .opera.intro #bubbles, .opera.intro #canvas, .opera.intro #container { z-index: -30000;}
+    .opera .credits #credits, .opera .createcharacter #createcharacter, .opera .loadcharacter #loadcharacter, .opera .confirmation #confirmation, .opera .death #death, 
+    .opera .error #error, .opera .about #about { z-index: 30000; }
+    .opera #instructions, .opera #achievements { z-index: -30000;}
+    .opera #achievements.active, .opera #instructions.active { z-index: 30000;}
+    .opera #coinsparks {display:none;}
+    .opera #death, .opera #about, .opera #credits, .opera #error, .opera #confirmation, .opera #loadcharacter { z-index: -30000; }
