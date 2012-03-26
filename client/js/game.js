@@ -1150,15 +1150,22 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                     });
 
                                     entity.onRequestPath(function(x, y) {
-                                        var ignored = [entity]; // Always ignore self
+                                        var ignored = [entity], // Always ignore self
+                                            ignoreTarget = function(target) {
+                                                ignored.push(target);
 
+                                                // also ignore other attackers of the target entity
+                                                target.forEachAttacker(function(attacker) {
+                                                    ignored.push(attacker);
+                                                });
+                                            };
+                                        
                                         if(entity.hasTarget()) {
-                                            ignored.push(entity.target);
-                                            
-                                            // also ignore other attackers of the target entity
-                                            entity.target.forEachAttacker(function(attacker) {
-                                                ignored.push(attacker);
-                                            });
+                                            ignoreTarget(entity.target);
+                                        } else if(entity.previousTarget) {
+                                            // If repositioning before attacking again, ignore previous target
+                                            // See: tryMovingToADifferentTile()
+                                            ignoreTarget(entity.previousTarget);
                                         }
                                         
                                         return self.findPath(entity, x, y, ignored);
