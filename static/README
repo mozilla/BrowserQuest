@@ -1,0 +1,7 @@
+Easily serve client side assets for dev purposes
+NOTE: you must have built the assets via bin/build.sh first
+
+Usage:
+1. node app.js
+2. run the Websockets server
+3. point your browser to lacalhost:8001
