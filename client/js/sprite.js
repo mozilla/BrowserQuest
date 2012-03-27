@@ -13,7 +13,7 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
         
         loadJSON: function(data) {
     		this.id = data.id;
-    		this.filepath = "img/" + this.scale + "/" + this.id + ".png";
+    		this.filepath = "http://cdn.mozilla.net/browserquest/img/" + this.scale + "/" + this.id + ".png";
     		this.animationData = data.animations;
     		this.width = data.width;
     		this.height = data.height;
@@ -99,69 +99,74 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
 	    
     	    canvas.width = width;
     	    canvas.height = height;
-    	    ctx.drawImage(this.image, 0, 0, width, height);
-    	    data = ctx.getImageData(0, 0, width, height).data;
-    	    finalData = ctx.getImageData(0, 0, width, height);
-    	    fdata = finalData.data;
-	    
-    	    var getIndex = function(x, y) {
-    	        return ((width * (y-1)) + x - 1) * 4;
-    	    };
-	    
-    	    var getPosition = function(i) {
-    	        var x, y;
-	        
-    	        i = (i / 4) + 1;
-    	        x = i % width;
-    	        y = ((i - x) / width) + 1;
-	        
-    	        return { x: x, y: y };
-    	    };
-	    
-    	    var hasAdjacentPixel = function(i) {
-    	        var pos = getPosition(i);
-	        
-    	        if(pos.x < width && !isBlankPixel(getIndex(pos.x + 1, pos.y))) {
-    	            return true;
-    	        }
-    	        if(pos.x > 1 && !isBlankPixel(getIndex(pos.x - 1, pos.y))) {
-        	        return true;
-    	        }
-    	        if(pos.y < height && !isBlankPixel(getIndex(pos.x, pos.y + 1))) {
-        	        return true;
-    	        }
-    	        if(pos.y > 1 && !isBlankPixel(getIndex(pos.x, pos.y - 1))) {
-        	        return true;
-    	        }
-    	        return false;
-    	    };
-	    
-    	    var isBlankPixel = function(i) {
-    	        if(i < 0 || i >= data.length) {
-    	            return true;
-    	        }
-    	        return data[i] === 0 && data[i+1] === 0 && data[i+2] === 0 && data[i+3] === 0;
-    	    };
-	    
-    	    for(var i=0; i < data.length; i += 4) {
-    	        if(isBlankPixel(i) && hasAdjacentPixel(i)) {
-    	            fdata[i] = fdata[i+1] = 255;
-    	            fdata[i+2] = 150;
-    	            fdata[i+3] = 150;
-    	        }
-    	    }
+    	    
+    	    try {
+    	        ctx.drawImage(this.image, 0, 0, width, height);
+        	    data = ctx.getImageData(0, 0, width, height).data;
+        	    finalData = ctx.getImageData(0, 0, width, height);
+        	    fdata = finalData.data;
 
-    	    finalData.data = fdata;
-    	    ctx.putImageData(finalData, 0, 0);
-	    
-    	    this.silhouetteSprite = { 
-                image: canvas,
-        	    isLoaded: true,
-        	    offsetX: this.offsetX,
-        	    offsetY: this.offsetY,
-        	    width: this.width,
-        	    height: this.height
-        	};
+        	    var getIndex = function(x, y) {
+        	        return ((width * (y-1)) + x - 1) * 4;
+        	    };
+
+        	    var getPosition = function(i) {
+        	        var x, y;
+
+        	        i = (i / 4) + 1;
+        	        x = i % width;
+        	        y = ((i - x) / width) + 1;
+
+        	        return { x: x, y: y };
+        	    };
+
+        	    var hasAdjacentPixel = function(i) {
+        	        var pos = getPosition(i);
+
+        	        if(pos.x < width && !isBlankPixel(getIndex(pos.x + 1, pos.y))) {
+        	            return true;
+        	        }
+        	        if(pos.x > 1 && !isBlankPixel(getIndex(pos.x - 1, pos.y))) {
+            	        return true;
+        	        }
+        	        if(pos.y < height && !isBlankPixel(getIndex(pos.x, pos.y + 1))) {
+            	        return true;
+        	        }
+        	        if(pos.y > 1 && !isBlankPixel(getIndex(pos.x, pos.y - 1))) {
+            	        return true;
+        	        }
+        	        return false;
+        	    };
+
+        	    var isBlankPixel = function(i) {
+        	        if(i < 0 || i >= data.length) {
+        	            return true;
+        	        }
+        	        return data[i] === 0 && data[i+1] === 0 && data[i+2] === 0 && data[i+3] === 0;
+        	    };
+
+        	    for(var i=0; i < data.length; i += 4) {
+        	        if(isBlankPixel(i) && hasAdjacentPixel(i)) {
+        	            fdata[i] = fdata[i+1] = 255;
+        	            fdata[i+2] = 150;
+        	            fdata[i+3] = 150;
+        	        }
+        	    }
+
+        	    finalData.data = fdata;
+        	    ctx.putImageData(finalData, 0, 0);
+
+        	    this.silhouetteSprite = { 
+                    image: canvas,
+            	    isLoaded: true,
+            	    offsetX: this.offsetX,
+            	    offsetY: this.offsetY,
+            	    width: this.width,
+            	    height: this.height
+            	};
+    	    } catch(e) {
+    	        this.silhouetteSprite = this;
+    	    }
     	}
     });
 
