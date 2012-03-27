@@ -11,7 +11,7 @@ The game server currently runs on nodejs v0.4.7 (but should run fine on the late
 - sanitizer
 - memcache
 
-All of them can be installed via `npm install -d`
+All of them can be installed via `npm install -d` (this will install a local copy of all the dependencies in the node_modules directory)
 
 
 Configuration
