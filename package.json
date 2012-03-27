@@ -11,5 +11,4 @@
     , "sanitizer": ">0"
     , "memcache": ">0"
   }
-  , "main": "./index.js"
 }
