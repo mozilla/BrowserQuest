@@ -9,8 +9,9 @@ The game server currently runs on nodejs v0.4.7 (but should run fine on the late
 - websocket
 - websocket-server
 - sanitizer
+- memcache
 
-All of them can be installed via `npm install [module_name]`
+All of them can be installed via `npm install -d`
 
 
 Configuration
