@@ -1559,7 +1559,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 log.debug("Teleport out of bounds: "+x+", "+y);
             }
         },
-
         /**
          * Moves the current player to a given target location.
          * @see makeCharacterGoTo
@@ -1567,7 +1566,38 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         makePlayerGoTo: function(x, y) {
             this.makeCharacterGoTo(this.player, x, y);
         },
-    
+            /**         
+         * Moves the player one space to the left, if possible
+         */     
+        makePlayerGoLeft: function() {
+                var currentX = this.player.gridX,                                                                                                                                                                   
+                        currentY = this.player.gridY;                                                                                                                                                               
+                this.makePlayerGoTo((currentX - 1), currentY);                                                                                                                                                      
+        },          
+        /**     
+         * Moves the player one space to the right, if possible                                                                                                                                                     
+         */     
+        makePlayerGoRight: function() {
+                var currentX = this.player.gridX,
+                        currentY = this.player.gridY;                                                                                                                                                               
+                this.makePlayerGoTo((currentX + 1), currentY);                                                                                                                                                      
+        },          
+        /**     
+         * Moves the player one space to the north, if possible                                                                                                                                                     
+         */                                                                                                                                                                                                         
+        makePlayerGoUp: function() {
+                var currentX = this.player.gridX,                                                                                                                                                                   
+                        currentY = this.player.gridY;                                                                                                                                                               
+                this.makePlayerGoTo(currentX, (currentY - 1));                                                                                                                                                      
+        },      
+        /**         
+         * Moves the player one space to the north, if possible                                                                                                                                                     
+         */                 
+        makePlayerGoDown: function() {                                                                                                                                                                              
+                var currentX = this.player.gridX,                                                                                                                                                                   
+                        currentY = this.player.gridY;                                                                                                                                                               
+                this.makePlayerGoTo(currentX, (currentY + 1));                                                                                                                                                      
+        },              
         /**
          * Moves the current player towards a specific item.
          * @see makeCharacterGoTo
