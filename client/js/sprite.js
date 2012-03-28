@@ -27,6 +27,7 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
         	var self = this;
 
         	this.image = new Image();
+        	this.image.crossOrigin = "Anonymous";
         	this.image.src = this.filepath;
 
         	this.image.onload = function() {
