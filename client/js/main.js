@@ -348,7 +348,7 @@ define(['jquery', 'app'], function($, App) {
                         app.showChat();
                     }
                 }
-                if (game.started)
+                if (game.started && !$('#chatbox').hasClass('active'))
                 {
                     pos = {
                         x: game.player.gridX,
