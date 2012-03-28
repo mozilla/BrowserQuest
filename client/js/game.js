@@ -114,9 +114,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         initPlayer: function() {
-            if(this.storage.hasAlreadyPlayed()) {
-                this.player.setSpriteName(this.storage.data.player.armor);
-                this.player.setWeaponName(this.storage.data.player.weapon);
+            if(this.storage.hasAlreadyPlayed() && this.storage.data.player) {
+                if(this.storage.data.player.armor && this.storage.data.player.weapon) {
+                    this.player.setSpriteName(this.storage.data.player.armor);
+                    this.player.setWeaponName(this.storage.data.player.weapon);
+                }
             }
         
         	this.player.setSprite(this.sprites[this.player.getSpriteName()]);
