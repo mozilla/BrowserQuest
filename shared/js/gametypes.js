@@ -100,10 +100,20 @@ Types = {
     },
 
     Keys: {
+        ENTER: 13,
         UP: 38,
         DOWN: 40,
         LEFT: 37,
-        RIGHT: 39
+        RIGHT: 39,
+        W: 87,
+        A: 65,
+        S: 83,
+        D: 68,
+        SPACE: 32,
+        I: 73,
+        H: 72,
+        M: 77,
+        P: 80
     }
 };
 
