@@ -25,7 +25,7 @@ module.exports = Player = Character.extend({
         this.disconnectTimeout = null;
         
         this.connection.listen(function(message) {
-            var action = parseInt(message[0]);
+            var action = parseInt(message[0], 10);
             
             log.debug("Received: "+message);
             if(!check(message)) {
