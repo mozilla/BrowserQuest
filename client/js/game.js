@@ -1616,41 +1616,20 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         /**         
-         * Moves the player one space to the left, if possible
+         * Moves the player one space, if possible
          */     
-        makePlayerGoLeft: function() {
-                var currentX = this.player.gridX,
-                        currentY = this.player.gridY;
-                this.makePlayerGoTo((currentX - 1), currentY);
-                this.player.turnTo(Types.Orientations.LEFT);
-        },          
-        /**     
-         * Moves the player one space to the right, if possible                                                                                                                                                     
-         */     
-        makePlayerGoRight: function() {
-                var currentX = this.player.gridX,
-                        currentY = this.player.gridY;
-                this.makePlayerGoTo((currentX + 1), currentY);
-                this.player.turnTo(Types.Orientations.RIGHT);
-        },          
-        /**     
-         * Moves the player one space to the north, if possible                                                                                                                                                     
-         */                                                                                                                                                                                                         
-        makePlayerGoUp: function() {
-                var currentX = this.player.gridX,
-                        currentY = this.player.gridY;
-                this.makePlayerGoTo(currentX, (currentY - 1));
-                this.player.turnTo(Types.Orientations.UP);
+        makePlayerGoKeys: function(pos, orientation) {
+            if(this.started
+            && this.player
+            && !this.isZoning()
+            && !this.isZoningTile(this.player.nextGridX, this.player.nextGridY)
+            && !this.player.isDead
+            && !this.hoveringCollidingTile
+            && !this.hoveringPlateauTile) {
+                this.makePlayerGoTo(pos.x, pos.y);
+                this.player.turnTo(orientation);
+            }
         },
-        /**         
-         * Moves the player one space to the north, if possible                                                                                                                                                     
-         */                 
-        makePlayerGoDown: function() {                                                                                                                                                                              
-                var currentX = this.player.gridX,
-                        currentY = this.player.gridY;
-                this.makePlayerGoTo(currentX, (currentY + 1));
-                this.player.turnTo(Types.Orientations.DOWN);
-        },              
         /**
          * Moves the current player towards a specific item.
          * @see makeCharacterGoTo

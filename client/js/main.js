@@ -350,22 +350,30 @@ define(['jquery', 'app'], function($, App) {
                 }
                 if (game.started)
                 {
+                    pos = {
+                        x: game.player.gridX,
+                        y: game.player.gridY
+                    };
                     switch(key) {
                         case Types.Keys.LEFT:
                         case Types.Keys.A:
-                            game.makePlayerGoLeft();
+                            pos.x -= 1;
+                            game.makePlayerGoKeys(pos, Types.Orientations.LEFT);
                             break;
                         case Types.Keys.RIGHT:
                         case Types.Keys.D:
-                            game.makePlayerGoRight();
+                            pos.x += 1;
+                            game.makePlayerGoKeys(pos, Types.Orientations.RIGHT);
                             break;
                         case Types.Keys.UP:
                         case Types.Keys.W:
-                            game.makePlayerGoUp();
+                            pos.y -= 1;
+                            game.makePlayerGoKeys(pos, Types.Orientations.UP);
                             break;
                         case Types.Keys.DOWN:
                         case Types.Keys.S:
-                            game.makePlayerGoDown();
+                            pos.y += 1;
+                            game.makePlayerGoKeys(pos, Types.Orientations.DOWN);
                             break;
                         case Types.Keys.SPACE:
                             game.makePlayerAttackNext();
