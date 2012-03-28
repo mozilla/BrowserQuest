@@ -65,7 +65,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
     	},
 	
     	animate: function(animation, speed, count, onEndCount) {
-    	    var oriented = ['atk', 'walk', 'idle'];
+    	    var oriented = ['atk', 'walk', 'idle'],
     	        o = this.orientation;
             
             if(!(this.currentAnimation && this.currentAnimation.name === "death")) { // don't change animation if the character is dying

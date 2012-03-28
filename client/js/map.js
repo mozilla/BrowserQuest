@@ -123,8 +123,8 @@ define(['jquery', 'area'], function($, Area) {
         },
 
         _loadTileset: function(filepath) {
-        	var self = this;
-    	    var tileset = new Image();
+        	var self = this,
+                tileset = new Image();
     	
     	    tileset.crossOrigin = "Anonymous";
         	tileset.src = filepath;
@@ -162,7 +162,7 @@ define(['jquery', 'area'], function($, Area) {
                     return 0;
                 }
                 return (num % w == 0) ? w - 1 : (num % w) - 1;
-            }
+            };
     
             tileNum -= 1;
             x = getX(tileNum + 1, this.width);
@@ -194,7 +194,7 @@ define(['jquery', 'area'], function($, Area) {
                 self = this;
 
             this.grid = [];
-            for(var	j, i = 0; i < this.height; i++) {
+            for(var j, i = 0; i < this.height; i++) {
                 this.grid[i] = [];
                 for(j = 0; j < this.width; j++) {
                     this.grid[i][j] = 0;
@@ -219,7 +219,7 @@ define(['jquery', 'area'], function($, Area) {
             var tileIndex = 0;
 
             this.plateauGrid = [];
-            for(var	j, i = 0; i < this.height; i++) {
+            for(var j, i = 0; i < this.height; i++) {
                 this.plateauGrid[i] = [];
                 for(j = 0; j < this.width; j++) {
                     if(_.include(this.plateau, tileIndex)) {
