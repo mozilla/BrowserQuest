@@ -97,6 +97,13 @@ Types = {
         DOWN: 2,
         LEFT: 3,
         RIGHT: 4
+    },
+
+    Keys: {
+        UP: 38,
+        DOWN: 40,
+        LEFT: 37,
+        RIGHT: 39
     }
 };
 

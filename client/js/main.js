@@ -348,6 +348,25 @@ define(['jquery', 'app'], function($, App) {
                         app.showChat();
                     }
                 }
+                if (game.started)
+                {
+                    switch(key) {
+                        case Types.Keys.LEFT:
+                            game.makePlayerGoLeft();
+                            break;
+                        case Types.Keys.RIGHT:
+                            game.makePlayerGoRight();
+                            break;
+                        case Types.Keys.UP:
+                            game.makePlayerGoDown();
+                            break;
+                        case Types.Keys.DOWN:
+                            game.makePlayerGoDown();
+                            break;
+                        default:
+                            break;
+                    }
+                }
             });
             
             $('#chatinput').keydown(function(e) {
