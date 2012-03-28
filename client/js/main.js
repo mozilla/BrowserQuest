@@ -358,22 +358,22 @@ define(['jquery', 'app'], function($, App) {
                         case Types.Keys.LEFT:
                         case Types.Keys.A:
                             pos.x -= 1;
-                            game.makePlayerGoKeys(pos, Types.Orientations.LEFT);
+                            game.keys(pos, Types.Orientations.LEFT);
                             break;
                         case Types.Keys.RIGHT:
                         case Types.Keys.D:
                             pos.x += 1;
-                            game.makePlayerGoKeys(pos, Types.Orientations.RIGHT);
+                            game.keys(pos, Types.Orientations.RIGHT);
                             break;
                         case Types.Keys.UP:
                         case Types.Keys.W:
                             pos.y -= 1;
-                            game.makePlayerGoKeys(pos, Types.Orientations.UP);
+                            game.keys(pos, Types.Orientations.UP);
                             break;
                         case Types.Keys.DOWN:
                         case Types.Keys.S:
                             pos.y += 1;
-                            game.makePlayerGoKeys(pos, Types.Orientations.DOWN);
+                            game.keys(pos, Types.Orientations.DOWN);
                             break;
                         case Types.Keys.SPACE:
                             game.makePlayerAttackNext();

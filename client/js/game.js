@@ -1615,21 +1615,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.makeCharacterGoTo(this.player, x, y);
         },
 
-        /**         
-         * Moves the player one space, if possible
-         */     
-        makePlayerGoKeys: function(pos, orientation) {
-            if(this.started
-            && this.player
-            && !this.isZoning()
-            && !this.isZoningTile(this.player.nextGridX, this.player.nextGridY)
-            && !this.player.isDead
-            && !this.hoveringCollidingTile
-            && !this.hoveringPlateauTile) {
-                this.makePlayerGoTo(pos.x, pos.y);
-                this.player.turnTo(orientation);
-            }
-        },
         /**
          * Moves the current player towards a specific item.
          * @see makeCharacterGoTo
@@ -1961,19 +1946,34 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
     
-        /**
-         * Processes game logic when the user triggers a click/touch event during the game.
-         */
-        click: function() {
-            var pos = this.getMouseGridPosition(),
-                entity;
-            
+        /**         
+         * Moves the player one space, if possible
+         */     
+        keys: function(pos, orientation) {
+            this.processInput(pos);
+            this.player.turnTo(orientation);
+        },
+
+        click: function()
+        {
+            var pos = this.getMouseGridPosition();
+
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
             } else {
                 this.previousClickPosition = pos;
             }
+
+            this.processInput(pos);
+        },
+
+        /**
+         * Processes game logic when the user triggers a click/touch event during the game.
+         */
+        processInput: function(pos) {
+            var entity;
+            
 	        
     	    if(this.started
     	    && this.player
