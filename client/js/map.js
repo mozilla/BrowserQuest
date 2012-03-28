@@ -126,6 +126,7 @@ define(['jquery', 'area'], function($, Area) {
         	var self = this;
     	    var tileset = new Image();
     	
+    	    tileset.crossOrigin = "Anonymous";
         	tileset.src = filepath;
     
             log.info("Loading tileset: "+filepath);
