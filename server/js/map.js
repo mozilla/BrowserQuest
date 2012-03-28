@@ -63,7 +63,7 @@ module.exports = Map = cls.Class.extend({
                 return 0;
             }
             return (num % w == 0) ? w - 1 : (num % w) - 1;
-        }
+        };
     
         tileNum -= 1;
         x = getX(tileNum + 1, this.width);
@@ -81,7 +81,7 @@ module.exports = Map = cls.Class.extend({
     
         if(this.isLoaded) {
             var tileIndex = 0;
-            for(var	j, i = 0; i < this.height; i++) {
+            for(var j, i = 0; i < this.height; i++) {
                 this.grid[i] = [];
                 for(j = 0; j < this.width; j++) {
                     if(_.include(this.collisions, tileIndex)) {
@@ -201,8 +201,8 @@ module.exports = Map = cls.Class.extend({
     },
     
     getRandomStartingPosition: function() {
-        var nbAreas = _.size(this.startingAreas);
-            i = Utils.randomInt(0, nbAreas-1);
+        var nbAreas = _.size(this.startingAreas),
+            i = Utils.randomInt(0, nbAreas-1),
             area = this.startingAreas[i];
         
         return area.getRandomPosition();

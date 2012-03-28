@@ -293,9 +293,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         receiveDrop: function(data) {
             var mobId = data[1],
                 id = data[2],
-                kind = data[3];
-        
-            var item = EntityFactory.createEntity(kind, id);
+                kind = data[3],
+                item = EntityFactory.createEntity(kind, id);
+
             item.wasDropped = true;
             item.playersInvolved = data[4];
         

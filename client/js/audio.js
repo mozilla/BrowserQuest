@@ -189,7 +189,7 @@ define(['area'], function(Area) {
             if(music && !music.sound.fadingOut) {
                 this.clearFadeIn(music);
                 music.sound.fadingOut = setInterval(function() {
-                    var step = 0.02;
+                    var step = 0.02,
                         volume = music.sound.volume - step;
                 
                     if(self.enabled && volume >= step) {
@@ -208,7 +208,7 @@ define(['area'], function(Area) {
             if(music && !music.sound.fadingIn) {
                 this.clearFadeOut(music);
                 music.sound.fadingIn = setInterval(function() {
-                    var step = 0.01;
+                    var step = 0.01,
                         volume = music.sound.volume + step;
 
                     if(self.enabled && volume < 1 - step) {

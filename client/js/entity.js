@@ -166,8 +166,8 @@ define(function() {
          * 
          */
         getDistanceToEntity: function(entity) {
-            var distX = Math.abs(entity.gridX - this.gridX);
-            var distY = Math.abs(entity.gridY - this.gridY);
+            var distX = Math.abs(entity.gridX - this.gridX),
+                distY = Math.abs(entity.gridY - this.gridY);
 
             return (distX > distY) ? distX : distY;
         },
