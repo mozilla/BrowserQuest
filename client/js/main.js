@@ -341,7 +341,7 @@ define(['jquery', 'app'], function($, App) {
             	var key = e.which,
                     $chat = $('#chatinput');
 
-                if(key === 13) {
+                if(key === Types.Keys.ENTER) {
                     if($('#chatbox').hasClass('active')) {
                         app.hideChat();
                     } else {
@@ -352,16 +352,35 @@ define(['jquery', 'app'], function($, App) {
                 {
                     switch(key) {
                         case Types.Keys.LEFT:
+                        case Types.Keys.A:
                             game.makePlayerGoLeft();
                             break;
                         case Types.Keys.RIGHT:
+                        case Types.Keys.D:
                             game.makePlayerGoRight();
                             break;
                         case Types.Keys.UP:
+                        case Types.Keys.W:
                             game.makePlayerGoUp();
                             break;
                         case Types.Keys.DOWN:
+                        case Types.Keys.S:
                             game.makePlayerGoDown();
+                            break;
+                        case Types.Keys.SPACE:
+                            game.makePlayerAttackNext();
+                            break;
+                        case Types.Keys.I:
+                            $('#achievementsbutton').click();
+                            break;
+                        case Types.Keys.H:
+                            $('#helpbutton').click();
+                            break;
+                        case Types.Keys.M:
+                            $('#mutebutton').click();
+                            break;
+                        case Types.Keys.P:
+                            $('#playercount').click();
                             break;
                         default:
                             break;

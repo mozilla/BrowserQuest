@@ -1561,6 +1561,52 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 log.debug("Teleport out of bounds: "+x+", "+y);
             }
         },
+
+        /**
+         *
+         */
+        makePlayerAttackNext: function()
+        {
+
+            pos = {
+                x: this.player.gridX,
+                y: this.player.gridY
+            };
+            switch(this.player.orientation)
+            {
+                case Types.Orientations.DOWN:
+                    pos.y += 1;
+                    this.makePlayerAttackTo(pos);
+                    break;
+                case Types.Orientations.UP:
+                    pos.y -= 1;
+                    this.makePlayerAttackTo(pos);
+                    break;
+                case Types.Orientations.LEFT:
+                    pos.x -= 1;
+                    this.makePlayerAttackTo(pos);
+                    break;
+                case Types.Orientations.RIGHT:
+                    pos.x += 1;
+                    this.makePlayerAttackTo(pos);
+                    break;
+
+                default:
+                    break;
+            }
+        },
+
+        /**
+         *
+         */
+        makePlayerAttackTo: function(pos)
+        {
+            entity = this.getEntityAt(pos.x, pos.y);
+            if(entity instanceof Mob) {
+                this.makePlayerAttack(entity);
+            }
+        },
+
         /**
          * Moves the current player to a given target location.
          * @see makeCharacterGoTo
@@ -1568,37 +1614,42 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         makePlayerGoTo: function(x, y) {
             this.makeCharacterGoTo(this.player, x, y);
         },
-            /**         
+
+        /**         
          * Moves the player one space to the left, if possible
          */     
         makePlayerGoLeft: function() {
-                var currentX = this.player.gridX,                                                                                                                                                                   
-                        currentY = this.player.gridY;                                                                                                                                                               
-                this.makePlayerGoTo((currentX - 1), currentY);                                                                                                                                                      
+                var currentX = this.player.gridX,
+                        currentY = this.player.gridY;
+                this.makePlayerGoTo((currentX - 1), currentY);
+                this.player.turnTo(Types.Orientations.LEFT);
         },          
         /**     
          * Moves the player one space to the right, if possible                                                                                                                                                     
          */     
         makePlayerGoRight: function() {
                 var currentX = this.player.gridX,
-                        currentY = this.player.gridY;                                                                                                                                                               
-                this.makePlayerGoTo((currentX + 1), currentY);                                                                                                                                                      
+                        currentY = this.player.gridY;
+                this.makePlayerGoTo((currentX + 1), currentY);
+                this.player.turnTo(Types.Orientations.RIGHT);
         },          
         /**     
          * Moves the player one space to the north, if possible                                                                                                                                                     
          */                                                                                                                                                                                                         
         makePlayerGoUp: function() {
-                var currentX = this.player.gridX,                                                                                                                                                                   
-                        currentY = this.player.gridY;                                                                                                                                                               
-                this.makePlayerGoTo(currentX, (currentY - 1));                                                                                                                                                      
-        },      
+                var currentX = this.player.gridX,
+                        currentY = this.player.gridY;
+                this.makePlayerGoTo(currentX, (currentY - 1));
+                this.player.turnTo(Types.Orientations.UP);
+        },
         /**         
          * Moves the player one space to the north, if possible                                                                                                                                                     
          */                 
         makePlayerGoDown: function() {                                                                                                                                                                              
-                var currentX = this.player.gridX,                                                                                                                                                                   
-                        currentY = this.player.gridY;                                                                                                                                                               
-                this.makePlayerGoTo(currentX, (currentY + 1));                                                                                                                                                      
+                var currentX = this.player.gridX,
+                        currentY = this.player.gridY;
+                this.makePlayerGoTo(currentX, (currentY + 1));
+                this.player.turnTo(Types.Orientations.DOWN);
         },              
         /**
          * Moves the current player towards a specific item.
