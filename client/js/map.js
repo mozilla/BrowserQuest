@@ -27,7 +27,7 @@ define(['jquery', 'area'], function($, Area) {
 
         _loadMap: function(useWorker) {
         	var self = this,
-        	    filepath = "maps/world_client.json";
+        	    filepath = "http://cdn.mozilla.net/browserquest/maps/world_client.json";
         	
         	if(useWorker) {
         	    log.info("Loading map with web worker.");

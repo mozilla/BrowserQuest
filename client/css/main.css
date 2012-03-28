@@ -61,11 +61,11 @@ footer, header, hgroup, menu, nav, section {
 
     @font-face {
         font-family: 'GraphicPixel';
-        src: url('../fonts/graphicpixel-webfont.eot');
-        src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
-             url('../fonts/graphicpixel-webfont.woff') format('woff'),
-             url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
-             url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+        src: url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.eot');
+        src: url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+             url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.woff') format('woff'),
+             url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.ttf') format('truetype'),
+             url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
         font-weight: normal;
         font-style: normal;
 
@@ -73,11 +73,11 @@ footer, header, hgroup, menu, nav, section {
     
     @font-face {
         font-family: 'AdvoCut';
-        src: url('../fonts/advocut-webfont.eot');
-        src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
-             url('../fonts/advocut-webfont.woff') format('woff'),
-             url('../fonts/advocut-webfont.ttf') format('truetype'),
-             url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
+        src: url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.eot');
+        src: url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
+             url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.woff') format('woff'),
+             url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.ttf') format('truetype'),
+             url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.svg#AndinaRegular') format('svg');
         font-weight: normal;
         font-style: normal;
 
