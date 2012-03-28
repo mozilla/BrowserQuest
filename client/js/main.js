@@ -324,7 +324,7 @@ define(['jquery', 'app'], function($, App) {
                             game.makePlayerGoRight();
                             break;
                         case Types.Keys.UP:
-                            game.makePlayerGoDown();
+                            game.makePlayerGoUp();
                             break;
                         case Types.Keys.DOWN:
                             game.makePlayerGoDown();
