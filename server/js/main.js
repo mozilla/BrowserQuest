@@ -13,7 +13,7 @@ function main(config) {
         worlds = [],
         lastTotalPlayers = 0,
         checkPopulationInterval = setInterval(function() {
-            if(metrics.isReady) {
+            if(metrics && metrics.isReady) {
                 metrics.getTotalPlayers(function(totalPlayers) {
                     if(totalPlayers !== lastTotalPlayers) {
                         lastTotalPlayers = totalPlayers;
@@ -44,7 +44,7 @@ function main(config) {
                 }
             };
         
-        if(config.metrics_enabled) {
+        if(metrics) {
             metrics.getOpenWorldCount(function(open_world_count) {
                 // choose the least populated world among open worlds
                 world = _.min(_.first(worlds, open_world_count), function(w) { return w.playerCount; });
@@ -78,8 +78,7 @@ function main(config) {
         var world = new WorldServer('world'+ (i+1), config.nb_players_per_world, server);
         world.run(config.map_filepath);
         worlds.push(world);
-        
-        if(config.metrics_enabled) {
+        if(metrics) {
             world.onPlayerAdded(onPopulationChange);
             world.onPlayerRemoved(onPopulationChange);
         }
