@@ -39,7 +39,7 @@ module.exports = Metrics = Class.extend({
                 // Recalculate the total number of players and set it
                 _.each(config.game_servers, function(server) {
                     self.client.get('player_count_'+server.name, function(error, result) {
-                        var count = result ? parseInt(result) : 0;
+                        var count = result ? parseInt(result, 10) : 0;
 
                         total_players += count;
                         numServers -= 1;

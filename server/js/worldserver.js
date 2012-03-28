@@ -239,7 +239,7 @@ module.exports = World = cls.Class.extend({
         if(player && (player.group in this.groups)) {
             entities = _.keys(this.groups[player.group].entities);
             entities = _.reject(entities, function(id) { return id == player.id; });
-            entities = _.map(entities, function(id) { return parseInt(id); });
+            entities = _.map(entities, function(id) { return parseInt(id, 10); });
             if(entities) {
                 this.pushToPlayer(player, new Messages.List(entities));
             }

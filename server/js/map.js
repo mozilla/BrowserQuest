@@ -110,7 +110,7 @@ module.exports = Map = cls.Class.extend({
     GroupIdToGroupPosition: function(id) {
         var posArray = id.split('-');
         
-        return pos(parseInt(posArray[0]), parseInt(posArray[1]));
+        return pos(parseInt(posArray[0], 10), parseInt(posArray[1], 10));
     },
     
     forEachGroup: function(callback) {
