@@ -1948,8 +1948,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * Moves the player one space, if possible
          */     
         keys: function(pos, orientation) {
+            oldHoveringCollidingValue = this.hoveringCollidingTile;
+            this.hoveringCollidingTile = false;
+
             this.processInput(pos);
             this.player.turnTo(orientation);
+
+            this.hoveringCollidingTile = oldHoveringCollidingValue;
         },
 
         click: function()
@@ -1971,8 +1976,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          */
         processInput: function(pos) {
             var entity;
-            
-	        
+
     	    if(this.started
     	    && this.player
     	    && !this.isZoning()
