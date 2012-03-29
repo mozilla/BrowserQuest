@@ -13,7 +13,11 @@ define(['jquery', 'animation', 'sprites'], function($, Animation, sprites) {
         
         loadJSON: function(data) {
     		this.id = data.id;
-    		this.filepath = "http://cdn.mozilla.net/browserquest/img/" + this.scale + "/" + this.id + ".png";
+    		if(this.id === "chest") { // Temporary hack to prevent CDN bug with CORS headers not being sent for chest.png
+    		    this.filepath = "img/" + this.scale + "/" + this.id + ".png";
+    		} else {
+    		    this.filepath = "http://cdn.mozilla.net/browserquest/img/" + this.scale + "/" + this.id + ".png";
+    		}
     		this.animationData = data.animations;
     		this.width = data.width;
     		this.height = data.height;
