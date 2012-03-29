@@ -1,0 +1,13 @@
+{
+  "name": "BrowserQuest",
+  "version": "0.1.0", 
+  "scripts": {"start": "node server/js/main.js"},
+  "dependencies": 
+    {"underscore": "1.x",
+     "log": "1.x",
+     "bison": "1.x",
+     "websocket": "1.x",
+     "websocket-server": "1.x",
+     "sanitizer": "0.x",
+     "memcache": "0.x"}
+}
