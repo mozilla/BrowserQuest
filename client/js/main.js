@@ -357,21 +357,25 @@ define(['jquery', 'app'], function($, App) {
                     switch(key) {
                         case Types.Keys.LEFT:
                         case Types.Keys.A:
+                        case Types.Keys.KEYPAD_4:
                             pos.x -= 1;
                             game.keys(pos, Types.Orientations.LEFT);
                             break;
                         case Types.Keys.RIGHT:
                         case Types.Keys.D:
+                        case Types.Keys.KEYPAD_6:
                             pos.x += 1;
                             game.keys(pos, Types.Orientations.RIGHT);
                             break;
                         case Types.Keys.UP:
                         case Types.Keys.W:
+                        case Types.Keys.KEYPAD_8:
                             pos.y -= 1;
                             game.keys(pos, Types.Orientations.UP);
                             break;
                         case Types.Keys.DOWN:
                         case Types.Keys.S:
+                        case Types.Keys.KEYPAD_2:
                             pos.y += 1;
                             game.keys(pos, Types.Orientations.DOWN);
                             break;
