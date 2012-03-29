@@ -113,7 +113,11 @@ Types = {
         I: 73,
         H: 72,
         M: 77,
-        P: 80
+        P: 80,
+        KEYPAD_4: 100,
+        KEYPAD_6: 102,
+        KEYPAD_8: 104,
+        KEYPAD_2: 98
     }
 };
 
