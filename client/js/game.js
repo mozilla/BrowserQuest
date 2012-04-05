@@ -791,9 +791,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
                 if(!self.storage.hasAlreadyPlayed()) {
                     self.storage.initPlayer(self.player.name);
-                    self.storage.savePlayer(self.renderer.getPlayerImage(),
-                                            self.player.getSpriteName(),
-                                            self.player.getWeaponName());
+                    self.renderer.getPlayerImage(function(playerImage) {
+                        self.storage.savePlayer(playerImage,
+                                                self.player.getSpriteName(),
+                                                self.player.getWeaponName());
+                    });
                     self.showNotification("Welcome to BrowserQuest!");
                 } else {
                     self.showNotification("Welcome back to BrowserQuest!");
@@ -1055,9 +1057,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.player.onSwitchItem(function() {
-                    self.storage.savePlayer(self.renderer.getPlayerImage(),
-                                            self.player.getArmorName(),
-                                            self.player.getWeaponName());
+                    self.renderer.getPlayerImage(function(playerImage) {
+                        self.storage.savePlayer(playerImage,
+                                                self.player.getArmorName(),
+                                                self.player.getWeaponName());
+                    });
                     if(self.equipment_callback) {
                         self.equipment_callback();
                     }
