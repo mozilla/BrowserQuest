@@ -3,5 +3,5 @@ client-build
 build.txt
 config_build.json
 config_local*
-client/audio
+client/audio/music
 .DS_Store
