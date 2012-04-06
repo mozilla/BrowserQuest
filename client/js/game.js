@@ -1459,8 +1459,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
                 self.client.onChatMessage(function(entityId, message) {
                     var entity = self.getEntityById(entityId);
-                    self.createBubble(entityId, message);
-                    self.assignBubbleTo(entity);
+                    if(!self.parseChatCommands(entity, message)) {
+                        self.createBubble(entityId, message);
+                        self.assignBubbleTo(entity);
+                    }
                     self.audioManager.playSound("chat");
                 });
             
@@ -2447,6 +2449,24 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     this.renderer.targetRect = targetRect;
                 }
             }
+        },
+
+        /**
+         * Handles special chat commands.  Return true to disable chat bubble.
+         *
+         * @param entity
+         * @param message
+         * @return boolean
+         */
+        parseChatCommands: function(entity, message) {
+            switch (message.substr(0, 3)) {
+                case '/w ':
+                    chatMessage = entity.name + ": " + message.substr(3);
+                    log.debug("/w " + chatMessage);
+                    this.showNotification(chatMessage);
+                    return true;
+            }
+            return false;
         }
     });
     
