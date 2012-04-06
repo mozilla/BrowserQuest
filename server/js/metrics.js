@@ -7,8 +7,9 @@ module.exports = Metrics = Class.extend({
         var self = this;
         
         this.config = config;
-        this.client = new require("memcache").Client(config.memcached_port, config.memcached_host),
+        this.client = new (require("memcache")).Client(config.memcached_port, config.memcached_host);
         this.client.connect();
+        
         this.isReady = false;
         
         this.client.on('connect', function() {
