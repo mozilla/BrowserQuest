@@ -13,7 +13,7 @@ function main(config) {
         worlds = [],
         lastTotalPlayers = 0,
         checkPopulationInterval = setInterval(function() {
-            if(metrics.isReady) {
+            if(metrics && metrics.isReady) {
                 metrics.getTotalPlayers(function(totalPlayers) {
                     if(totalPlayers !== lastTotalPlayers) {
                         lastTotalPlayers = totalPlayers;
