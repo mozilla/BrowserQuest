@@ -1561,13 +1561,58 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         /**
+         *
+         */
+        makePlayerAttackNext: function()
+        {
+
+            pos = {
+                x: this.player.gridX,
+                y: this.player.gridY
+            };
+            switch(this.player.orientation)
+            {
+                case Types.Orientations.DOWN:
+                    pos.y += 1;
+                    this.makePlayerAttackTo(pos);
+                    break;
+                case Types.Orientations.UP:
+                    pos.y -= 1;
+                    this.makePlayerAttackTo(pos);
+                    break;
+                case Types.Orientations.LEFT:
+                    pos.x -= 1;
+                    this.makePlayerAttackTo(pos);
+                    break;
+                case Types.Orientations.RIGHT:
+                    pos.x += 1;
+                    this.makePlayerAttackTo(pos);
+                    break;
+
+                default:
+                    break;
+            }
+        },
+
+        /**
+         *
+         */
+        makePlayerAttackTo: function(pos)
+        {
+            entity = this.getEntityAt(pos.x, pos.y);
+            if(entity instanceof Mob) {
+                this.makePlayerAttack(entity);
+            }
+        },
+
+        /**
          * Moves the current player to a given target location.
          * @see makeCharacterGoTo
          */
         makePlayerGoTo: function(x, y) {
             this.makeCharacterGoTo(this.player, x, y);
         },
-    
+
         /**
          * Moves the current player towards a specific item.
          * @see makeCharacterGoTo
@@ -1899,20 +1944,39 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
     
-        /**
-         * Processes game logic when the user triggers a click/touch event during the game.
-         */
-        click: function() {
-            var pos = this.getMouseGridPosition(),
-                entity;
-            
+        /**         
+         * Moves the player one space, if possible
+         */     
+        keys: function(pos, orientation) {
+            oldHoveringCollidingValue = this.hoveringCollidingTile;
+            this.hoveringCollidingTile = false;
+
+            this.processInput(pos);
+            this.player.turnTo(orientation);
+
+            this.hoveringCollidingTile = oldHoveringCollidingValue;
+        },
+
+        click: function()
+        {
+            var pos = this.getMouseGridPosition();
+
             if(pos.x === this.previousClickPosition.x
             && pos.y === this.previousClickPosition.y) {
                 return;
             } else {
                 this.previousClickPosition = pos;
             }
-	        
+
+            this.processInput(pos);
+        },
+
+        /**
+         * Processes game logic when the user triggers a click/touch event during the game.
+         */
+        processInput: function(pos) {
+            var entity;
+
     	    if(this.started
     	    && this.player
     	    && !this.isZoning()

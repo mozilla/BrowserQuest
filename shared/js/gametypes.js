@@ -97,6 +97,27 @@ Types = {
         DOWN: 2,
         LEFT: 3,
         RIGHT: 4
+    },
+
+    Keys: {
+        ENTER: 13,
+        UP: 38,
+        DOWN: 40,
+        LEFT: 37,
+        RIGHT: 39,
+        W: 87,
+        A: 65,
+        S: 83,
+        D: 68,
+        SPACE: 32,
+        I: 73,
+        H: 72,
+        M: 77,
+        P: 80,
+        KEYPAD_4: 100,
+        KEYPAD_6: 102,
+        KEYPAD_8: 104,
+        KEYPAD_2: 98
     }
 };
 
