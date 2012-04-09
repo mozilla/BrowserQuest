@@ -98,7 +98,7 @@ define(['area'], function(Area) {
         },
     
         loadMusic: function(name, handleLoaded) {
-            this.load("audio/music/", name, handleLoaded, 1);
+            this.load("audio/sounds/", name, handleLoaded, 1);
             var music = this.sounds[name][0];
             music.loop = true;
             music.addEventListener('ended', function() { music.play() }, false);
