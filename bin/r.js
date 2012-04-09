@@ -88,7 +88,7 @@ var requirejs, require, define;
         };
 
         exists = function (fileName) {
-            return path.existsSync(fileName);
+            return fs.existsSync(fileName);
         };
 
 
@@ -2218,7 +2218,7 @@ var requirejs, require, define;
         context.loaded[moduleName] = false;
         context.scriptCount += 1;
 
-        if (path.existsSync(url)) {
+        if (fs.existsSync(url)) {
             contents = fs.readFileSync(url, 'utf8');
 
             contents = req.makeNodeWrapper(contents);
