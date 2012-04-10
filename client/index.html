@@ -29,6 +29,10 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
         <meta property="og:description" content="Play Mozilla's BrowserQuest, an HTML5 massively multiplayer game demo powered by WebSockets!">
         <link rel="stylesheet" href="css/main.css" type="text/css">
         <link rel="stylesheet" href="css/achievements.css" type="text/css">
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+          var controller = io.connect();
+        </script>
         <script src="js/lib/modernizr.js" type="text/javascript"></script>
         <!--[if lt IE 9]>
                 <link rel="stylesheet" href="css/ie.css" type="text/css">
@@ -218,7 +222,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
 	                </h1>
 	                <ul>
 	                   <li><span class="icon"></span>Left click or tap to move, attack and pick up items.</li>
-	                   <li><span class="icon"></span>Press ENTER to chat.</li>
+	                   <li><span class="icon"></span>Press ENTER to chat, use arrow keys for movement.</li>
 	                   <li><span class="icon"></span>Your character is automatically saved as you play.</li>
 	                </ul>
 	                    <p>- click anywhere to close -</p>
