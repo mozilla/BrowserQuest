@@ -131,9 +131,8 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         drawText: function(text, x, y, centered, color, strokeColor) {
-            var ctx = this.context;
-            
-            var strokeSize;
+            var ctx = this.context,
+                strokeSize;
         
             switch(this.scale) {
                 case 1:
@@ -334,7 +333,7 @@ function(Camera, Item, Character, Player, Timer) {
                 ds = this.upscaledRendering ? this.scale : 1;
         
             if(anim && sprite) {
-                var	frame = anim.currentFrame,
+                var frame = anim.currentFrame,
                     s = this.scale,
                     x = frame.x * os,
                     y = frame.y * os,
@@ -400,7 +399,7 @@ function(Camera, Item, Character, Player, Timer) {
         
                     if(weapon) {
                         var weaponAnimData = weapon.animationData[anim.name],
-                            index = frame.index < weaponAnimData.length ? frame.index : frame.index % weaponAnimData.length;
+                            index = frame.index < weaponAnimData.length ? frame.index : frame.index % weaponAnimData.length,
                             wx = weapon.width * index * os,
                             wy = weapon.height * anim.row * os,
                             ww = weapon.width * os,
@@ -468,7 +467,7 @@ function(Camera, Item, Character, Player, Timer) {
             });
             
             if(this.game.clearTarget && this.lastTargetPos) {
-                var last = this.lastTargetPos;
+                var last = this.lastTargetPos,
                     rect = this.getTargetBoundingRect(last.x, last.y);
                 
                 this.clearDirtyRect(rect);
@@ -688,7 +687,7 @@ function(Camera, Item, Character, Player, Timer) {
     	        shadow = this.game.shadows["small"],
     	        sw = shadow.width * os,
     	        sh = shadow.height * os,
-    	        ox = -sprite.offsetX * os;
+    	        ox = -sprite.offsetX * os,
     	        oy = -sprite.offsetY * os;
 	    
     	    canvas.width = w;

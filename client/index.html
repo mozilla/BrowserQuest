@@ -339,7 +339,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
             if(!Modernizr.localstorage) {
                 var alert = document.createElement("div");
                     alert.className = 'alert';
-                    alertMsg = document.createTextNode("You need to enable cookies/localStorage to play BrowserQuest");
+                var alertMsg = document.createTextNode("You need to enable cookies/localStorage to play BrowserQuest");
                     alert.appendChild(alertMsg);
 
                 target = document.getElementById("intro");

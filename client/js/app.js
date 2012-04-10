@@ -230,8 +230,8 @@ define(['jquery', 'storage'], function($, Storage) {
         },
 
         initEquipmentIcons: function() {
-            var scale = this.game.renderer.getScaleFactor();
-            var getIconPath = function(spriteName) {
+            var scale = this.game.renderer.getScaleFactor(),
+                getIconPath = function(spriteName) {
                     return 'img/'+ scale +'/item-' + spriteName + '.png';
                 },
                 weapon = this.game.player.getWeaponName(),
@@ -281,9 +281,9 @@ define(['jquery', 'storage'], function($, Storage) {
         },
 
         displayUnlockedAchievement: function(id) {
-            var $achievement = $('#achievements li.achievement' + id);
+            var $achievement = $('#achievements li.achievement' + id),
+                achievement = this.game.getAchievementById(id);
 
-            var achievement = this.game.getAchievementById(id);
             if(achievement && achievement.hidden) {
                 this.setAchievementData($achievement, achievement.name, achievement.desc);
             }
@@ -319,7 +319,7 @@ define(['jquery', 'storage'], function($, Storage) {
                 $a.find('.twitter').attr('href', 'http://twitter.com/share?url=http%3A%2F%2Fbrowserquest.mozilla.org&text=I%20unlocked%20the%20%27'+ achievement.name +'%27%20achievement%20on%20Mozilla%27s%20%23BrowserQuest%21&related=glecollinet:Creators%20of%20BrowserQuest%2Cwhatthefranck');
                 $a.show();
                 $a.find('a').click(function() {
-                     var url = $(this).attr('href');
+                    var url = $(this).attr('href');
 
                     self.openPopup('twitter', url);
                     return false;

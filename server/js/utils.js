@@ -61,8 +61,8 @@ Utils.Mixin = function(target, source) {
 };
 
 Utils.distanceTo = function(x, y, x2, y2) {
-    var distX = Math.abs(x - x2);
-    var distY = Math.abs(y - y2);
+    var distX = Math.abs(x - x2),
+        distY = Math.abs(y - y2);
 
     return (distX > distY) ? distX : distY;
 };
