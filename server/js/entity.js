@@ -5,7 +5,7 @@ var cls = require("./lib/class"),
 
 module.exports = Entity = cls.Class.extend({
     init: function(id, type, kind, x, y) {
-        this.id = parseInt(id);
+        this.id = parseInt(id, 10);
         this.type = type;
         this.kind = kind;
         this.x = x;
@@ -18,7 +18,7 @@ module.exports = Entity = cls.Class.extend({
     
     _getBaseState: function() {
         return [
-            parseInt(this.id),
+            parseInt(this.id, 10),
             this.kind,
             this.x,
             this.y

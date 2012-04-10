@@ -21,6 +21,6 @@ Formulas.hp = function(armorLevel) {
     return hp;
 };
 
-if(!(typeof exports === 'undefined')) {
+if((typeof exports === 'undefined')) {
     module.exports = Formulas;
 }
