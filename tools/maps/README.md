@@ -11,7 +11,7 @@ Install the Tiled editor: http://www.mapeditor.org/
 
 Open the `tmx/map.tmx` file in Tiled and start editing.
 
-Note: there currently is no documentation on how to edit BrowserQuest-specific objects/layers in Tiled. Please refer to `tmx/map.tmx` as an example if you want to create your own map.
+**Note:** there currently is no documentation on how to edit BrowserQuest-specific objects/layers in Tiled. Please refer to `tmx/map.tmx` as an example if you want to create your own map.
 
 
 Using the exporter
@@ -32,9 +32,7 @@ Note: This tool was written with OSX in mind. If you are using a different OS (e
 
 1. `cd tools/maps/`
 
-2.
-- Converting the client map: `./export.py client`
-- Converting the server map: `./export.py server`
+2. `./export.py client` or `./export.py server`
 
 You must run both commands in order to export the client and server map files. There is no one-step export command for both map types yet.
 
@@ -50,6 +48,7 @@ These are both required because, depending on the browser, the game will load th
 The client map file contains data about terrain tile layers, collision cells, doors, music areas, etc.
 The server map file contains data about static entity spawning points, spawning areas, collision cells, etc.
 
+Depending on what you want to change, it's therefore not always needed to export both maps. Also, each `world_server.json` file change requires a server restart.
 
 **How the exporting process works:**
 
