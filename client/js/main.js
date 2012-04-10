@@ -4,7 +4,7 @@ define(['jquery', 'app'], function($, App) {
 
     var initApp = function() {
         $(document).ready(function() {
-        	app = new App();
+            app = new App();
             app.center();
         
             if(Detect.isWindows()) {
@@ -27,66 +27,66 @@ define(['jquery', 'app'], function($, App) {
                 }
             });
 	
-        	$('.barbutton').click(function() {
-        	    $(this).toggleClass('active');
-        	});
+            $('.barbutton').click(function() {
+                $(this).toggleClass('active');
+            });
 	
-        	$('#chatbutton').click(function() {
-        	    if($('#chatbutton').hasClass('active')) {
-        	        app.showChat();
-        	    } else {
+            $('#chatbutton').click(function() {
+                if($('#chatbutton').hasClass('active')) {
+                    app.showChat();
+                } else {
                     app.hideChat();
-        	    }
-        	});
+                }
+            });
 	
-        	$('#helpbutton').click(function() {
+            $('#helpbutton').click(function() {
                 app.toggleAbout();
-        	});
+            });
 	
-        	$('#achievementsbutton').click(function() {
+            $('#achievementsbutton').click(function() {
                 app.toggleAchievements();
                 if(app.blinkInterval) {
                     clearInterval(app.blinkInterval);
                 }
                 $(this).removeClass('blink');
-        	});
+            });
 	
-        	$('#instructions').click(function() {
+            $('#instructions').click(function() {
                 app.hideWindows();
-        	});
+            });
         	
-        	$('#playercount').click(function() {
-        	    app.togglePopulationInfo();
-        	});
+            $('#playercount').click(function() {
+                app.togglePopulationInfo();
+            });
         	
-        	$('#population').click(function() {
-        	    app.togglePopulationInfo();
-        	});
+            $('#population').click(function() {
+                app.togglePopulationInfo();
+            });
 	
-        	$('.clickable').click(function(event) {
+            $('.clickable').click(function(event) {
                 event.stopPropagation();
-        	});
+            });
 	
-        	$('#toggle-credits').click(function() {
-        	    app.toggleCredits();
-        	});
+            $('#toggle-credits').click(function() {
+                app.toggleCredits();
+            });
 	
-        	$('#create-new span').click(function() {
-        	    app.animateParchment('loadcharacter', 'confirmation');
-        	});
+            $('#create-new span').click(function() {
+                app.animateParchment('loadcharacter', 'confirmation');
+            });
 	
-        	$('.delete').click(function() {
+            $('.delete').click(function() {
                 app.storage.clear();
-        	    app.animateParchment('confirmation', 'createcharacter');
-        	});
+                app.animateParchment('confirmation', 'createcharacter');
+            });
 	
-        	$('#cancel span').click(function() {
-        	    app.animateParchment('confirmation', 'loadcharacter');
-        	});
+            $('#cancel span').click(function() {
+                app.animateParchment('confirmation', 'loadcharacter');
+            });
         	
-        	$('.ribbon').click(function() {
-        	    app.toggleAbout();
-        	});
+            $('.ribbon').click(function() {
+                app.toggleAbout();
+            });
 
             $('#nameinput').bind("keyup", function() {
                 app.toggleButton();
@@ -105,8 +105,8 @@ define(['jquery', 'app'], function($, App) {
     
             $('#next').click(function() {
                 var $achievements = $('#achievements'),
-                    $lists = $('#lists'),
-                    nbPages = $lists.children('ul').length;
+                $lists = $('#lists'),
+                nbPages = $lists.children('ul').length;
         
                 if(app.currentPage === nbPages) {
                     return false;
@@ -125,29 +125,29 @@ define(['jquery', 'app'], function($, App) {
             $('.twitter').click(function() {
                 var url = $(this).attr('href');
 
-               app.openPopup('twitter', url);
-               return false;
+                app.openPopup('twitter', url);
+                return false;
             });
 
             $('.facebook').click(function() {
                 var url = $(this).attr('href');
 
-               app.openPopup('facebook', url);
-               return false;
+                app.openPopup('facebook', url);
+                return false;
             });
         
             var data = app.storage.data;
-    		if(data.hasAlreadyPlayed) {
-    		    if(data.player.name && data.player.name !== "") {
-		            $('#playername').html(data.player.name);
-    		        $('#playerimage').attr('src', data.player.image);
-    		    }
-    		}
+            if(data.hasAlreadyPlayed) {
+                if(data.player.name && data.player.name !== "") {
+                    $('#playername').html(data.player.name);
+                    $('#playerimage').attr('src', data.player.image);
+                }
+            }
     		
-    		$('.play div').click(function(event) {
+            $('.play div').click(function(event) {
                 var nameFromInput = $('#nameinput').attr('value'),
-                    nameFromStorage = $('#playername').html(),
-                    name = nameFromInput || nameFromStorage;
+                nameFromStorage = $('#playername').html(),
+                name = nameFromInput || nameFromStorage;
                 
                 app.tryStartingGame(name);
             });
@@ -168,97 +168,97 @@ define(['jquery', 'app'], function($, App) {
         require(['game'], function(Game) {
             
             var canvas = document.getElementById("entities"),
-        	    background = document.getElementById("background"),
-        	    foreground = document.getElementById("foreground"),
-        	    input = document.getElementById("chatinput");
+            background = document.getElementById("background"),
+            foreground = document.getElementById("foreground"),
+            input = document.getElementById("chatinput");
 
-    		game = new Game(app);
-    		game.setup('#bubbles', canvas, background, foreground, input);
-    		game.setStorage(app.storage);
-    		app.setGame(game);
-    		
-    		if(app.isDesktop && app.supportsWorkers) {
-    		    game.loadMap();
-    		}
+            game = new Game(app);
+            game.setup('#bubbles', canvas, background, foreground, input);
+            game.setStorage(app.storage);
+            app.setGame(game);
+            
+            if(app.isDesktop && app.supportsWorkers) {
+                game.loadMap();
+            }
 	
-    		game.onGameStart(function() {
+            game.onGameStart(function() {
                 app.initEquipmentIcons();
-    		});
+            });
     		
-    		game.onDisconnect(function(message) {
-    		    $('#death').find('p').html(message+"<em>Please reload the page.</em>");
-    		    $('#respawn').hide();
-    		});
+            game.onDisconnect(function(message) {
+                $('#death').find('p').html(message+"<em>Please reload the page.</em>");
+                $('#respawn').hide();
+            });
 	
-    		game.onPlayerDeath(function() {
-    		    if($('body').hasClass('credits')) {
-    		        $('body').removeClass('credits');
-    		    }
+            game.onPlayerDeath(function() {
+                if($('body').hasClass('credits')) {
+                    $('body').removeClass('credits');
+                }
                 $('body').addClass('death');
-    		});
+            });
 	
-    		game.onPlayerEquipmentChange(function() {
-    		    app.initEquipmentIcons();
-    		});
+            game.onPlayerEquipmentChange(function() {
+                app.initEquipmentIcons();
+            });
 	
-    		game.onPlayerInvincible(function() {
-    		    $('#hitpoints').toggleClass('invincible');
-    		});
+            game.onPlayerInvincible(function() {
+                $('#hitpoints').toggleClass('invincible');
+            });
 
-    		game.onNbPlayersChange(function(worldPlayers, totalPlayers) {
-    		    var setWorldPlayersString = function(string) {
-        		        $("#instance-population").find("span:nth-child(2)").text(string);
-        		        $("#playercount").find("span:nth-child(2)").text(string);
-        		    },
-        		    setTotalPlayersString = function(string) {
-        		        $("#world-population").find("span:nth-child(2)").text(string);
-        		    };
+            game.onNbPlayersChange(function(worldPlayers, totalPlayers) {
+                var setWorldPlayersString = function(string) {
+                    $("#instance-population").find("span:nth-child(2)").text(string);
+                    $("#playercount").find("span:nth-child(2)").text(string);
+                },
+                setTotalPlayersString = function(string) {
+                    $("#world-population").find("span:nth-child(2)").text(string);
+                };
     		    
-    		    $("#playercount").find("span.count").text(worldPlayers);
+                $("#playercount").find("span.count").text(worldPlayers);
     		    
-    		    $("#instance-population").find("span").text(worldPlayers);
-    		    if(worldPlayers == 1) {
-    		        setWorldPlayersString("player");
-    		    } else {
-    		        setWorldPlayersString("players");
-    		    }
+                $("#instance-population").find("span").text(worldPlayers);
+                if(worldPlayers == 1) {
+                    setWorldPlayersString("player");
+                } else {
+                    setWorldPlayersString("players");
+                }
     		    
-    		    $("#world-population").find("span").text(totalPlayers);
-    		    if(totalPlayers == 1) {
-    		        setTotalPlayersString("player");
-    		    } else {
-    		        setTotalPlayersString("players");
-    		    }
-    		});
+                $("#world-population").find("span").text(totalPlayers);
+                if(totalPlayers == 1) {
+                    setTotalPlayersString("player");
+                } else {
+                    setTotalPlayersString("players");
+                }
+            });
 	
-    		game.onAchievementUnlock(function(id, name, description) {
-    		    app.unlockAchievement(id, name);
-    		});
+            game.onAchievementUnlock(function(id, name, description) {
+                app.unlockAchievement(id, name);
+            });
 	
-    		game.onNotification(function(message) {
-    		    app.showMessage(message);
-    		});
+            game.onNotification(function(message) {
+                app.showMessage(message);
+            });
 	
             app.initHealthBar();
 	
             $('#nameinput').attr('value', '');
-    		$('#chatbox').attr('value', '');
+            $('#chatbox').attr('value', '');
     		
-        	if(game.renderer.mobile || game.renderer.tablet) {
+            if(game.renderer.mobile || game.renderer.tablet) {
                 $('#foreground').bind('touchstart', function(event) {
                     app.center();
                     app.setMouseCoordinates(event.originalEvent.touches[0]);
-                	game.click();
-                	app.hideWindows();
+                    game.click();
+                    app.hideWindows();
                 });
             } else {
                 $('#foreground').click(function(event) {
                     app.center();
                     app.setMouseCoordinates(event);
                     if(game) {
-                	    game.click();
-                	}
-                	app.hideWindows();
+                        game.click();
+                    }
+                    app.hideWindows();
                     // $('#chatinput').focus();
                 });
             }
@@ -297,15 +297,36 @@ define(['jquery', 'app'], function($, App) {
             });
             
             $(document).mousemove(function(event) {
-            	app.setMouseCoordinates(event);
-            	if(game.started) {
-            	    game.movecursor();
-            	}
+                app.setMouseCoordinates(event);
+                if(game.started) {
+                    game.movecursor();
+                }
             });
 
+            if (controller) {
+                controller.on('msg', function (data) {
+                    if (game.started && !game.player.isMoving()) {
+                        pos = {x: game.player.gridX, y: game.player.gridY};
+                        if (data.indexOf('Left from') > -1) {
+                            pos.x -= 1;
+                            game.keys(pos, Types.Orientations.LEFT);
+                        } else if (data.indexOf('Right from') > -1) {
+                            pos.x += 1;
+                            game.keys(pos, Types.Orientations.RIGHT);
+                        } else if (data.indexOf('Up from') > -1) {
+                            pos.y -= 1;
+                            game.keys(pos, Types.Orientations.UP);
+                        } else if (data.indexOf('Down from') > -1) {
+                            pos.y += 1;
+                            game.keys(pos, Types.Orientations.DOWN);
+                        }
+                    }
+                });                       
+            }
+
             $(document).keydown(function(e) {
-            	var key = e.which,
-                    $chat = $('#chatinput');
+                var key = e.which,
+                $chat = $('#chatinput');
 
                 if(key === Types.Keys.ENTER) {
                     if($('#chatbox').hasClass('active')) {
@@ -326,49 +347,49 @@ define(['jquery', 'app'], function($, App) {
                         case Types.Keys.KEYPAD_4:
                             pos.x -= 1;
                             game.keys(pos, Types.Orientations.LEFT);
-                            break;
+                        break;
                         case Types.Keys.RIGHT:
                         case Types.Keys.D:
                         case Types.Keys.KEYPAD_6:
                             pos.x += 1;
                             game.keys(pos, Types.Orientations.RIGHT);
-                            break;
+                        break;
                         case Types.Keys.UP:
                         case Types.Keys.W:
                         case Types.Keys.KEYPAD_8:
                             pos.y -= 1;
                             game.keys(pos, Types.Orientations.UP);
-                            break;
+                        break;
                         case Types.Keys.DOWN:
                         case Types.Keys.S:
                         case Types.Keys.KEYPAD_2:
                             pos.y += 1;
                             game.keys(pos, Types.Orientations.DOWN);
-                            break;
+                        break;
                         case Types.Keys.SPACE:
                             game.makePlayerAttackNext();
-                            break;
+                        break;
                         case Types.Keys.I:
                             $('#achievementsbutton').click();
-                            break;
+                        break;
                         case Types.Keys.H:
                             $('#helpbutton').click();
-                            break;
+                        break;
                         case Types.Keys.M:
                             $('#mutebutton').click();
-                            break;
+                        break;
                         case Types.Keys.P:
                             $('#playercount').click();
-                            break;
+                        break;
                         default:
-                            break;
+                        break;
                     }
                 }
             });
             
             $('#chatinput').keydown(function(e) {
                 var key = e.which,
-                    $chat = $('#chatinput');
+                $chat = $('#chatinput');
 
                 if(key === 13) {
                     if($chat.attr('value') !== '') {
@@ -393,7 +414,7 @@ define(['jquery', 'app'], function($, App) {
 
             $('#nameinput').keypress(function(event) {
                 var $name = $('#nameinput'),
-                    name = $name.attr('value');
+                name = $name.attr('value');
 
                 if(event.keyCode === 13) {
                     if(name !== '') {
@@ -412,8 +433,8 @@ define(['jquery', 'app'], function($, App) {
             });
             
             $(document).bind("keydown", function(e) {
-            	var key = e.which,
-            	    $chat = $('#chatinput');
+                var key = e.which,
+                $chat = $('#chatinput');
 
                 if($('#chatinput:focus').size() == 0 && $('#nameinput:focus').size() == 0) {
                     if(key === 13) { // Enter
