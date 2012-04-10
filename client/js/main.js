@@ -307,11 +307,61 @@ define(['jquery', 'app'], function($, App) {
             	var key = e.which,
                     $chat = $('#chatinput');
 
-                if(key === 13) {
+                if(key === Types.Keys.ENTER) {
                     if($('#chatbox').hasClass('active')) {
                         app.hideChat();
                     } else {
                         app.showChat();
+                    }
+                }
+                if (game.started && !$('#chatbox').hasClass('active'))
+                {
+                    pos = {
+                        x: game.player.gridX,
+                        y: game.player.gridY
+                    };
+                    switch(key) {
+                        case Types.Keys.LEFT:
+                        case Types.Keys.A:
+                        case Types.Keys.KEYPAD_4:
+                            pos.x -= 1;
+                            game.keys(pos, Types.Orientations.LEFT);
+                            break;
+                        case Types.Keys.RIGHT:
+                        case Types.Keys.D:
+                        case Types.Keys.KEYPAD_6:
+                            pos.x += 1;
+                            game.keys(pos, Types.Orientations.RIGHT);
+                            break;
+                        case Types.Keys.UP:
+                        case Types.Keys.W:
+                        case Types.Keys.KEYPAD_8:
+                            pos.y -= 1;
+                            game.keys(pos, Types.Orientations.UP);
+                            break;
+                        case Types.Keys.DOWN:
+                        case Types.Keys.S:
+                        case Types.Keys.KEYPAD_2:
+                            pos.y += 1;
+                            game.keys(pos, Types.Orientations.DOWN);
+                            break;
+                        case Types.Keys.SPACE:
+                            game.makePlayerAttackNext();
+                            break;
+                        case Types.Keys.I:
+                            $('#achievementsbutton').click();
+                            break;
+                        case Types.Keys.H:
+                            $('#helpbutton').click();
+                            break;
+                        case Types.Keys.M:
+                            $('#mutebutton').click();
+                            break;
+                        case Types.Keys.P:
+                            $('#playercount').click();
+                            break;
+                        default:
+                            break;
                     }
                 }
             });
