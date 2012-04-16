@@ -1,7 +1,7 @@
 BrowserQuest
 ============
 
-BrowserQuest is a HTML5/JavaScript multiplayer game experiment.
+[BrowserQuest](http://browserquest.mozilla.org/) is a HTML5/JavaScript multiplayer game experiment.
 
 It has two major parts:
 
