@@ -1,4 +1,3 @@
-
 var Utils = {},
     sanitizer = require('sanitizer'),
     Types = require("../../shared/js/gametypes");
@@ -23,13 +22,7 @@ Utils.randomInt = function(min, max) {
 };
 
 Utils.clamp = function(min, max, value) {
-    if(value < min) {
-        return min;
-    } else if(value > max) {
-        return max;
-    } else {
-        return value;
-    }
+    return Math.min(max, Math.max(min, value));
 };
 
 Utils.randomOrientation = function() {
