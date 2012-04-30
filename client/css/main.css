@@ -228,7 +228,7 @@ footer, header, hgroup, menu, nav, section {
     #sharing .twitter {height:22px;width:32px;background-position:-770px -224px;margin:0 12px 0 0;}
     #sharing .twitter:hover {background-position:-770px -224px;}
     #sharing .gplus {height:22px;width:22px;background:url('../img/common/gplus.png');margin:0 12px 0 0px;}
-    #credits-link span {display:inline-block;margin-left:12px;}
+    #toggle-credits {display:inline-block;margin-left:12px;}
     #credits-link span:hover, #legal-link span:hover {color:#fcda5c;cursor:pointer;}
     
     #sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
@@ -256,6 +256,7 @@ footer, header, hgroup, menu, nav, section {
     #legal p {width:75%;font-size:20px;line-height:30px;}
     #legal p a {color:#2e7fdd;text-decoration:none;}
     #close-legal {font-size:20px;}
+    #toggle-legal {padding:0 10px;}
 
 /* Magic Parchment */
 
@@ -745,6 +746,8 @@ footer, header, hgroup, menu, nav, section {
         
 	    footer {font-size:16px;}
         #resize-check {height:2px;}
+        
+        #toggle-legal {padding:0 8px;}
 	}
 	
 	@media screen and (max-width: 1000px) {
@@ -1035,8 +1038,17 @@ footer, header, hgroup, menu, nav, section {
         #respawn { background-position: -204px -1398px; background-size: 844px auto; width: 204px; height: 54px;}
 		#respawn:active {background-position:-408px -1398px;}
 
-        footer {display:none;}
+        #sharing, #credits-link, .dash {display:none;}
         #bubbles {overflow:hidden;}
+        
+        footer {bottom:auto;}
+        .intro #toggle-legal {display:block;}
+        #toggle-legal {display:none;position:absolute;top:260px;left:50%;width:200px;margin-left:-100px;z-index:9000;height:30px;}
+        .returning #toggle-legal {top:300px;}
+        #close-legal {display:none;}
+        
+        #legal-link span:hover {color:#C6C0A3;}
+        #legal p {font-size:12px;width:80%;line-height:14px;}
 	}
 
 	@media screen and (max-width: 800px) and (orientation: portrait) {
@@ -1048,6 +1060,8 @@ footer, header, hgroup, menu, nav, section {
         #portrait p {color:#eee;font-family:'GraphicPixel', sans-serif;font-size:20px;text-align:center;}
         
         #tilt {height:120px;width:132px;background-position:-710px -82px;background-size:844px;margin:25px auto 0 auto;}
+        
+        #toggle-legal {display:none;}
     }
     
     @media screen and (max-width: 640px) and (orientation: portrait) {
