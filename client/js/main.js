@@ -82,6 +82,13 @@ define(['jquery', 'app'], function($, App) {
         	
         	$('#toggle-legal').click(function() {
         	    app.toggleScrollContent('legal');
+        	    if(game.renderer.mobile) {
+        	        if($('#parchment').hasClass('legal')) {
+        	            $(this).text('close');
+        	        } else {
+                        $(this).text('Privacy');
+        	        }
+        	    };
         	});
 	
         	$('#create-new span').click(function() {
@@ -91,6 +98,7 @@ define(['jquery', 'app'], function($, App) {
         	$('.delete').click(function() {
                 app.storage.clear();
         	    app.animateParchment('confirmation', 'createcharacter');
+        	    $('body').removeClass('returning');
         	});
 	
         	$('#cancel span').click(function() {

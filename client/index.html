@@ -316,10 +316,10 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
               <a href="http://www.facebook.com/share.php?u=http://browserquest.mozilla.org/" class="facebook"></a>
 		    </div>
 		    <div id="legal-link" class="clickable">
-		      - <span id="toggle-legal">Privacy</span>
+		      <span class="dash">&ndash;</span> <span id="toggle-legal">Privacy</span>
 		    </div>
 		    <div id="credits-link" class="clickable">
-		      – <span id="toggle-credits">Credits</span>
+		      <span class="dash">&ndash;</span> <span id="toggle-credits">Credits</span>
 		    </div>
 		</footer>
 		
@@ -361,6 +361,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                 target = document.getElementById("intro");
                 document.body.insertBefore(alert, target);
             } else if(localStorage && localStorage.data) {
+                document.body.className += " returning";
                 parchment.className = "loadcharacter";
             }
         </script>
