@@ -168,6 +168,8 @@ footer, header, hgroup, menu, nav, section {
     .barbutton {background:url('../img/1/barsheet.png');image-rendering:-moz-crispt-edges;position:absolute;}
     
     #chatbox {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;left:50%;z-index:5;-moz-transition:0.2s bottom ease;-webkit-transition:0.2s bottom ease;-o-transition:0.2s bottom ease;-ms-transition:0.2s bottom ease;transition:0.2s bottom ease;}
+    #chatinput {color:#eee;}
+    #chatinput.placeholder {color:#aaa;}
     .bubble p {-moz-user-select:none;-webkit-user-select:none;}
     
     #instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
@@ -258,7 +260,7 @@ footer, header, hgroup, menu, nav, section {
     #close-legal {font-size:20px;}
     #toggle-legal {padding:0 10px;}
     
-    form {position:relative;}
+    #createcharacter form {position:relative;}
     
     #name-tooltip {width:400px;height:30px;padding:10px 0;font-size:20px;background:#373737;position:absolute;left:50%;margin-left:-200px;color:#fff;border-radius:8px;line-height:30px;top:-40px;opacity:0;-moz-transition:0.25s opacity ease;-webkit-transition:0.25s opacity ease;-o-transition:0.25s opacity ease;-ms-transition:0.25s opacity ease;transition:0.25s opacity ease;pointer-events:none;}
     #name-tooltip:after {content:url('../img/common/arrow.png');width:28px;height:16px;position:absolute;bottom:-8px;left:50%;margin-left:-14px;}
@@ -544,7 +546,7 @@ footer, header, hgroup, menu, nav, section {
         
         #chatbox {height:48px;width:1182px;background-size:1440px;background-position:0 -96px;margin-left:-591px;bottom:18px;}
         #chatbox.active {bottom:66px;}
-		#chatbox input {font-size:20px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:16px 0;}
+		#chatbox input {font-size:20px;background:none;width:90%;border:0;margin-left:2%;padding:16px 0;}
 		
 		/*Credits*/
         #credits, #death, #about {width:1266px;height:546px;margin-left:-633px;margin-top:-273px;font-size:30px;}
@@ -707,7 +709,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#chatbox {height:32px;width:788px;background-size:960px;background-position:0 -64px;margin-left:-394px;bottom:12px;}
 		#chatbox.active {bottom:44px;}
-		#chatbox input {font-size:20px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:7px 0;}
+		#chatbox input {font-size:14px;background:none;width:90%;border:0;margin-left:2%;padding:8px 0;}
 		
 		/*Credits*/
         #credits, #death, #about {width:844px;height:364px;margin-left:-422px;margin-top:-182px;font-size:20px;}
@@ -874,7 +876,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#chatbox {height:16px;width:394px;background-size:480px;background-position:0 -32px;margin-left:-197px;bottom:6px;}
 		#chatbox.active {bottom:22px;}
-		#chatbox input {font-size:10px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:0;}
+		#chatbox input {font-size:10px;background:none;width:90%;border:0;margin-left:2%;padding:0;}
 		
 		/*Credits*/
         #credits, #death, #about {width:422px;height:182px;top:50%;margin-left:-211px;margin-top:-91px;font-size:10px;}
@@ -1033,7 +1035,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#chatbox {height:32px;width:480px;background-size:960px;background-position:0 -64px;margin-left:-240px;bottom:2px;}
 		#chatbox.active {bottom:34px;}
-		#chatbox input {font-size:20px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:0px 0;}
+		#chatbox input {font-size:14px;background:none;width:90%;border:0;margin-left:2%;padding:4px 0;}
 		
 		/*Credits*/
         .parchment-left, .upscaled .parchment-left, .parchment-middle, .upscaled .parchment-middle, .parchment-right, .upscaled .parchment-right {background:none;}
@@ -1101,7 +1103,7 @@ footer, header, hgroup, menu, nav, section {
 
     .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
     .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, .windows #legal, 
-    .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows .bubble p, .windows #population {font-family:'AdvoCut';}
+    .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows .bubble p, .windows #population, .windows #chatinput {font-family:'AdvoCut';}
 
 /* Workarounds for opera's lack of pointer-events support */
 
