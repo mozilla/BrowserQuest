@@ -19,11 +19,15 @@ define(['jquery', 'app'], function($, App) {
         
             $('body').click(function(event) {
                 if($('#parchment').hasClass('credits')) {
-                    app.toggleCredits();
+                    app.toggleScrollContent('credits');
+                }
+                
+                if($('#parchment').hasClass('legal')) {
+                    app.toggleScrollContent('legal');
                 }
                 
                 if($('#parchment').hasClass('about')) {
-                    app.toggleAbout();
+                    app.toggleScrollContent('about');
                 }
             });
 	
@@ -40,7 +44,12 @@ define(['jquery', 'app'], function($, App) {
         	});
 	
         	$('#helpbutton').click(function() {
-                app.toggleAbout();
+                if($('body').hasClass('about')) {
+                    app.closeInGameScroll('about');
+                    $('#helpbutton').removeClass('active');
+                } else {
+                    app.toggleScrollContent('about');
+                }
         	});
 	
         	$('#achievementsbutton').click(function() {
@@ -68,7 +77,11 @@ define(['jquery', 'app'], function($, App) {
         	});
 	
         	$('#toggle-credits').click(function() {
-        	    app.toggleCredits();
+        	    app.toggleScrollContent('credits');
+        	});
+        	
+        	$('#toggle-legal').click(function() {
+        	    app.toggleScrollContent('legal');
         	});
 	
         	$('#create-new span').click(function() {
@@ -85,7 +98,7 @@ define(['jquery', 'app'], function($, App) {
         	});
         	
         	$('.ribbon').click(function() {
-        	    app.toggleAbout();
+                app.toggleScrollContent('about');
         	});
 
             $('#nameinput').bind("keyup", function() {
@@ -269,19 +282,28 @@ define(['jquery', 'app'], function($, App) {
                 
                 if($('#parchment').hasClass('credits')) {
                     if(game.started) {
-                        app.closeInGameCredits();
+                        app.closeInGameScroll('credits');
                         hasClosedParchment = true;
                     } else {
-                        app.toggleCredits();
+                        app.toggleScrollContent('credits');
+                    }
+                }
+                
+                if($('#parchment').hasClass('legal')) {
+                    if(game.started) {
+                        app.closeInGameScroll('legal');
+                        hasClosedParchment = true;
+                    } else {
+                        app.toggleScrollContent('legal');
                     }
                 }
                 
                 if($('#parchment').hasClass('about')) {
                     if(game.started) {
-                        app.closeInGameAbout();
+                        app.closeInGameScroll('about');
                         hasClosedParchment = true;
                     } else {
-                        app.toggleAbout();
+                        app.toggleScrollContent('about');
                     }
                 }
                 
