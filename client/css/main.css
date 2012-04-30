@@ -257,6 +257,15 @@ footer, header, hgroup, menu, nav, section {
     #legal p a {color:#2e7fdd;text-decoration:none;}
     #close-legal {font-size:20px;}
     #toggle-legal {padding:0 10px;}
+    
+    form {position:relative;}
+    
+    #name-tooltip {width:400px;height:30px;padding:10px 0;font-size:20px;background:#373737;position:absolute;left:50%;margin-left:-200px;color:#fff;border-radius:8px;line-height:30px;top:-40px;opacity:0;-moz-transition:0.25s opacity ease;-webkit-transition:0.25s opacity ease;-o-transition:0.25s opacity ease;-ms-transition:0.25s opacity ease;transition:0.25s opacity ease;pointer-events:none;}
+    #name-tooltip:after {content:url('../img/common/arrow.png');width:28px;height:16px;position:absolute;bottom:-8px;left:50%;margin-left:-14px;}
+    #name-tooltip.visible {opacity:.9;}
+    
+    .opera #name-tooltip {display:none;}
+    .opera #name-tooltip.visible {display:block;}
 
 /* Magic Parchment */
 
@@ -748,6 +757,9 @@ footer, header, hgroup, menu, nav, section {
         #resize-check {height:2px;}
         
         #toggle-legal {padding:0 8px;}
+        
+        #name-tooltip {font-size:14px;width:280px;margin-left:-140px;height:20px;line-height:18px;top:-30px;}
+        #name-tooltip:after {bottom:-8px;}
 	}
 	
 	@media screen and (max-width: 1000px) {
@@ -909,6 +921,9 @@ footer, header, hgroup, menu, nav, section {
         .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:346px;margin-left:-173px;background-position: -38px -294px;}
 
         #resize-check {height:1px;}
+        
+        #name-tooltip {font-size:10px;width:180px;margin-left:-90px;height:10px;line-height:10px;top:-30px;border-radius:4px;}
+        #name-tooltip:after {bottom:-8px;}
 	}
 
 	@media screen and (max-width: 800px) {
@@ -1049,6 +1064,8 @@ footer, header, hgroup, menu, nav, section {
         
         #legal-link span:hover {color:#C6C0A3;}
         #legal p {font-size:12px;width:80%;line-height:14px;}
+        
+        #name-tooltip {display:none;}
 	}
 
 	@media screen and (max-width: 800px) and (orientation: portrait) {
@@ -1061,7 +1078,7 @@ footer, header, hgroup, menu, nav, section {
         
         #tilt {height:120px;width:132px;background-position:-710px -82px;background-size:844px;margin:25px auto 0 auto;}
         
-        #toggle-legal {display:none;}
+        .intro #toggle-legal, #toggle-legal {display:none;}
     }
     
     @media screen and (max-width: 640px) and (orientation: portrait) {
