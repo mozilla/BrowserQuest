@@ -16,14 +16,23 @@ define(['jquery', 'app'], function($, App) {
                 // Fix for no pointer events
                 $('body').addClass('opera');
             }
+            
+            if(Detect.isFirefoxAndroid()) {
+                // Remove chat placeholder
+                $('#chatinput').removeAttr('placeholder');
+            }
         
             $('body').click(function(event) {
                 if($('#parchment').hasClass('credits')) {
-                    app.toggleCredits();
+                    app.toggleScrollContent('credits');
+                }
+                
+                if($('#parchment').hasClass('legal')) {
+                    app.toggleScrollContent('legal');
                 }
                 
                 if($('#parchment').hasClass('about')) {
-                    app.toggleAbout();
+                    app.toggleScrollContent('about');
                 }
             });
 	
@@ -40,7 +49,12 @@ define(['jquery', 'app'], function($, App) {
         	});
 	
         	$('#helpbutton').click(function() {
-                app.toggleAbout();
+                if($('body').hasClass('about')) {
+                    app.closeInGameScroll('about');
+                    $('#helpbutton').removeClass('active');
+                } else {
+                    app.toggleScrollContent('about');
+                }
         	});
 	
         	$('#achievementsbutton').click(function() {
@@ -68,7 +82,18 @@ define(['jquery', 'app'], function($, App) {
         	});
 	
         	$('#toggle-credits').click(function() {
-        	    app.toggleCredits();
+        	    app.toggleScrollContent('credits');
+        	});
+        	
+        	$('#toggle-legal').click(function() {
+        	    app.toggleScrollContent('legal');
+        	    if(game.renderer.mobile) {
+        	        if($('#parchment').hasClass('legal')) {
+        	            $(this).text('close');
+        	        } else {
+                        $(this).text('Privacy');
+        	        }
+        	    };
         	});
 	
         	$('#create-new span').click(function() {
@@ -78,6 +103,7 @@ define(['jquery', 'app'], function($, App) {
         	$('.delete').click(function() {
                 app.storage.clear();
         	    app.animateParchment('confirmation', 'createcharacter');
+        	    $('body').removeClass('returning');
         	});
 	
         	$('#cancel span').click(function() {
@@ -85,7 +111,7 @@ define(['jquery', 'app'], function($, App) {
         	});
         	
         	$('.ribbon').click(function() {
-        	    app.toggleAbout();
+                app.toggleScrollContent('about');
         	});
 
             $('#nameinput').bind("keyup", function() {
@@ -259,7 +285,6 @@ define(['jquery', 'app'], function($, App) {
                 	    game.click();
                 	}
                 	app.hideWindows();
-                    // $('#chatinput').focus();
                 });
             }
 
@@ -269,19 +294,28 @@ define(['jquery', 'app'], function($, App) {
                 
                 if($('#parchment').hasClass('credits')) {
                     if(game.started) {
-                        app.closeInGameCredits();
+                        app.closeInGameScroll('credits');
                         hasClosedParchment = true;
                     } else {
-                        app.toggleCredits();
+                        app.toggleScrollContent('credits');
+                    }
+                }
+                
+                if($('#parchment').hasClass('legal')) {
+                    if(game.started) {
+                        app.closeInGameScroll('legal');
+                        hasClosedParchment = true;
+                    } else {
+                        app.toggleScrollContent('legal');
                     }
                 }
                 
                 if($('#parchment').hasClass('about')) {
                     if(game.started) {
-                        app.closeInGameAbout();
+                        app.closeInGameScroll('about');
                         hasClosedParchment = true;
                     } else {
-                        app.toggleAbout();
+                        app.toggleScrollContent('about');
                     }
                 }
                 
@@ -318,8 +352,17 @@ define(['jquery', 'app'], function($, App) {
             
             $('#chatinput').keydown(function(e) {
                 var key = e.which,
-                    $chat = $('#chatinput');
-
+                    $chat = $('#chatinput'),
+                    placeholder = $(this).attr("placeholder");
+                
+                if (!(e.shiftKey && e.keyCode === 16) && e.keyCode !== 9) {
+                    if ($(this).val() === placeholder) {
+                        $(this).val('');
+                        $(this).removeAttr('placeholder');
+                        $(this).removeClass('placeholder');
+                    }
+                }
+                
                 if(key === 13) {
                     if($chat.attr('value') !== '') {
                         if(game.player) {
@@ -340,10 +383,32 @@ define(['jquery', 'app'], function($, App) {
                     return false;
                 }
             });
+            
+            $('#chatinput').focus(function(e) {
+                var placeholder = $(this).attr("placeholder");
+                
+                if(!Detect.isFirefoxAndroid()) {
+                    $(this).val(placeholder);
+                }
+                
+                if ($(this).val() === placeholder) {
+                    this.setSelectionRange(0, 0);
+                }
+            });
+            
+            $('#nameinput').focusin(function() {
+                $('#name-tooltip').addClass('visible');
+            });
+            
+            $('#nameinput').focusout(function() {
+                $('#name-tooltip').removeClass('visible');
+            });
 
             $('#nameinput').keypress(function(event) {
                 var $name = $('#nameinput'),
                     name = $name.attr('value');
+
+                $('#name-tooltip').removeClass('visible');
 
                 if(event.keyCode === 13) {
                     if(name !== '') {
