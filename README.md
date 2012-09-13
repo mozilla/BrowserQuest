@@ -86,5 +86,8 @@ Many other people are contributing through GitHub:
 
 * Myles Recny [@mkrecny](https://github.com/mkrecny)
 * Ben Noordhuis [@bnoordhuis](https://github.com/bnoordhuis)
+* Taylor Fausak [@tfausak](https://github.com/tfausak)
+* William Bowers [@willurd](https://github.com/willurd)
+* Steve Gricci [@sgricci](https://github.com/sgricci)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
 * Justin Clift [@justinclift](https://github.com/justinclift)
