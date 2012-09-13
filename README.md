@@ -39,7 +39,6 @@ this:
     $ node server/js/main.js
     Could not open config file: ./server/config_local.json
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Starting BrowserQuest game server...
-    path.exists is now called `fs.exists`.
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world1 created (capacity: 200 players).
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world2 created (capacity: 200 players).
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world3 created (capacity: 200 players).
@@ -92,5 +91,6 @@ Many other people are contributing through GitHub:
 * Dave Eddy [@bahamas10](https://github.com/bahamas10)
 * Mathias Bynens [@mathiasbynens](https://github.com/mathiasbynens)
 * Rob McCann [@unforeseen](https://github.com/unforeseen)
+* Scott Noel-Hemming [@frogstarr78](https://github.com/frogstarr78)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
 * Justin Clift [@justinclift](https://github.com/justinclift)
