@@ -3,11 +3,69 @@ BrowserQuest
 
 BrowserQuest is a HTML5/JavaScript multiplayer game experiment.
 
+It has two major parts:
 
-Documentation
--------------
+* the server side, which runs using node.js
+* the client side, which runs in your browser
 
-Documentation is located in client and server directories.
+
+How to get it going
+-------------------
+
+Getting the server up and running is pretty easy. You need to
+have the following installed:
+
+* node.js
+* gcc-c++
+* GNU make
+* zlib-devel  <-- this is the Fedora/RHEL package name, others may be slightly different
+
+Clone the git repo:
+
+    $ git clone git://github.com/browserquest/BrowserQuest.git
+    $ cd BrowserQuest
+
+Then install the nodejs dependencies by running:
+
+    $ npm install -d bison log memcache sanitizer underscore websocket websocket-server
+
+Then start the server by running:
+
+    $ node server/js/main.js
+
+The BrowserQuest server should start up, showing output like
+this:
+
+    $ node server/js/main.js
+    Could not open config file: ./server/config_local.json
+    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Starting BrowserQuest game server...
+    path.exists is now called `fs.exists`.
+    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world1 created (capacity: 200 players).
+    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world2 created (capacity: 200 players).
+    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world3 created (capacity: 200 players).
+    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world4 created (capacity: 200 players).
+    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world5 created (capacity: 200 players).
+    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Server is listening on port 8000
+
+That means its working.  Ignore the warnings about "Could not open config file"
+and "path.exists".  There should not be any other warnings or errors.
+
+
+Client side
+-----------
+
+Still needs to be written. (also not hard)
+
+
+Node.js for Fedora 16 and RHEL6/CentOS
+--------------------------------------
+
+On Fedora 16 and RHEL 6/CentOS 6, the rpms here are known to work:
+
+  http://justinclift.fedorapeople.org/nodejs/
+
+Note, those rpms are ugly, unofficial builds I did myself.  You are
+most welcome to improve on them. :)
 
 
 License
@@ -19,7 +77,12 @@ See the LICENSE file for details.
 
 Credits
 -------
-Created by [Little Workshop](http://www.littleworkshop.fr):
+Originally created by [Little Workshop](http://www.littleworkshop.fr):
 
 * Franck Lecollinet - [@whatthefranck](http://twitter.com/whatthefranck)
 * Guillaume Lecollinet - [@glecollinet](http://twitter.com/glecollinet)
+
+Many other people are contributing through GitHub:
+
+* Tom McKay [@thomasmckay](https://github.com/thomasmckay)
+
