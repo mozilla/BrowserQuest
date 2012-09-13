@@ -92,6 +92,6 @@ Many other people are contributing through GitHub:
 * Mathias Bynens [@mathiasbynens](https://github.com/mathiasbynens)
 * Rob McCann [@unforeseen](https://github.com/unforeseen)
 * Scott Noel-Hemming [@frogstarr78](https://github.com/frogstarr78)
-* porneL [@pornel](https://github.com/pornel)
+* Kornel Lesiński [@pornel](https://github.com/pornel)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
 * Justin Clift [@justinclift](https://github.com/justinclift)
