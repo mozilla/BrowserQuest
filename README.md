@@ -89,5 +89,6 @@ Many other people are contributing through GitHub:
 * Taylor Fausak [@tfausak](https://github.com/tfausak)
 * William Bowers [@willurd](https://github.com/willurd)
 * Steve Gricci [@sgricci](https://github.com/sgricci)
+* Dave Eddy [@bahamas10](https://github.com/bahamas10)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
 * Justin Clift [@justinclift](https://github.com/justinclift)
