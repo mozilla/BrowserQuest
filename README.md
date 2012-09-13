@@ -90,5 +90,6 @@ Many other people are contributing through GitHub:
 * William Bowers [@willurd](https://github.com/willurd)
 * Steve Gricci [@sgricci](https://github.com/sgricci)
 * Dave Eddy [@bahamas10](https://github.com/bahamas10)
+* Mathias Bynens [@mathiasbynens](https://github.com/mathiasbynens)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
 * Justin Clift [@justinclift](https://github.com/justinclift)
