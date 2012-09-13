@@ -93,5 +93,6 @@ Many other people are contributing through GitHub:
 * Rob McCann [@unforeseen](https://github.com/unforeseen)
 * Scott Noel-Hemming [@frogstarr78](https://github.com/frogstarr78)
 * Kornel Lesiński [@pornel](https://github.com/pornel)
+* Korvin Szanto [@KorvinSzanto](https://github.com/KorvinSzanto)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
 * Justin Clift [@justinclift](https://github.com/justinclift)
