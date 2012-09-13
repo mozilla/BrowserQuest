@@ -84,5 +84,7 @@ Originally created by [Little Workshop](http://www.littleworkshop.fr):
 
 Many other people are contributing through GitHub:
 
+* Myles Recny [@mkrecny](https://github.com/mkrecny)
+* Ben Noordhuis [@bnoordhuis](https://github.com/bnoordhuis)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
-
+* Justin Clift [@justinclift](https://github.com/justinclift)
