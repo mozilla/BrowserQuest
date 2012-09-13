@@ -46,8 +46,8 @@ this:
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world5 created (capacity: 200 players).
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Server is listening on port 8000
 
-That means its working.  Ignore the warnings about "Could not open config file"
-and "path.exists".  There should not be any other warnings or errors.
+That means its working.  Ignore the warning about "Could not open config file".
+There should not be any other warnings or errors.
 
 
 Client side
