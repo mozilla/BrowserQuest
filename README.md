@@ -91,5 +91,6 @@ Many other people are contributing through GitHub:
 * Steve Gricci [@sgricci](https://github.com/sgricci)
 * Dave Eddy [@bahamas10](https://github.com/bahamas10)
 * Mathias Bynens [@mathiasbynens](https://github.com/mathiasbynens)
+* Rob McCann [@unforeseen](https://github.com/unforeseen)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
 * Justin Clift [@justinclift](https://github.com/justinclift)
