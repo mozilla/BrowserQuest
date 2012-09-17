@@ -15,7 +15,7 @@ How to get it going
 Getting the server up and running is pretty easy. You need to
 have the following installed:
 
-* node.js (**v0.8.8** works, v0.6.x series should work, other versions are unknown - let us know if you test them!)
+* Node.js (**v0.8.8** works, v0.6.x series should work, other versions are unknown - let us know if you test them!)
 * gcc-c++
 * GNU make
 * zlib-devel  <-- this is the Fedora/RHEL package name, others may be slightly different
@@ -25,7 +25,7 @@ Clone the git repo:
     $ git clone git://github.com/browserquest/BrowserQuest.git
     $ cd BrowserQuest
 
-Then install the nodejs dependencies by running:
+Then install the Node.js dependencies by running:
 
     $ npm install -d bison log memcache sanitizer underscore websocket websocket-server
 
