@@ -12,7 +12,7 @@ module.exports = Map = cls.Class.extend({
     
     	this.isLoaded = false;
     
-    	fs.exists(filepath, function(exists) {
+    	path.exists(filepath, function(exists) {
             if(!exists) {
                 log.error(filepath + " doesn't exist.");
                 return;
