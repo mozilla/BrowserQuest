@@ -10,5 +10,6 @@
     , "websocket-server": ">0"
     , "sanitizer": ">0"
     , "memcache": ">0"
+    , "connect": ">2"
   }
 }
