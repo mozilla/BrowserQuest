@@ -15,7 +15,7 @@ How to get it going
 Getting the server up and running is pretty easy. You need to
 have the following installed:
 
-* node.js (**v0.8.8** works, older versions may not)
+* node.js (**v0.8.8** works, v0.6.x series should work, other versions are unknown - let us know if you test them!)
 * gcc-c++
 * GNU make
 * zlib-devel  <-- this is the Fedora/RHEL package name, others may be slightly different
