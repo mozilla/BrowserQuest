@@ -27,7 +27,7 @@ Clone the git repo:
 
 Then install the Node.js dependencies by running:
 
-    $ npm install -d bison log memcache sanitizer underscore websocket websocket-server
+    $ npm install -d
 
 Then start the server by running:
 
