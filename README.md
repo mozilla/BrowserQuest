@@ -67,6 +67,12 @@ On Fedora 16 and RHEL 6/CentOS 6, the rpms here are known to work:
 Note, those rpms are ugly, unofficial builds I did myself.  You are
 most welcome to improve on them. :)
 
+Mailing List
+------------
+
+The mailing list for development is at browserquest@librelist.com. ([archives](http://librelist.com/browser/browserquest/))
+
+To subscribe, just send an email to that address.  Your initial email will be dropped, but will start the subscription.
 
 License
 -------
