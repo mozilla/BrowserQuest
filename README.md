@@ -57,7 +57,7 @@ First, set the "host" value in client/config/config_build.json-dist, then copy i
     $ vi client/config/config_build.json-dist
     $ cp client/config/config_build.json-dist client/config/config_build.json
 
-The updated host value must be the IP address you want the client side server listening on.  For example:
+The updated host value must be the IP address of the BrowserQuest server.  For example:
 
     {
         "host": "100.200.300.400",
@@ -81,6 +81,8 @@ Now start the client side server up:
 No warning messages should be displayed.
 
 Using a browser, connect to port 8080 of the IP address you entered above.  The BrowserQuest start page should appear.
+
+If you have the BrowserQuest server running too, then you should be able to launch and play the game.
 
 
 Node.js for Fedora 16 and RHEL6/CentOS
