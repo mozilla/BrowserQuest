@@ -9,6 +9,7 @@
     , "websocket": ">0"
     , "websocket-server": ">0"
     , "sanitizer": ">0"
+    , "semver": ">0"
     , "memcache": ">0"
     , "connect": ">2"
   }
