@@ -111,7 +111,7 @@ function getWorldDistribution(worlds) {
 function getConfigFile(path, callback) {
     fs.readFile(path, 'utf8', function(err, json_string) {
         if(err) {
-            console.error("Could not open config file:", err.path);
+            console.info("This server can be customized by creating a configuration file named: " + err.path);
             callback(null);
         } else {
             callback(JSON.parse(json_string));

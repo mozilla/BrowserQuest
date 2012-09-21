@@ -37,7 +37,7 @@ The BrowserQuest server should start up, showing output like
 this:
 
     $ node server/js/main.js
-    Could not open config file: ./server/config_local.json
+    This server can be customized by creating a configuration file named: ./server/config_local.json
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Starting BrowserQuest game server...
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world1 created (capacity: 200 players).
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world2 created (capacity: 200 players).
@@ -46,7 +46,7 @@ this:
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world5 created (capacity: 200 players).
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Server is listening on port 8000
 
-That means its working.  Ignore the warning about "Could not open config file".  There should not be any other warnings or errors.
+That means its working.  There should not be any warnings or errors.
 
 
 Client side
