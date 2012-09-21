@@ -52,7 +52,35 @@ That means its working.  There should not be any warnings or errors.
 Client side
 -----------
 
-Still needs to be written. (also not hard)
+First, set the "host" value in client/config/config_build.json-dist, then copy it to/client/config/config_build.json:
+
+    $ vi client/config/config_build.json-dist
+    $ cp client/config/config_build.json-dist client/config/config_build.json
+
+The updated host value must be the IP address you want the client side server listening on.  For example:
+
+    {
+        "host": "100.200.300.400",
+        "port": 8000
+    }
+
+Then do the same thing for client/config/config_local.json-dist, editing the host value, then copying it to client/config/config_local.json:
+
+    $ vi client/config/config_local.json-dist
+    $ cp client/config/config_local.json-dist client/config/config_local.json
+
+Next, copy the "shared" directory from the root of the git repo, into the "client" directory:
+
+    $ cp -r shared client/
+
+Now start the client side server up:
+
+    $ node start_dev_client.js
+    BrowserQuest client server started on port 8080
+
+No warning messages should be displayed.
+
+Using a browser, connect to port 8080 of the IP address you entered above.  The BrowserQuest start page should appear.
 
 
 Node.js for Fedora 16 and RHEL6/CentOS
