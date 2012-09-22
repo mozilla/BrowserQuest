@@ -92,7 +92,7 @@ On Fedora 16 and RHEL 6/CentOS 6, the rpms here are known to work:
 
   http://justinclift.fedorapeople.org/nodejs/
 
-Note, those rpms are ugly, unofficial builds I did myself.  You are
+Note, those rpms are ugly, unofficial builds by [@justinclift](https://github.com/justinclift).  You are
 most welcome to improve on them. :)
 
 Mailing List
