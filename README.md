@@ -129,5 +129,6 @@ Many other people are contributing through GitHub:
 * Scott Noel-Hemming [@frogstarr78](https://github.com/frogstarr78)
 * Kornel Lesiński [@pornel](https://github.com/pornel)
 * Korvin Szanto [@KorvinSzanto](https://github.com/KorvinSzanto)
+* Jeff Lang [@jeffplang](https://github.com/jeffplang)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
 * Justin Clift [@justinclift](https://github.com/justinclift)
