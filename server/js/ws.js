@@ -112,29 +112,101 @@ WS.MultiVersionWebsocketServer = Server.extend({
     _connections: {},
     _counter: 0,
     
-    init: function(port) {
+    init: function(port, useOnePort) {
         var self = this;
-        
+
         this._super(port);
-        
-        this._httpServer = http.createServer(function(request, response) {
-            var path = url.parse(request.url).pathname;
-            switch(path) {
-                case '/status':
-                    if(self.status_callback) {
-                        response.writeHead(200);
-                        response.write(self.status_callback());
+
+        // Are we doing both client and server on one port?
+        if (useOnePort === true) {
+            // Yes, we are
+
+            // Use 'connect' for its static module
+            var connect = require('connect');
+            var app = connect();
+
+            // Serve everything in the client subdir statically
+            app.use(connect.static('client'));
+
+            // Dsplay errors (such as 404's) in the server log
+            app.use(connect.logger('dev'));
+
+            // Generate (on the fly) the pages needing special treatment
+            app.use(function(request, response) {
+                var path = url.parse(request.url).pathname;
+                switch(path) {
+                    case '/status':
+                        // The server status page
+                        if(self.status_callback) {
+                            response.writeHead(200);
+                            response.write(self.status_callback());
+                            break;
+                        }
+                    case '/config/config_build.json':
+                    case '/config/config_local.json':
+                        // Generate the config_build/local.json files on the
+                        // fly, using the IP address the request arrived on,
+                        // and the tcp port the server is listening to
+
+                        // Create the config data structure
+                        var listeningInterface = request.connection.address();
+                        var newConfig = {
+                            host: listeningInterface.address,
+                            port: port,
+                            dispatcher: false
+                        };
+
+                        // Make it JSON
+                        var newConfigString = JSON.stringify(newConfig);
+
+                        // Create appropriate http headers
+                        var response_headers = {
+                            'Content-Type': 'application/json',
+                            'Content-Length': newConfigString.length
+                        };
+
+                        // Send it all back to the client
+                        response.writeHead(200, response_headers);
+                        response.end(new_config_string);
                         break;
-                    }
-                default:
-                    response.writeHead(404);
-            }
-            response.end();
-        });
-        this._httpServer.listen(port, function() {
-            log.info("Server is listening on port "+port);
-        });
-        
+                    case '/shared/js/file.js':
+                        // Sends the real shared/js/file.js to the client
+                        sendFile('js/file.js');
+                        break;
+                    case '/shared/js/gametypes.js':
+                        // Sends the real shared/js/gametypes.js to the client
+                        sendFile('js/gametypes.js');
+                        break;
+                    default:
+                        response.writeHead(404);
+                }
+                response.end();
+            });
+
+            this._httpServer = http.createServer(app).listen(port, function() {
+                log.info("Server (everything) is listening on port "+port);
+            });
+        } else {
+            // Only run the server side code
+            this._httpServer = http.createServer(function(request, response) {
+                var path = url.parse(request.url).pathname;
+                switch(path) {
+                    case '/status':
+                        if(self.status_callback) {
+                            response.writeHead(200);
+                            response.write(self.status_callback());
+                            break;
+                        }
+                    default:
+                        response.writeHead(404);
+                }
+                response.end();
+            });
+            this._httpServer.listen(port, function() {
+                log.info("Server (only) is listening on port "+port);
+            });
+        }
+
         this._miksagoServer = wsserver.createServer();
         this._miksagoServer.server = this._httpServer;
         this._miksagoServer.addListener('connection', function(connection) {
@@ -292,3 +364,20 @@ WS.miksagoWebSocketConnection = Connection.extend({
         this._connection.send(data);
     }
 });
+
+// Sends a file to the client
+function sendFile(file) {
+    try {
+        var realFile = fs.readFileSync(__dirname + '/../../shared/' + file);
+        var responseHeaders = {
+            'Content-Type': 'text/javascript',
+            'Content-Length': realFile.length
+        };
+        response.writeHead(200, responseHeaders);
+        response.end(realFile);
+    }
+    catch (err) {
+        response.writeHead(500);
+        log.error('Something went wrong when trying to send ' + file);
+    }
+}
