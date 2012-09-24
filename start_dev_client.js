@@ -1,18 +1,18 @@
 var connect = require('connect');
+var app = connect();
+var port = 8080;
 
-var app = connect()
+// Display incoming requests, coloured for status
+app.use(connect.logger('dev'));
 
-  // Display incoming requests, coloured for status
-  .use(connect.logger('dev'))
+// Serve everything in the client subdir statically
+app.use(connect.static('client'));
 
-  // Serve everything in the client subdir statically
-  .use(connect.static('client'))
+// This lets us return and log 404's, which is
+// very useful for debugging configuration problems
+app.use(function(err, req, res, next){});
 
-  // This lets us return and log 404's, which is
-  // very useful for debugging configuration problems
-  .use(function(err, req, res, next){})
+// The tcp port to listen on
+app.listen(port);
 
-  // The tcp port to listen on
-  .listen(8080);
-
-console.log('BrowserQuest client server started on port '+8080);
+console.log('BrowserQuest client server started on port '+port);
