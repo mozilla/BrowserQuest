@@ -102,6 +102,13 @@ The mailing list for development is at browserquest@librelist.com. ([archives](h
 
 To subscribe, just send an email to that address.  Your initial email will be dropped, but will start the subscription.
 
+IRC Channel
+-----------
+
+BrowserQuest IRC Channel
+
+#browserquest on irc.synirc.net
+
 License
 -------
 
