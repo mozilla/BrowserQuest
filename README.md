@@ -5,17 +5,16 @@ BrowserQuest
 
 It has two major parts:
 
-* the server side, which runs using node.js
+* the server side, which runs using Node.js
 * the client side, which runs in your browser
 
 
 How to get it going
 -------------------
 
-Getting the server up and running is pretty easy. You need to
-have the following installed:
+Getting the server up and running is pretty easy. You need to have the following installed:
 
-* Node.js (**v0.8.8** works, v0.6.x series should work, other versions are unknown - let us know if you test them!)
+* Node.js (**v0.8.x** works, v0.6.x series should work, other versions are unknown - let us know if you test them!)
 * gcc-c++
 * GNU make
 * zlib-devel  <-- this is the Fedora/RHEL package name, others may be slightly different
@@ -33,8 +32,7 @@ Then start the server by running:
 
     $ node server/js/main.js
 
-The BrowserQuest server should start up, showing output like
-this:
+The BrowserQuest server should start, showing output like this:
 
     $ node server/js/main.js
     This server can be customized by creating a configuration file named: ./server/config_local.json
@@ -44,45 +42,11 @@ this:
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world3 created (capacity: 200 players).
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world4 created (capacity: 200 players).
     [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO world5 created (capacity: 200 players).
-    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Server is listening on port 8000
+    [Thu Sep 13 2012 17:16:27 GMT-0400 (EDT)] INFO Server (everything) is listening on port 8000
 
 That means its working.  There should not be any warnings or errors.
 
-
-Client side
------------
-
-First, set the "host" value in client/config/config_build.json-dist, then copy it to/client/config/config_build.json:
-
-    $ vi client/config/config_build.json-dist
-    $ cp client/config/config_build.json-dist client/config/config_build.json
-
-The updated host value must be the IP address of the BrowserQuest server.  For example:
-
-    {
-        "host": "100.200.300.400",
-        "port": 8000
-    }
-
-Then do the same thing for client/config/config_local.json-dist, editing the host value, then copying it to client/config/config_local.json:
-
-    $ vi client/config/config_local.json-dist
-    $ cp client/config/config_local.json-dist client/config/config_local.json
-
-Next, copy the "shared" directory from the root of the git repo, into the "client" directory:
-
-    $ cp -r shared client/
-
-Now start the client side server up:
-
-    $ node start_dev_client.js
-    BrowserQuest client server started on port 8080
-
-No warning messages should be displayed.
-
-Using a browser, connect to port 8080 of the IP address you entered above.  The BrowserQuest start page should appear.
-
-If you have the BrowserQuest server running too, then you should be able to launch and play the game.
+Using a browser, connect to port 8000 of the server entered above.  The BrowserQuest start page should appear, and the game should work.
 
 
 Browser Support
