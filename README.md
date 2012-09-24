@@ -85,6 +85,17 @@ Using a browser, connect to port 8080 of the IP address you entered above.  The 
 If you have the BrowserQuest server running too, then you should be able to launch and play the game.
 
 
+Browser Support
+---------------
+
+* Firefox (any recent) - Works well.
+* Safari 6.x - Works well.
+* Chrome - Sounds effects don't work.
+* Chromium - Varies wildly.  Some releases display using BrowserQuest's "mobile" layout, with very small screen.  Not recommended.
+* Opera - Doesn't work, no WebSocket support.
+* IE (any version) - Untested.
+
+
 Node.js for Fedora 16 and RHEL6/CentOS
 --------------------------------------
 
