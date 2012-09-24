@@ -1,3 +1,4 @@
+
 var cls = require("./lib/class"),
     url = require('url'),
     wsserver = require("websocket-server"),
@@ -159,22 +160,22 @@ WS.MultiVersionWebsocketServer = Server.extend({
                         var newConfigString = JSON.stringify(newConfig);
 
                         // Create appropriate http headers
-                        var response_headers = {
+                        var responseHeaders = {
                             'Content-Type': 'application/json',
                             'Content-Length': newConfigString.length
                         };
 
                         // Send it all back to the client
-                        response.writeHead(200, response_headers);
-                        response.end(new_config_string);
+                        response.writeHead(200, responseHeaders);
+                        response.end(newConfigString);
                         break;
                     case '/shared/js/file.js':
                         // Sends the real shared/js/file.js to the client
-                        sendFile('js/file.js');
+                        sendFile('js/file.js', response, log);
                         break;
                     case '/shared/js/gametypes.js':
                         // Sends the real shared/js/gametypes.js to the client
-                        sendFile('js/gametypes.js');
+                        sendFile('js/gametypes.js', response, log);
                         break;
                     default:
                         response.writeHead(404);
@@ -365,7 +366,7 @@ WS.miksagoWebSocketConnection = Connection.extend({
 });
 
 // Sends a file to the client
-function sendFile(file) {
+function sendFile(file, response, log) {
     try {
         var realFile = fs.readFileSync(__dirname + '/../../shared/' + file);
         var responseHeaders = {
