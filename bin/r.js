@@ -15,7 +15,7 @@
 /*global readFile: true, process: false, Packages: false, print: false,
 console: false, java: false, module: false */
 
-var requirejs, require, define, file = require("../../shared/js/file");
+var requirejs, require, define, file = require("../shared/js/file");
 (function (console, args, readFileFunc) {
 
     var fileName, env, fs, vm, path, exec, rhinoContext, dir, nodeRequire,
