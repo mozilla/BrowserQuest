@@ -142,4 +142,5 @@ Many other people are contributing through GitHub:
 * Jeff Lang [@jeffplang](https://github.com/jeffplang)
 * Tom McKay [@thomasmckay](https://github.com/thomasmckay)
 * Justin Clift [@justinclift](https://github.com/justinclift)
+* Brynn Bateman [@brynnb](https://github.com/brynnb)
 * Dylen Rivera [@dylenbrivera](https://github.com/dylenbrivera)
