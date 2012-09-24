@@ -95,6 +95,11 @@ On Fedora 16 and RHEL 6/CentOS 6, the rpms here are known to work:
 Note, those rpms are ugly, unofficial builds by [@justinclift](https://github.com/justinclift).  You are
 most welcome to improve on them. :)
 
+Documentation
+-------------
+
+Lots of useful info on the [wiki](https://github.com/browserquest/BrowserQuest/wiki).
+
 Mailing List
 ------------
 
