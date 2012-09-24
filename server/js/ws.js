@@ -1,4 +1,3 @@
-
 var cls = require("./lib/class"),
     url = require('url'),
     wsserver = require("websocket-server"),
@@ -128,7 +127,7 @@ WS.MultiVersionWebsocketServer = Server.extend({
             // Serve everything in the client subdir statically
             app.use(connect.static('client'));
 
-            // Dsplay errors (such as 404's) in the server log
+            // Display errors (such as 404's) in the server log
             app.use(connect.logger('dev'));
 
             // Generate (on the fly) the pages needing special treatment
