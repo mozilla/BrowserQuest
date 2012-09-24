@@ -105,9 +105,7 @@ To subscribe, just send an email to that address.  Your initial email will be dr
 IRC Channel
 -----------
 
-BrowserQuest IRC Channel
-
-#browserquest on irc.synirc.net
+\#browserquest on irc.synirc.net
 
 License
 -------
