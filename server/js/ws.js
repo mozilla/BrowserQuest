@@ -145,14 +145,40 @@ WS.MultiVersionWebsocketServer = Server.extend({
                     case '/config/config_build.json':
                     case '/config/config_local.json':
                         // Generate the config_build/local.json files on the
-                        // fly, using the IP address the request arrived on,
-                        // and the tcp port the server is listening to
+                        // fly, using the host address and port from the
+                        // incoming http header
 
-                        // Create the config data structure
-                        var listeningInterface = request.connection.address();
+                        // Grab the incoming host:port request string
+                        var headerPieces = request.connection.parser.incoming.headers.host.split(':', 2);
+
+                        // Determine new host string to give clients
+                        var newHost;
+                        if ((typeof headerPieces[0] === 'string') && (headerPieces[0].length > 0))  {
+                            // Seems like a valid string, lets use it
+                            newHost = headerPieces[0];
+                        } else {
+                            // The host value doesn't seem usable, so
+                            // fallback to the local interface IP address
+                            newHost = request.connection.address().address;
+                        }
+
+                        // Default port is 80
+                        var newPort = 80;
+                        if (2 === headerPieces.length) {
+                            // We've been given a 2nd value, maybe a port #
+                            if ((typeof headerPieces[1] === 'string') && (headerPieces[1].length > 0)) {
+                                // If a usable port value was given, use that instead
+                                tmpPort = parseInt(headerPieces[1], 10);
+                                if (!isNaN(tmpPort) && (tmpPort > 0) && (tmpPort < 65536)) {
+                                  newPort = tmpPort;
+                                }
+                            }
+                        }
+
+                        // Assemble the config data structure
                         var newConfig = {
-                            host: listeningInterface.address,
-                            port: port,
+                            host: newHost,
+                            port: newPort,
                             dispatcher: false
                         };
 
