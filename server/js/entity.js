@@ -11,11 +11,11 @@ module.exports = Entity = cls.Class.extend({
         this.x = x;
         this.y = y;
     },
-    
+
     destroy: function() {
 
     },
-    
+
     _getBaseState: function() {
         return [
             parseInt(this.id, 10),
@@ -24,24 +24,24 @@ module.exports = Entity = cls.Class.extend({
             this.y
         ];
     },
-    
+
     getState: function() {
         return this._getBaseState();
     },
-    
+
     spawn: function() {
         return new Messages.Spawn(this);
     },
-    
+
     despawn: function() {
         return new Messages.Despawn(this.id);
     },
-    
+
     setPosition: function(x, y) {
         this.x = x;
         this.y = y;
     },
-    
+
     getPositionNextTo: function(entity) {
         var pos = null;
         if(entity) {
@@ -49,7 +49,7 @@ module.exports = Entity = cls.Class.extend({
             // This is a quick & dirty way to give mobs a random position
             // close to another entity.
             var r = Utils.random(4);
-            
+
             pos.x = entity.x;
             pos.y = entity.y;
             if(r === 0)
