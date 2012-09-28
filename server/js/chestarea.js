@@ -10,7 +10,7 @@ module.exports = ChestArea = Area.extend({
         this.chestX = cx;
         this.chestY = cy;
     },
-    
+
     contains: function(entity) {
         if(entity) {
             return entity.x >= this.x

@@ -34,7 +34,7 @@ Utils.clamp = function(min, max, value) {
 
 Utils.randomOrientation = function() {
     var o, r = Utils.random(4);
-    
+
     if(r === 0)
         o = Types.Orientations.LEFT;
     if(r === 1)
@@ -43,7 +43,7 @@ Utils.randomOrientation = function() {
         o = Types.Orientations.UP;
     if(r === 3)
         o = Types.Orientations.DOWN;
-    
+
     return o;
 };
 

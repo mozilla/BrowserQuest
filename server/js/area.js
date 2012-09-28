@@ -15,11 +15,11 @@ module.exports = Area = cls.Class.extend({
         this.entities = [];
         this.hasCompletelyRespawned = true;
     },
-    
+
     _getRandomPositionInsideArea: function() {
         var pos = {},
             valid = false;
-        
+
         while(!valid) {
             pos.x = this.x + Utils.random(this.width + 1);
             pos.y = this.y + Utils.random(this.height + 1);
@@ -27,17 +27,17 @@ module.exports = Area = cls.Class.extend({
         }
         return pos;
     },
-    
+
     removeFromArea: function(entity) {
         var i = _.indexOf(_.pluck(this.entities, 'id'), entity.id);
         this.entities.splice(i, 1);
-        
+
         if(this.isEmpty() && this.hasCompletelyRespawned && this.empty_callback) {
             this.hasCompletelyRespawned = false;
             this.empty_callback();
         }
     },
-    
+
     addToArea: function(entity) {
         if(entity) {
             this.entities.push(entity);
@@ -46,24 +46,24 @@ module.exports = Area = cls.Class.extend({
                 this.world.addMob(entity);
             }
         }
-        
+
         if(this.isFull()) {
             this.hasCompletelyRespawned = true;
         }
     },
-    
+
     setNumberOfEntities: function(nb) {
         this.nbEntities = nb;
     },
-    
+
     isEmpty: function() {
         return !_.any(this.entities, function(entity) { return !entity.isDead });
     },
-    
+
     isFull: function() {
         return !this.isEmpty() && (this.nbEntities === _.size(this.entities));
     },
-    
+
     onEmpty: function(callback) {
         this.empty_callback = callback;
     }

@@ -21,31 +21,31 @@ var Server = cls.Class.extend({
     init: function(port) {
         this.port = port;
     },
-    
+
     onConnect: function(callback) {
         this.connection_callback = callback;
     },
-    
+
     onError: function(callback) {
         this.error_callback = callback;
     },
-    
+
     broadcast: function(message) {
         throw "Not implemented";
     },
-    
+
     forEachConnection: function(callback) {
         _.each(this._connections, callback);
     },
-    
+
     addConnection: function(connection) {
         this._connections[connection.id] = connection;
     },
-    
+
     removeConnection: function(id) {
         delete this._connections[id];
     },
-    
+
     getConnection: function(id) {
         return this._connections[id];
     }
@@ -58,27 +58,27 @@ var Connection = cls.Class.extend({
         this._server = server;
         this.id = id;
     },
-    
+
     onClose: function(callback) {
         this.close_callback = callback;
     },
-    
+
     listen: function(callback) {
         this.listen_callback = callback;
     },
-    
+
     broadcast: function(message) {
         throw "Not implemented";
     },
-    
+
     send: function(message) {
         throw "Not implemented";
     },
-    
+
     sendUTF8: function(data) {
         throw "Not implemented";
     },
-    
+
     close: function(logError) {
         log.info("Closing connection to "+this._connection.remoteAddress+". Error: "+logError);
         this._connection.close();
@@ -89,7 +89,7 @@ var Connection = cls.Class.extend({
 
 /**
  * MultiVersionWebsocketServer
- * 
+ *
  * Websocket server supporting draft-75, draft-76 and version 08+ of the WebSocket protocol.
  * Fallback for older protocol versions borrowed from https://gist.github.com/1219165
  */
@@ -111,7 +111,7 @@ WS.MultiVersionWebsocketServer = Server.extend({
     },
     _connections: {},
     _counter: 0,
-    
+
     init: function(port, useOnePort) {
         var self = this;
 
@@ -242,13 +242,13 @@ WS.MultiVersionWebsocketServer = Server.extend({
             // We want to use "sendUTF" regardless of the server implementation
             connection.sendUTF = connection.send;
             var c = new WS.miksagoWebSocketConnection(self._createId(), connection, self);
-            
+
             if(self.connection_callback) {
                 self.connection_callback(c);
             }
             self.addConnection(c);
         });
-        
+
         this._httpServer.on('upgrade', function(req, socket, head) {
             if (typeof req.headers['sec-websocket-version'] !== 'undefined') {
                 // WebSocket hybi-08/-09/-10 connection (WebSocket-Node)
@@ -277,17 +277,17 @@ WS.MultiVersionWebsocketServer = Server.extend({
             }
         });
     },
-    
+
     _createId: function() {
         return '5' + Utils.random(99) + '' + (this._counter++);
     },
-    
+
     broadcast: function(message) {
         this.forEachConnection(function(connection) {
             connection.send(message);
         });
     },
-    
+
     onRequestStatus: function(status_callback) {
         this.status_callback = status_callback;
     }
@@ -301,9 +301,9 @@ WS.MultiVersionWebsocketServer = Server.extend({
 WS.worlizeWebSocketConnection = Connection.extend({
     init: function(id, connection, server) {
         var self = this;
-        
+
         this._super(id, connection, server);
-        
+
         this._connection.on('message', function(message) {
             if(self.listen_callback) {
                 if(message.type === 'utf8') {
@@ -323,7 +323,7 @@ WS.worlizeWebSocketConnection = Connection.extend({
                 }
             }
         });
-        
+
         this._connection.on('close', function(connection) {
             if(self.close_callback) {
                 self.close_callback();
@@ -331,7 +331,7 @@ WS.worlizeWebSocketConnection = Connection.extend({
             delete self._server.removeConnection(self.id);
         });
     },
-    
+
     send: function(message) {
         var data;
         if(useBison) {
@@ -341,7 +341,7 @@ WS.worlizeWebSocketConnection = Connection.extend({
         }
         this.sendUTF8(data);
     },
-    
+
     sendUTF8: function(data) {
         this._connection.sendUTF(data);
     }
@@ -355,9 +355,9 @@ WS.worlizeWebSocketConnection = Connection.extend({
 WS.miksagoWebSocketConnection = Connection.extend({
     init: function(id, connection, server) {
         var self = this;
-        
+
         this._super(id, connection, server);
-        
+
         this._connection.addListener("message", function(message) {
             if(self.listen_callback) {
                 if(useBison) {
@@ -367,7 +367,7 @@ WS.miksagoWebSocketConnection = Connection.extend({
                 }
             }
         });
-        
+
         this._connection.on('close', function(connection) {
             if(self.close_callback) {
                 self.close_callback();
@@ -375,7 +375,7 @@ WS.miksagoWebSocketConnection = Connection.extend({
             delete self._server.removeConnection(self.id);
         });
     },
-    
+
     send: function(message) {
         var data;
         if(useBison) {
@@ -385,7 +385,7 @@ WS.miksagoWebSocketConnection = Connection.extend({
         }
         this.sendUTF8(data);
     },
-    
+
     sendUTF8: function(data) {
         this._connection.send(data);
     }
