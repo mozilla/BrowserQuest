@@ -1,5 +1,5 @@
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true,
-    unused:true, curly:true, browser:true, node:true, indent:4, maxerr:50, globalstrict:true,
+    unused:true, curly:true, browser:true, node:true, maxerr:50, globalstrict:true,
     camelcase: true, quotmark: single, trailing: true*/
 
 'use strict';
