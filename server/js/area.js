@@ -22,8 +22,8 @@ var Area = cls.Class.extend({
     },
 
     _getRandomPositionInsideArea: function () {
-        var pos = {},
-            valid = false;
+        var pos = {};
+        var valid = false;
 
         while (!valid) {
             pos.x = this.x + Utils.random(this.width + 1);
