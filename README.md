@@ -53,7 +53,7 @@ Browser Support
 ---------------
 
 * Firefox (any recent) - Works well.
-* Safari 6.x - Works well.
+* Safari 6.x - Background music doesn't play.  Everything else works well.
 * Chrome - Sounds effects don't work.
 * Chromium - Varies wildly.  Some releases display using BrowserQuest's "mobile" layout, with very small screen.  Not recommended.
 * Opera - Doesn't work, no WebSocket support.
