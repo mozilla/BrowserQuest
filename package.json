@@ -1,7 +1,7 @@
 {
     "name": "BrowserQuest"
   , "version": "0.0.1"
-  , "private": false 
+  , "private": false
   , "dependencies": {
     "underscore": ">0"
     , "log": ">0"
