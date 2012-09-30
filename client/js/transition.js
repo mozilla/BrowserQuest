@@ -28,16 +28,16 @@ define(function() {
                 }
                 else {
                     var elapsed = currentTime - this.startTime;
-            
+
                     if(elapsed > this.duration) {
                         elapsed = this.duration;
                     }
-        
+
                     var diff = this.endValue - this.startValue;
                     var i = this.startValue + ((diff / this.duration) * elapsed);
-            
+
                     i = Math.round(i);
-            
+
                     if(elapsed === this.duration || i === this.endValue) {
                         this.stop();
                         if(this.stopFunction) {
@@ -60,6 +60,6 @@ define(function() {
             this.inProgress = false;
         }
     });
-    
+
     return Transition;
 });

@@ -69,14 +69,14 @@ define(['text!../sprites/agent.json',
         'text!../sprites/villagegirl.json',
         'text!../sprites/villager.json',
         'text!../sprites/wizard.json'], function() {
-    
+
     var sprites = {};
-    
+
     _.each(arguments, function(spriteJson) {
         var sprite = JSON.parse(spriteJson);
-        
+
         sprites[sprite.id] = sprite;
     });
-    
+
     return sprites;
 });

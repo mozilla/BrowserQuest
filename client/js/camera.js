@@ -11,13 +11,13 @@ define(function() {
             this.offset = 0.5;
             this.rescale();
         },
-    
+
         rescale: function() {
             var factor = this.renderer.mobile ? 1 : 2;
-        
+
             this.gridW = 15 * factor;
             this.gridH = 7 * factor;
-        
+
             log.debug("---------");
             log.debug("Factor:"+factor);
             log.debug("W:"+this.gridW + " H:" + this.gridH);
@@ -26,7 +26,7 @@ define(function() {
         setPosition: function(x, y) {
             this.x = x;
             this.y = y;
-    
+
             this.gridX = Math.floor( x / 16 );
             this.gridY = Math.floor( y / 16 );
         },
@@ -34,7 +34,7 @@ define(function() {
         setGridPosition: function(x, y) {
             this.gridX = x;
             this.gridY = y;
-        
+
             this.x = this.gridX * 16;
             this.y = this.gridY * 16;
         },
@@ -43,7 +43,7 @@ define(function() {
             var r = this.renderer,
                 x = Math.round( entity.x - (Math.floor(this.gridW / 2) * r.tilesize) ),
                 y = Math.round( entity.y - (Math.floor(this.gridH / 2) * r.tilesize) );
-    
+
             this.setPosition(x, y);
         },
 
@@ -55,11 +55,11 @@ define(function() {
                 }
             }
         },
-        
+
         isVisible: function(entity) {
             return this.isVisiblePosition(entity.gridX, entity.gridY);
         },
-        
+
         isVisiblePosition: function(x, y) {
             if(y >= this.gridY && y < this.gridY + this.gridH
             && x >= this.gridX && x < this.gridX + this.gridW) {
@@ -68,7 +68,7 @@ define(function() {
                 return false;
             }
         },
-    
+
         focusEntity: function(entity) {
             var w = this.gridW - 2,
                 h = this.gridH - 2,

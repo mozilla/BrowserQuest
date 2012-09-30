@@ -3,11 +3,11 @@ define(['entity'], function(Entity) {
 
     var Item = Entity.extend({
         init: function(id, kind, type) {
-    	    this._super(id, kind);
+            this._super(id, kind);
 
             this.itemKind = Types.getKindAsString(kind);
-    	    this.type = type;
-    	    this.wasDropped = false;
+            this.type = type;
+            this.wasDropped = false;
         },
 
         hasShadow: function() {
@@ -31,6 +31,6 @@ define(['entity'], function(Entity) {
             return this.lootMessage;
         }
     });
-    
+
     return Item;
 });

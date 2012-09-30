@@ -5,7 +5,7 @@ function(build) {
         dev: { host: "localhost", port: 8000, dispatcher: false },
         build: JSON.parse(build)
     };
-    
+
     //>>excludeStart("prodHost", pragmas.prodHost);
     require(['text!../config/config_local.json'], function(local) {
         try {
@@ -15,6 +15,6 @@ function(build) {
         }
     });
     //>>excludeEnd("prodHost");
-    
+
     return config;
 });

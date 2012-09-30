@@ -8,7 +8,7 @@ define(function() {
             this.width = width;
             this.height = height;
         },
-    
+
         contains: function(entity) {
             if(entity) {
                 return entity.gridX >= this.x
@@ -20,6 +20,6 @@ define(function() {
             }
         }
     });
-    
+
     return Area;
 });

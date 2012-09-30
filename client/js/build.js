@@ -4,7 +4,7 @@
     dir: "../../client-build",
     optimize: "uglify",
     optimizeCss: "standard.keepLines",
-    
+
     paths: {
         "jquery": "lib/require-jquery"
     },
@@ -15,19 +15,19 @@
         {
             name: "jquery"
         },
-        
+
         {
             name: "game",
             exclude: ["jquery"]
         },
-         
+
         {
             name: "home",
             // Exclude the jquery module since it is included already in require-jquery.js
             exclude: ["jquery", "game"]
         }
     ],
-    
+
     pragmas: {
         devHost: false,
         prodHost: true

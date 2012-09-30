@@ -4,7 +4,7 @@ importScripts('../maps/world_client.js', 'lib/underscore.min.js');
 onmessage = function (event) {
     generateCollisionGrid();
     generatePlateauGrid();
-    
+
     postMessage(mapData);
 };
 
@@ -23,7 +23,7 @@ function generateCollisionGrid() {
         var pos = tileIndexToGridPosition(tileIndex+1);
         mapData.grid[pos.y][pos.x] = 1;
     });
-    
+
     _.each(mapData.blocking, function(tileIndex) {
         var pos = tileIndexToGridPosition(tileIndex+1);
         if(mapData.grid[pos.y] !== undefined) {

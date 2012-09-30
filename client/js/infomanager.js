@@ -7,34 +7,34 @@ define(function() {
             this.infos = {};
             this.destroyQueue = [];
         },
-    
+
         addDamageInfo: function(value, x, y, type) {
             var time = this.game.currentTime,
                 id = time+""+Math.abs(value)+""+x+""+y,
                 self = this,
                 info = new DamageInfo(id, value, x, y, DamageInfo.DURATION, type);
-        
+
             info.onDestroy(function(id) {
                 self.destroyQueue.push(id);
             });
             this.infos[id] = info;
         },
-    
+
         forEachInfo: function(callback) {
             var self = this;
-        
+
             _.each(this.infos, function(info, id) {
                 callback(info);
             });
         },
-    
+
         update: function(time) {
             var self = this;
-        
+
             this.forEachInfo(function(info) {
                 info.update(time);
             });
-        
+
             _.each(this.destroyQueue, function(id) {
                 delete self.infos[id];
             });
@@ -61,7 +61,7 @@ define(function() {
 
     var DamageInfo = Class.extend({
         DURATION: 1000,
-    
+
         init: function(id, value, x, y, duration, type) {
             this.id = id;
             this.value = value;
@@ -74,18 +74,18 @@ define(function() {
             this.fillColor = damageInfoColors[type].fill;
             this.strokeColor = damageInfoColors[type].stroke;
         },
-    
+
         isTimeToAnimate: function(time) {
-        	return (time - this.lastTime) > this.speed;
+            return (time - this.lastTime) > this.speed;
         },
-    
+
         update: function(time) {
             if(this.isTimeToAnimate(time)) {
                 this.lastTime = time;
                 this.tick();
             }
         },
-    
+
         tick: function() {
             this.y -= 1;
             this.opacity -= 0.07;
@@ -93,17 +93,17 @@ define(function() {
                 this.destroy();
             }
         },
-    
+
         onDestroy: function(callback) {
             this.destroy_callback = callback;
         },
-    
+
         destroy: function() {
             if(this.destroy_callback) {
                 this.destroy_callback(this.id);
             }
         }
     });
-    
+
     return InfoManager;
 });
