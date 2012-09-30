@@ -5,3 +5,4 @@ config_build.json
 config_local*
 .DS_Store
 *.swp
+.project
