@@ -1,11 +1,14 @@
+/*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true,
+    unused:true, curly:true, browser:true, node:true, indent:4, maxerr:50, globalstrict:true,
+    camelcase: true, quotmark: single, trailing: true*/
 
-var cls = require('./lib/class'),
-    _ = require('underscore'),
-    Utils = require('./utils'),
-    Types = require("../../shared/js/gametypes");
+'use strict';
 
-module.exports = Checkpoint = cls.Class.extend({
-    init: function(id, x, y, width, height) {
+var cls = require('./lib/class');
+var Utils = require('./utils');
+
+var Checkpoint = cls.Class.extend({
+    init: function (id, x, y, width, height) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -13,7 +16,7 @@ module.exports = Checkpoint = cls.Class.extend({
         this.height = height;
     },
 
-    getRandomPosition: function() {
+    getRandomPosition: function () {
         var pos = {};
 
         pos.x = this.x + Utils.randomInt(0, this.width - 1);
@@ -21,3 +24,5 @@ module.exports = Checkpoint = cls.Class.extend({
         return pos;
     }
 });
+
+module.exports = Checkpoint;

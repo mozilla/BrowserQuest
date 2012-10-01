@@ -1,3 +1,4 @@
+var Entity = require('./entity');
 
 module.exports = Item = Entity.extend({
     init: function(id, kind, x, y) {
