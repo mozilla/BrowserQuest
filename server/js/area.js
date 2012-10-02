@@ -4,7 +4,6 @@
 
 var cls = require('./lib/class');
 var _ = require('underscore');
-var Mob = require('./mob');
 var Utils = require('./utils');
 
 var Area = cls.Class.extend({

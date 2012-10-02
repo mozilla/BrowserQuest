@@ -1,6 +1,7 @@
 
 var cls = require("./lib/class"),
     _ = require("underscore"),
+    ChestArea = require("./chestarea"),
     Messages = require("./message"),
     Properties = require("./properties"),
     Types = require("../../shared/js/gametypes");
