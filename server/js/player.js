@@ -1,6 +1,7 @@
 
 var cls = require("./lib/class"),
     _ = require("underscore"),
+    Character = require('./character'),
     Chest = require('./chest'),
     Messages = require("./message"),
     Utils = require("./utils"),
