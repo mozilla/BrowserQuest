@@ -148,12 +148,12 @@ module.exports = World = cls.Class.extend({
     run: function(mapFilePath) {
         var self = this;
 
-        this.map = new Map(mapFilePath);
+        this.map = new Map(mapFilePath, log);
 
         this.map.ready(function() {
             self.initZoneGroups();
 
-            self.map.generateCollisionGrid();
+            self.map.generateCollisionGrid(log);
 
             // Populate all mob "roaming" areas
             _.each(self.map.mobAreas, function(a) {
