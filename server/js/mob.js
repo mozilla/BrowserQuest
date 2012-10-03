@@ -1,7 +1,3 @@
-/*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:false, undef:true,
-    unused:true, curly:true, browser:true, node:true, maxerr:50, camelcase: true, quotmark: single,
-    trailing: true*/
-
 var _ = require('underscore');
 var Character = require('./character');
 var ChestArea = require('./chestarea');
