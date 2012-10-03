@@ -2,10 +2,10 @@
     unused:true, curly:true, browser:true, node:true, maxerr:50, camelcase: true, quotmark: single,
     trailing: true*/
 
-var cls = require('./lib/class')
-    _ = require('underscore');
-var Utils = require('./utils');
+var _ = require('underscore');
 var Checkpoint = require('./checkpoint');
+var cls = require('./lib/class');
+var Utils = require('./utils');
 
 module.exports = Map = cls.Class.extend({
     init: function(filepath) {

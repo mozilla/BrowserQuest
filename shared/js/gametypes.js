@@ -202,10 +202,12 @@ Types.rankedArmors = [
 ];
 
 Types.getWeaponRank = function(weaponKind) {
+    var _ = require('underscore');
     return _.indexOf(Types.rankedWeapons, weaponKind);
 };
 
 Types.getArmorRank = function(armorKind) {
+    var _ = require('underscore');
     return _.indexOf(Types.rankedArmors, armorKind);
 };
 
