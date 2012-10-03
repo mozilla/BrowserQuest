@@ -11,6 +11,7 @@ var Map = cls.Class.extend({
     init: function (filepath, log) {
         var self = this;
         var file = require('../../shared/js/file');
+        this.log = log;
 
         this.isLoaded = false;
 
@@ -18,7 +19,7 @@ var Map = cls.Class.extend({
             var fs = require('fs');
 
             if (!exists) {
-                log.error(filepath + ' doesn\'t exist.');
+                this.log.error(filepath + ' doesn\'t exist.');
                 return;
             }
 
@@ -80,7 +81,7 @@ var Map = cls.Class.extend({
         return (y * this.width) + x + 1;
     },
 
-    generateCollisionGrid: function (log) {
+    generateCollisionGrid: function () {
         this.grid = [];
 
         if (this.isLoaded) {
@@ -96,7 +97,7 @@ var Map = cls.Class.extend({
                     tileIndex += 1;
                 }
             }
-            log.info('Collision grid generated.');
+            this.log.info('Collision grid generated.');
         }
     },
 
