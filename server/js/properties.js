@@ -161,6 +161,7 @@ Properties.getArmorLevel = function(kind) {
         }
     } catch(e) {
         log.error("No level found for armor: "+Types.getKindAsString(kind));
+        log.error('Error stack: ' + e.stack);
     }
 };
 
@@ -173,6 +174,7 @@ Properties.getWeaponLevel = function(kind) {
         }
     } catch(e) {
         log.error("No level found for weapon: "+Types.getKindAsString(kind));
+        log.error('Error stack: ' + e.stack);
     }
 };
 
