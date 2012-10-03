@@ -22,7 +22,7 @@ function main(config) {
         WorldServer = require("./worldserver"),
         _ = require('underscore'),
         server = new ws.MultiVersionWebsocketServer(config.port, config.use_one_port),
-        metrics = config.metrics_enabled ? new Metrics(config) : null,
+        metrics = config.metrics_enabled ? new Metrics(config, log) : null,
         worlds = [],
         lastTotalPlayers = 0,
         checkPopulationInterval = setInterval(function() {
