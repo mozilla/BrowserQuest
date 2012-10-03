@@ -15,7 +15,9 @@ var MobArea = Area.extend({
         this.respawns = [];
         this.setNumberOfEntities(this.nb);
 
-        //this.initRoaming();
+        // Enable random roaming for monsters
+        // (comment this out to disable roaming)
+        this.initRoaming();
     },
 
     spawnMobs: function () {
