@@ -3,7 +3,6 @@
     trailing: true*/
 
 var cls = require('./lib/class')
-    file = require("../../shared/js/file"),
     _ = require('underscore');
 var Utils = require('./utils');
 var Checkpoint = require('./checkpoint');
@@ -11,6 +10,7 @@ var Checkpoint = require('./checkpoint');
 module.exports = Map = cls.Class.extend({
     init: function(filepath) {
         var self = this;
+        var file = require('../../shared/js/file');
 
         this.isLoaded = false;
 
