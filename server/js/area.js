@@ -41,6 +41,7 @@ var Area = cls.Class.extend({
     },
 
     addToArea: function (entity) {
+        var Mob = require('./mob');
         if (entity) {
             this.entities.push(entity);
             entity.area = this;

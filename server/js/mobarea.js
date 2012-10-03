@@ -1,7 +1,7 @@
 
-var Area = require('./area'),
-    _ = require('underscore'),
-    Types = require("../../shared/js/gametypes");
+var _ = require('underscore');
+var Area = require('./area');
+var Types = require("../../shared/js/gametypes");
 
 module.exports = MobArea = Area.extend({
     init: function(id, nb, kind, x, y, width, height, world) {
@@ -21,9 +21,10 @@ module.exports = MobArea = Area.extend({
     },
 
     _createMobInsideArea: function() {
-        var k = Types.getKindFromString(this.kind),
-            pos = this._getRandomPositionInsideArea(),
-            mob = new Mob('1' + this.id + ''+ k + ''+ this.entities.length, k, pos.x, pos.y);
+        var Mob = require('./mob');
+        var k = Types.getKindFromString(this.kind);
+        var pos = this._getRandomPositionInsideArea();
+        var mob = new Mob('1' + this.id + '' + k + '' + this.entities.length, k, pos.x, pos.y);
 
         mob.onMove(this.world.onMobMoveCallback.bind(this.world));
 
