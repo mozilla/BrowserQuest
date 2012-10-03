@@ -1,15 +1,18 @@
+/*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:false, undef:true,
+    unused:true, curly:true, browser:true, node:true, maxerr:50, camelcase: true, quotmark: single,
+    trailing: true*/
 
-var cls = require("./lib/class"),
-    _ = require("underscore"),
-    Character = require("./character"),
-    ChestArea = require("./chestarea"),
-    Messages = require("./message"),
-    Properties = require("./properties"),
-    Types = require("../../shared/js/gametypes");
+var cls = require('./lib/class'),
+    _ = require('underscore'),
+    Character = require('./character'),
+    ChestArea = require('./chestarea'),
+    Messages = require('./message'),
+    Properties = require('./properties'),
+    Types = require('../../shared/js/gametypes');
 
 module.exports = Mob = Character.extend({
     init: function(id, kind, x, y) {
-        this._super(id, "mob", kind, x, y);
+        this._super(id, 'mob', kind, x, y);
 
         this.updateHitPoints();
         this.spawningX = x;
@@ -117,15 +120,15 @@ module.exports = Mob = Character.extend({
             }
 
             setTimeout(function() {
-                if(self.respawn_callback) {
-                    self.respawn_callback();
+                if(self.respawnCallback) {
+                    self.respawnCallback();
                 }
             }, delay);
         }
     },
 
     onRespawn: function(callback) {
-        this.respawn_callback = callback;
+        this.respawnCallback = callback;
     },
 
     resetPosition: function() {
@@ -145,13 +148,13 @@ module.exports = Mob = Character.extend({
     },
 
     onMove: function(callback) {
-        this.move_callback = callback;
+        this.moveCallback = callback;
     },
 
     move: function(x, y) {
         this.setPosition(x, y);
-        if(this.move_callback) {
-            this.move_callback(this);
+        if(this.moveCallback) {
+            this.moveCallback(this);
         }
     },
 
