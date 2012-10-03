@@ -1,11 +1,14 @@
+/*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:false, undef:true,
+    unused:true, curly:true, browser:true, node:true, maxerr:50, camelcase: true, quotmark: single,
+    trailing: true*/
 
 var cls = require('./lib/class')
     path = require('path'),
     fs = require('fs'),
     file = require("../../shared/js/file"),
-    _ = require('underscore'),
-    Utils = require('./utils'),
-    Checkpoint = require('./checkpoint');
+    _ = require('underscore');
+var Utils = require('./utils');
+var Checkpoint = require('./checkpoint');
 
 module.exports = Map = cls.Class.extend({
     init: function(filepath) {
