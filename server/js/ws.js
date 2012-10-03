@@ -393,6 +393,7 @@ WS.miksagoWebSocketConnection = Connection.extend({
 // Sends a file to the client
 function sendFile (file, response, log) {
     try {
+        var fs = require('fs');
         var realFile = fs.readFileSync(__dirname + '/../../shared/' + file);
         var responseHeaders = {
             'Content-Type': 'text/javascript',
@@ -404,6 +405,7 @@ function sendFile (file, response, log) {
     catch (err) {
         response.writeHead(500);
         log.error('Something went wrong when trying to send ' + file);
+        log.error('Error stack: ' + err.stack);
     }
 }
 
