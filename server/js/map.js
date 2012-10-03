@@ -3,8 +3,6 @@
     trailing: true*/
 
 var cls = require('./lib/class')
-    path = require('path'),
-    fs = require('fs'),
     file = require("../../shared/js/file"),
     _ = require('underscore');
 var Utils = require('./utils');
@@ -17,6 +15,8 @@ module.exports = Map = cls.Class.extend({
         this.isLoaded = false;
 
         file.exists(filepath, function(exists) {
+            var fs = require('fs');
+
             if(!exists) {
                 log.error(filepath + " doesn't exist.");
                 return;
