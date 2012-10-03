@@ -1,6 +1,6 @@
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:false, undef:true,
-    unused:true, curly:true, browser:true, node:true, indent:4, maxerr:50, camelcase: true,
-    quotmark: single, trailing: true*/
+    unused:true, curly:true, browser:true, node:true, maxerr:50, camelcase: true, quotmark: single,
+    trailing: true*/
 
 var _ = require('underscore');
 var BISON = require('bison');
