@@ -94,7 +94,7 @@ var Map = cls.Class.extend({
                     tileIndex += 1;
                 }
             }
-            this.log.info('Collision grid generated.');
+            this.log.debug('Collision grid generated.');
         }
     },
 
