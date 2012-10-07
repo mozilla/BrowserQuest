@@ -7,16 +7,15 @@ var Utils = require('./utils');
 var Checkpoint = require('./checkpoint');
 
 var Map = cls.Class.extend({
-    init: function (filepath, log) {
+    init: function (filepath) {
         var self = this;
-        this.log = log;
 
         this.isLoaded = false;
 
         file.exists(filepath, function (exists) {
 
             if (!exists) {
-                this.log.error(filepath + ' doesn\'t exist.');
+                log.error(filepath + ' doesn\'t exist.');
                 return;
             }
 
@@ -94,7 +93,7 @@ var Map = cls.Class.extend({
                     tileIndex += 1;
                 }
             }
-            this.log.debug('Collision grid generated.');
+            log.debug('Collision grid generated.');
         }
     },
 

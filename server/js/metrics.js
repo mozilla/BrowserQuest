@@ -5,18 +5,17 @@ var Metrics = {};
 module.exports = Metrics;
 
 Metrics = cls.Class.extend({
-    init: function(config, log) {
+    init: function(config) {
         var self = this;
 
         this.config = config;
-        this.log = log;
         this.client = new (require('memcache')).Client(config.memcached_port, config.memcached_host);
         this.client.connect();
 
         this.isReady = false;
 
         this.client.on('connect', function () {
-            this.log.info('Metrics enabled: memcached client connected to ' + config.memcached_host + ':' + config.memcached_port);
+            log.info('Metrics enabled: memcached client connected to ' + config.memcached_host + ':' + config.memcached_port);
             self.isReady = true;
             if (self.readyCallback) {
                 self.readyCallback();
@@ -57,7 +56,7 @@ Metrics = cls.Class.extend({
                 });
             });
         } else {
-            this.log.error('Memcached client not connected');
+            log.error('Memcached client not connected');
         }
     },
 

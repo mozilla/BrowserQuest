@@ -148,7 +148,7 @@ module.exports = World = cls.Class.extend({
     run: function(mapFilePath) {
         var self = this;
 
-        this.map = new Map(mapFilePath, log);
+        this.map = new Map(mapFilePath);
 
         this.map.ready(function() {
             self.initZoneGroups();

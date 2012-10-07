@@ -1,13 +1,9 @@
-
 var fs = require('fs'),
     Metrics = require('./metrics');
 
-
 function main(config) {
-    // Set up logging before anything else, so the
-    // log can be used by other functions
+    // Configure logging
     var Log = require('log');
-
     switch(config.debug_level) {
         case "error":
             log = new Log(Log.ERROR); break;
@@ -17,12 +13,11 @@ function main(config) {
             log = new Log(Log.INFO); break;
     };
 
-
     var ws = require("./ws"),
         WorldServer = require("./worldserver"),
         _ = require('underscore'),
         server = new ws.MultiVersionWebsocketServer(config.port, config.use_one_port),
-        metrics = config.metrics_enabled ? new Metrics(config, log) : null,
+        metrics = config.metrics_enabled ? new Metrics(config) : null,
         worlds = [],
         lastTotalPlayers = 0,
         checkPopulationInterval = setInterval(function() {
