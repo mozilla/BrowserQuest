@@ -1,18 +1,19 @@
-var _ = require('underscore');
-var Checkpoint = require('./checkpoint');
-var cls = require('./lib/class');
+var cls = require('./lib/class')
+    _ = require('underscore');
+var fs = require('fs');
+var file = require('../../shared/js/file');
+var path = require('path');
 var Utils = require('./utils');
+var Checkpoint = require('./checkpoint');
 
 var Map = cls.Class.extend({
     init: function (filepath, log) {
         var self = this;
-        var file = require('../../shared/js/file');
         this.log = log;
 
         this.isLoaded = false;
 
         file.exists(filepath, function (exists) {
-            var fs = require('fs');
 
             if (!exists) {
                 this.log.error(filepath + ' doesn\'t exist.');
