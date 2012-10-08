@@ -1,7 +1,3 @@
-/*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:false, undef:true,
-    unused:true, curly:true, browser:true, node:true, indent:4, maxerr:50, camelcase: true,
-    quotmark: single, trailing: true*/
-
 var _ = require('underscore');
 var BISON = require('bison');
 var cls = require('./lib/class');
@@ -12,7 +8,7 @@ var useBison = false;
 var Utils = require('./utils');
 var worlizeRequest = require('websocket').request;
 var WS = {};
-var wsserver = require('websocket-server');
+var wsServer = require('websocket-server');
 
 module.exports = WS;
 
@@ -135,7 +131,7 @@ WS.MultiVersionWebsocketServer = Server.extend({
             app.use(connect.logger('dev'));
 
             // Generate (on the fly) the pages needing special treatment
-            app.use(function (request, response) {
+            app.use(function handleDynamicPageRequests(request, response) {
                 var path = url.parse(request.url).pathname;
                 switch (path) {
                     case '/status':
@@ -182,7 +178,7 @@ WS.MultiVersionWebsocketServer = Server.extend({
                         var newConfig = {
                             host: newHost,
                             port: newPort,
-                            dispatcher: false
+                            dispatcher: false,
                         };
 
                         // Make it JSON
@@ -212,12 +208,12 @@ WS.MultiVersionWebsocketServer = Server.extend({
                 response.end();
             });
 
-            this._httpServer = http.createServer(app).listen(port, function () {
+            this._httpServer = http.createServer(app).listen(port, function serverEverythingListening() {
                 log.info('Server (everything) is listening on port ' + port);
             });
         } else {
             // Only run the server side code
-            this._httpServer = http.createServer(function (request, response) {
+            this._httpServer = http.createServer(function statusListener(request, response) {
                 var path = url.parse(request.url).pathname;
                 if ((path === '/status') && self.statusCallback) {
                     response.writeHead(200);
@@ -227,14 +223,14 @@ WS.MultiVersionWebsocketServer = Server.extend({
                 }
                 response.end();
             });
-            this._httpServer.listen(port, function () {
+            this._httpServer.listen(port, function serverOnlyListening() {
                 log.info('Server (only) is listening on port ' + port);
             });
         }
 
-        this._miksagoServer = wsserver.createServer();
+        this._miksagoServer = wsServer.createServer();
         this._miksagoServer.server = this._httpServer;
-        this._miksagoServer.addListener('connection', function (connection) {
+        this._miksagoServer.addListener('connection', function webSocketListener(connection) {
             // Add remoteAddress property
             connection.remoteAddress = connection._socket.remoteAddress;
 
@@ -248,7 +244,7 @@ WS.MultiVersionWebsocketServer = Server.extend({
             self.addConnection(c);
         });
 
-        this._httpServer.on('upgrade', function (req, socket, head) {
+        this._httpServer.on('upgrade', function httpUpgradeRequest(req, socket, head) {
             if (typeof req.headers['sec-websocket-version'] !== 'undefined') {
                 // WebSocket hybi-08/-09/-10 connection (WebSocket-Node)
                 var wsRequest = new worlizeRequest(socket, req, self.worlizeServerConfig);
@@ -303,7 +299,7 @@ WS.worlizeWebSocketConnection = Connection.extend({
 
         this._super(id, connection, server);
 
-        this._connection.on('message', function (message) {
+        this._connection.on('message', function onConnectionMessage(message) {
             if (self.listenCallback) {
                 if (message.type === 'utf8') {
                     if (useBison) {
@@ -323,7 +319,7 @@ WS.worlizeWebSocketConnection = Connection.extend({
             }
         });
 
-        this._connection.on('close', function (connection) {
+        this._connection.on('close', function onConnectionClose(connection) {
             if (self.closeCallback) {
                 self.closeCallback();
             }
@@ -393,6 +389,7 @@ WS.miksagoWebSocketConnection = Connection.extend({
 // Sends a file to the client
 function sendFile (file, response, log) {
     try {
+        var fs = require('fs');
         var realFile = fs.readFileSync(__dirname + '/../../shared/' + file);
         var responseHeaders = {
             'Content-Type': 'text/javascript',
@@ -404,6 +401,6 @@ function sendFile (file, response, log) {
     catch (err) {
         response.writeHead(500);
         log.error('Something went wrong when trying to send ' + file);
+        log.error('Error stack: ' + err.stack);
     }
 }
-

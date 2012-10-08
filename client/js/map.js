@@ -212,7 +212,7 @@ define(['jquery', 'area'], function($, Area) {
                     self.grid[pos.y][pos.x] = 1;
                 }
             });
-            log.info("Collision grid generated.");
+            log.debug("Collision grid generated.");
         },
 
         _generatePlateauGrid: function() {

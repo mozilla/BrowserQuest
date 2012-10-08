@@ -6,3 +6,4 @@ config_local*
 .DS_Store
 *.swp
 .project
+.idea
