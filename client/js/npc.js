@@ -1,4 +1,3 @@
-
 define(['character'], function(Character) {
 
     var NpcTalk = {
@@ -64,15 +63,35 @@ define(['character'], function(Character) {
             "Never gonna tell a lie and hurt you"
         ],
 
-        "scientist": [
-            "Greetings.",
-            "I am the inventor of these two potions.",
-            "The red one will replenish your health points...",
-            "The orange one will turn you into a firefox and make you invincible...",
-            "But it only lasts for a short while.",
-            "So make good use of it!",
-            "Now if you'll excuse me, I need to get back to my experiments..."
-        ],
+        "scientist": [{
+			"text": [//default
+				"Greetings.",
+				"I am the inventor of these two potions.",
+				"The red one will replenish your health points...",
+				"The orange one will turn you into a firefox and make you invincible...",
+				"But it only lasts for a short while.",
+				"So make good use of it!",
+				"Now if you'll excuse me, I need to get back to my experiments..."
+			]},
+			{"condition": function(game){return (game.player.invincible);},
+			 "text": [
+				"Did you not listen to what I said?!!",
+				"the famous fire-potion only lasts a few seconds",
+				"You shouldn't be wasting them talking to me…"
+			]},
+			{"condition": function(game){return ((game.player.getSpriteName() == "firefox")
+											&& !(game.player.invincible));},
+			 "text": [
+				"Ha ha ha, *name*",
+				"All that glitters is not gold…",
+				"-sigh-",
+				"Did you really think you could abuse me with your disguise?",
+				"I conceived that f…, that potion.",
+				"Better not use your outfit as a deterrent,",
+				"The goons you'll meet will attack you whatever you look like."
+			]}
+			
+		],
 
         "nyan": [
             "nyan nyan nyan nyan nyan",
@@ -165,22 +184,59 @@ define(['character'], function(Character) {
         init: function(id, kind) {
             this._super(id, kind, 1);
             this.itemKind = Types.getKindAsString(this.kind);
-            this.talkCount = NpcTalk[this.itemKind].length;
+            if(typeof NpcTalk[this.itemKind][0] === 'string'){
+				this.discourse = -1;
+				this.talkCount = NpcTalk[this.itemKind].length;
+			}
+			else{
+				this.discourse = 0;
+				this.talkCount = NpcTalk[this.itemKind][this.discourse]["text"].length;
+			}
             this.talkIndex = 0;
         },
+        
+        selectTalk: function(game){
+			var change = false;
+			if(this.discourse != -1){
+				var found = false;
+				for(var i = 1; !found && i<NpcTalk[this.itemKind].length; i++){
+					if(NpcTalk[this.itemKind][i]["condition"](game)){
+						if(this.discourse != i){
+							change = true;
+							this.discourse = i;
+							this.talkCount = NpcTalk[this.itemKind][this.discourse]["text"].length;
+						}
+						found = true;
+					}
+				}
+				if(!found){
+					if(this.discourse != 0){
+						change = true;
+						this.discourse = 0;
+						this.talkCount = NpcTalk[this.itemKind][this.discourse]["text"].length;
+					}
+				}
+			}
+			return change;
+		},
 
-        talk: function() {
+        talk: function(game) {
             var msg = null;
 
-            if(this.talkIndex > this.talkCount) {
+            if(this.selectTalk(game) || (this.talkIndex > this.talkCount) ){
                 this.talkIndex = 0;
             }
             if(this.talkIndex < this.talkCount) {
-                msg = NpcTalk[this.itemKind][this.talkIndex];
+				if(this.discourse == -1){
+					msg = NpcTalk[this.itemKind][this.talkIndex];
+				}
+				else{
+					msg = NpcTalk[this.itemKind][this.discourse]["text"][this.talkIndex];
+				}
             }
             this.talkIndex += 1;
 
-            return msg;
+            return msg.replace('*name*',game.player.name);
         }
     });
 

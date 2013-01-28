@@ -1,5 +1,5 @@
 
-define(['jquery', 'app'], function($, App) {
+define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
     var app, game;
 
     var initApp = function() {
@@ -209,6 +209,8 @@ define(['jquery', 'app'], function($, App) {
 
             game.onGameStart(function() {
                 app.initEquipmentIcons();
+                var entry = new EntryPoint();
+				entry.execute(game);
             });
 
             game.onDisconnect(function(message) {
