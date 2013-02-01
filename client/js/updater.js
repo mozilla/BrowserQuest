@@ -16,6 +16,7 @@ define(['character', 'timer'], function(Character, Timer) {
             this.updateAnimatedTiles();
             this.updateChatBubbles();
             this.updateInfos();
+            this.updateKeyboardMovement();
         },
 
         updateCharacters: function() {
@@ -194,6 +195,42 @@ define(['character', 'timer'], function(Character, Timer) {
                                      c.moveSpeed);
                 }
             }
+        },
+        
+        updateKeyboardMovement: function()
+        {           
+            if(!this.game.player || this.game.player.isMoving())
+                return;
+                
+            var game = this.game;
+            var player = this.game.player;
+                
+            var pos = {
+                x: player.gridX,
+                y: player.gridY
+            };
+            
+            if(player.moveUp)
+            {
+                pos.y -= 1;
+                game.keys(pos, Types.Orientations.UP);
+            }
+            else if(player.moveDown)
+            {
+                pos.y += 1;
+                game.keys(pos, Types.Orientations.DOWN);
+            }
+            else if(player.moveRight)
+            {
+                pos.x += 1;
+                game.keys(pos, Types.Orientations.RIGHT);
+            }
+            else if(player.moveLeft)
+            {
+                pos.x -= 1;
+                game.keys(pos, Types.Orientations.LEFT);
+            }
+        
         },
 
         updateAnimations: function() {

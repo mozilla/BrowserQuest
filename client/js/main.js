@@ -339,6 +339,38 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 }
             });
 
+            $(document).keyup(function(e) {
+                var key = e.which;
+                
+                if (game.started && !$('#chatbox').hasClass('active'))
+                {
+                    switch(key) {
+                        case Types.Keys.LEFT:
+                        case Types.Keys.A:
+                        case Types.Keys.KEYPAD_4:
+                            game.player.moveLeft = false;
+                            break;
+                        case Types.Keys.RIGHT:
+                        case Types.Keys.D:
+                        case Types.Keys.KEYPAD_6:
+                            game.player.moveRight = false;
+                            break;
+                        case Types.Keys.UP:
+                        case Types.Keys.W:
+                        case Types.Keys.KEYPAD_8:
+                            game.player.moveUp = false;
+                            break;
+                        case Types.Keys.DOWN:
+                        case Types.Keys.S:
+                        case Types.Keys.KEYPAD_2:
+                            game.player.moveDown = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+
             $(document).keydown(function(e) {
                 var key = e.which,
                     $chat = $('#chatinput');
@@ -360,26 +392,22 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                         case Types.Keys.LEFT:
                         case Types.Keys.A:
                         case Types.Keys.KEYPAD_4:
-                            pos.x -= 1;
-                            game.keys(pos, Types.Orientations.LEFT);
+                            game.player.moveLeft = true;
                             break;
                         case Types.Keys.RIGHT:
                         case Types.Keys.D:
                         case Types.Keys.KEYPAD_6:
-                            pos.x += 1;
-                            game.keys(pos, Types.Orientations.RIGHT);
+                            game.player.moveRight = true;
                             break;
                         case Types.Keys.UP:
                         case Types.Keys.W:
                         case Types.Keys.KEYPAD_8:
-                            pos.y -= 1;
-                            game.keys(pos, Types.Orientations.UP);
+                            game.player.moveUp = true;
                             break;
                         case Types.Keys.DOWN:
                         case Types.Keys.S:
                         case Types.Keys.KEYPAD_2:
-                            pos.y += 1;
-                            game.keys(pos, Types.Orientations.DOWN);
+                            game.player.moveDown = true;
                             break;
                         case Types.Keys.SPACE:
                             game.makePlayerAttackNext();
