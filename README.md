@@ -70,12 +70,26 @@ On Fedora 16 and RHEL 6/CentOS 6, the rpms here are known to work:
 Note, those rpms are ugly, unofficial builds by [@justinclift](https://github.com/justinclift).  You are
 most welcome to improve on them. :)
 
+
+Mac OS X
+--------
+
+Node installed through Homebrew is known to work. i.e.:
+
+* git clone git://github.com/browserquest/BrowserQuest.git
+* cd BrowserQuest
+* brew install node
+* npm install -d
+* node server/js/main.js
+
+
 Windows
 -------
 
 Windows 8 is known to work ok with just the base Node v0.8.18
 installed, without Visual Studio, nor Python, nor the native
 extensions for npm modules installed.
+
 
 Documentation
 -------------
