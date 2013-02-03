@@ -221,7 +221,7 @@ define(['character'], function(Character) {
 		},
 
         talk: function(game) {
-            var msg = null;
+            var msg = "";
 
             if(this.selectTalk(game) || (this.talkIndex > this.talkCount) ){
                 this.talkIndex = 0;
