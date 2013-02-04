@@ -349,21 +349,25 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                         case Types.Keys.A:
                         case Types.Keys.KEYPAD_4:
                             game.player.moveLeft = false;
+                            game.player.disableKeyboardNpcTalk = false;
                             break;
                         case Types.Keys.RIGHT:
                         case Types.Keys.D:
                         case Types.Keys.KEYPAD_6:
                             game.player.moveRight = false;
+                            game.player.disableKeyboardNpcTalk = false;
                             break;
                         case Types.Keys.UP:
                         case Types.Keys.W:
                         case Types.Keys.KEYPAD_8:
                             game.player.moveUp = false;
+                            game.player.disableKeyboardNpcTalk = false;
                             break;
                         case Types.Keys.DOWN:
                         case Types.Keys.S:
                         case Types.Keys.KEYPAD_2:
                             game.player.moveDown = false;
+                            game.player.disableKeyboardNpcTalk = false;
                             break;
                         default:
                             break;

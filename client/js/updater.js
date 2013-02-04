@@ -201,7 +201,7 @@ define(['character', 'timer'], function(Character, Timer) {
         {           
             if(!this.game.player || this.game.player.isMoving())
                 return;
-                
+
             var game = this.game;
             var player = this.game.player;
                 
@@ -209,7 +209,7 @@ define(['character', 'timer'], function(Character, Timer) {
                 x: player.gridX,
                 y: player.gridY
             };
-            
+
             if(player.moveUp)
             {
                 pos.y -= 1;

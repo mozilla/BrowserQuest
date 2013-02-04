@@ -27,6 +27,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.player.moveDown = false;
             this.player.moveLeft = false;
             this.player.moveRight = false;
+            this.player.disableKeyboardNpcTalk = false;
 
             // Game state
             this.entities = {};
@@ -40,6 +41,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.zoningQueue = [];
             this.previousClickPosition = {};
 
+            this.cursorVisible = true;
             this.selectedX = 0;
             this.selectedY = 0;
             this.selectedCellVisible = false;
@@ -820,6 +822,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     // Target cursor position
                     self.selectedX = x;
                     self.selectedY = y;
+
                     self.selectedCellVisible = true;
 
                     if(self.renderer.mobile || self.renderer.tablet) {
@@ -1925,6 +1928,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 x = mouse.x,
                 y = mouse.y;
 
+            this.cursorVisible = true;
+
             if(this.player && !this.renderer.mobile && !this.renderer.tablet) {
                 this.hoveringCollidingTile = this.map.isColliding(x, y);
                 this.hoveringPlateauTile = this.player.isOnPlateau ? !this.map.isPlateau(x, y) : this.map.isPlateau(x, y);
@@ -1962,11 +1967,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             && pos.y === this.previousClickPosition.y) || this.isZoning()) {
                 return;
             } else {
-                this.previousClickPosition = pos;
+                if(!this.player.disableKeyboardNpcTalk)
+                    this.previousClickPosition = pos;
             }
 
-            if(!this.player.isMoving())
-                this.processInput(pos);			
+            if(!this.player.isMoving()) {
+                this.cursorVisible = false;
+                this.processInput(pos);
+            }
         },
 
         click: function()
@@ -2008,7 +2016,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     if(this.player.isAdjacentNonDiagonal(entity) === false) {
                         this.makePlayerTalkTo(entity);
                     } else {
-                        this.makeNpcTalk(entity);
+                        if(!this.player.disableKeyboardNpcTalk) {
+                            this.makeNpcTalk(entity);
+
+                            if(this.player.moveUp || this.player.moveDown || this.player.moveLeft || this.player.moveRight)
+                                this.player.disableKeyboardNpcTalk = true;
+                        }
                     }
                 }
                 else if(entity instanceof Chest) {
@@ -2441,8 +2454,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
          * Also useful when the mouse is hovering a tile where an item is appearing.
          */
         updateCursor: function() {
+            if(!this.cursorVisible)
+                var keepCursorHidden = true;
+
             this.movecursor();
             this.updateCursorLogic();
+
+            if(keepCursorHidden)
+                this.cursorVisible = false;
         },
 
         /**
