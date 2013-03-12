@@ -475,9 +475,9 @@ define(['jquery', 'storage'], function($, Storage) {
 
             this.animateMessages();
             $message.text(message);
-            if(this.messageTimer) {
+            /*if(this.messageTimer) {
                 this.resetMessageTimer();
-            }
+            }*/
 
             this.messageTimer = setTimeout(function() {
                     $wrapper.addClass('top');

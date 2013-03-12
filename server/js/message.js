@@ -206,3 +206,24 @@ Messages.Blink = Message.extend({
                 this.item.id];
     }
 });
+
+Messages.GuildError = Message.extend({
+	init: function (errorType, guildName) {
+		this.guildName = guildName;
+		this.errorType = errorType;
+	},
+	serialize: function () {
+		return [Types.Messages.GUILDERROR, this.errorType, this.guildName];
+	}
+});
+
+Messages.Guild = Message.extend({
+	init: function (action, info) {
+		this.action = action;
+		this.info = info;
+		/**/log.info("Guild message created: (actionID:"+this.action+"/info:"+this.info+")");
+	},
+	serialize: function () {
+		return [Types.Messages.GUILD, this.action].concat(this.info);
+	}
+});

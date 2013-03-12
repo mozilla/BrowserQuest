@@ -5,7 +5,7 @@ var Types = require('../../shared/js/gametypes');
     FormatChecker = Class.extend({
         init: function () {
             this.formats = [];
-            this.formats[Types.Messages.HELLO] = ['s', 'n', 'n'],
+            //this.formats[Types.Messages.HELLO] = ['s', 'n', 'n', 'n'],
             this.formats[Types.Messages.MOVE] = ['n', 'n'],
             this.formats[Types.Messages.LOOTMOVE] = ['n', 'n', 'n'],
             this.formats[Types.Messages.AGGRO] = ['n'],
@@ -45,6 +45,36 @@ var Types = require('../../shared/js/gametypes');
                 // WHO messages have a variable amount of params, all of which must be numbers.
                 return message.length > 0 && _.all(message, function (param) { return _.isNumber(param); });
             }
+            else if (type === Types.Messages.HELLO) {
+				// HELLO with or without guild
+				return _.isString(message[0]) && _.isNumber(message[1]) && _.isNumber(message[2]) && (message.length == 3 || (_.isNumber(message[3]) && _.isString(message[4]) && message.length == 5) );
+			}
+            else if (type === Types.Messages.GUILD) {
+				if (message[0] === Types.Messages.GUILDACTION.CREATE){
+					return (message.length === 2 && _.isString(message[1]));
+				}
+				else if (message[0] === Types.Messages.GUILDACTION.INVITE){
+					return (message.length === 2 && _.isString(message[1]));
+				}
+				else if (message[0] === Types.Messages.GUILDACTION.JOIN){
+					/**/log.debug("JOIN "+message.join(','));
+					return (message.length === 3 && _.isNumber(message[1]) && _.isBoolean(message[2]));
+				}
+				else if (message[0] === Types.Messages.GUILDACTION.LEAVE){
+					/**/log.debug("LEAVE ");
+					return (message.length === 1);
+				}
+				else if (message[0] === Types.Messages.GUILDACTION.TALK){
+					/**/log.debug("talk "+message.join(','));
+					return (message.length === 2 && _.isString(message[1]));
+				}
+				else {
+					log.error('Unknown message type: ' + type);
+					return false;
+				// TODO
+			    //return _.isNumber(message[0]) && (  || (_.isNumber(message[1]) && _.isString(message[2]) && (message.length==3 || (_.isBoolean(message[3]) && message.length==4) ) ) );
+				}
+			}
             else {
                 log.error('Unknown message type: ' + type);
                 return false;

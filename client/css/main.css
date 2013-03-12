@@ -161,9 +161,12 @@ footer, header, hgroup, menu, nav, section {
     
     #playercount {font-family:'GraphicPixel';color:#e3e3e3;position:absolute;}
     #playercount:hover {cursor:pointer;color:#FCE045;}
-    #population {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;font-family:'GraphicPixel';color:#fff;text-align:center;opacity:0;pointer-events:none;-moz-transition:0.2s opacity linear, 0.2s height ease;-webkit-transition:0.2s opacity linear, 0.2s height ease;-o-transition:0.2s opacity linear, 0.2s height ease;-ms-transition:0.2s opacity linear, 0.2s height ease;transition:0.2s opacity linear, 0.2s height ease;height:0;overflow:hidden;}
-    #population span:nth-child(1) {color:#FCE045;}
-    #population.visible {opacity:1;pointer-events:auto;}
+    #population {position:absolute;font-family:'GraphicPixel';color:#fff;text-align:center;height:0;overflow:hidden;pointer-events:none;-moz-transition:0.2s height ease; -webkit-transition: 0.2s height ease;-o-transition:0.2s height ease;-ms-transition:0.2s height ease;transition:0.2s height ease;}
+    #population div{background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;opacity:0;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
+    #guild-name, #population span:nth-child(1) {color:#FCE045;}
+    #population.visible div{opacity:1;}
+    #guild-population {height:0;overflow:hidden;}
+    #population.visible, #guild-population.visible{height:auto;pointer-events:auto;}
     
     .barbutton {background:url('../img/1/barsheet.png');image-rendering:-moz-crispt-edges;position:absolute;}
     
@@ -436,7 +439,7 @@ footer, header, hgroup, menu, nav, section {
 	@media screen and (min-width: 1501px) {
 	    
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/3/spritesheet.png');}
-	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('../img/3/barsheet.png');}
+	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population div{background-image:url('../img/3/barsheet.png');}
 	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/3/achievements.png');}
 	    
 	    
@@ -525,10 +528,9 @@ footer, header, hgroup, menu, nav, section {
         #notifications span {line-height:45px;height:45px;}
 
         #playercount {font-size:20px;left:1076px;top:18px;width:172px;text-align:center;}
-        #population {background-size:1440px;right:105px;bottom:66px;width:393px;background-position:-720px -144px;font-size:20px;line-height:30px;}
-        #population.visible {height:96px;}
-        #instance-population {padding-top:18px;}
-
+        #population {width:393px;right:105px;bottom:66px;font-size:20px;line-height:30px;}
+        #population div{background-size:1440px;background-position:-720px -156px;}
+        #instance-population{background-size:1440px; background-position:-720px -144px !important;padding-top: 12px;}
 
         .barbutton {background-size:1440px;height:45px;width:42px;}
         #chatbutton {background-position:-306px -51px;top:3px;left:1260px;}
@@ -599,7 +601,7 @@ footer, header, hgroup, menu, nav, section {
 	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
 
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
-	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('../img/2/barsheet.png');}
+	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population div{background-image:url('../img/2/barsheet.png');}
 	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/2/achievements.png');}
 
         body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
@@ -689,9 +691,9 @@ footer, header, hgroup, menu, nav, section {
         .windows #notifications span {line-height:34px;}
 
         #playercount {font-size:16px;left:717px;top:10px;width:114px;text-align:center;}
-        #population {background-size:960px;right:70px;bottom:44px;width:262px;background-position:-480px -96px;font-size:14px;line-height:20px;}
-        #population.visible {height:64px;}
-        #instance-population {padding-top:12px;}
+        #population {right:70px;bottom:44px;width:262px;font-size:14px;line-height:20px;}
+        #population div{background-size:960px;background-position:-480px -104px;}
+        #instance-population{background-position:-480px -98px !important;padding-top: 6px;}
 
         .barbutton {background-size:960px;height:30px;width:28px;}
         #chatbutton {background-position:-204px -34px;top:2px;left:840px;}
@@ -856,9 +858,10 @@ footer, header, hgroup, menu, nav, section {
         #notifications span {line-height:15px;height:15px;}
 
         #playercount {font-size:10px;left:358px;top:4px;width:57px;text-align:center;}
-        #population {background-size:480px;right:35px;bottom:22px;width:131px;background-position:-240px -48px;font-size:9px;line-height:12px;}
-        #population.visible {height:32px;}
-        #instance-population {padding-top:5px;}
+        #population {right:35px;bottom:22px;width:130px;font-size:9px;line-height:12px;}
+        #population div{background-size:480px;background-position:-240px -52px;}
+        #instance-population{padding-top:4px;background-position:-240px -48px !important;}
+
 
         .barbutton {background-size:480px;height:15px;width:14px;}
         #chatbutton {background-position:-102px -17px;top:1px;left:420px;}
