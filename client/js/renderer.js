@@ -222,7 +222,7 @@ function(Camera, Item, Character, Player, Timer) {
         },
 
         drawSelectedCell: function() {
-            var sprite = this.game.cursors["target"],
+                var sprite = this.game.cursors["target"],
                 anim = this.game.targetAnimation,
                 os = this.upscaledRendering ? 1 : this.scale,
                 ds = this.upscaledRendering ? this.scale : 1;
@@ -732,7 +732,7 @@ function(Camera, Item, Character, Player, Timer) {
                 this.setCameraView(this.context);
                 this.drawAnimatedTiles();
 
-                if(this.game.started) {
+                if(this.game.started && this.game.cursorVisible) {
                     this.drawSelectedCell();
                     this.drawTargetCell();
                 }
@@ -745,7 +745,9 @@ function(Camera, Item, Character, Player, Timer) {
             this.context.restore();
 
             // Overlay UI elements
-            this.drawCursor();
+            if(this.game.cursorVisible)
+                this.drawCursor();
+
             this.drawDebugInfo();
         },
 
