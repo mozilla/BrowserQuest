@@ -73,9 +73,7 @@ module.exports = World = cls.Class.extend({
             if(player.hasGuild()){
 				self.pushToGuild(player.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.CONNECT, player.name),player);
 				var names = _.without(player.getGuild().memberNames(), player.name);
-            log.info("players from guild " + player.getGuild().memberNames() + "sends "+names);
 				if(names.length > 0){
-					log.info("Message sent" + JSON.stringify(new Messages.Guild(Types.Messages.GUILDACTION.ONLINE, names)));/**/
 					self.pushToPlayer(player, new Messages.Guild(Types.Messages.GUILDACTION.ONLINE, names));
 				}
 			}
@@ -283,19 +281,16 @@ module.exports = World = cls.Class.extend({
     
     pushToGuild: function(guild, message, except) {
 		var	self = this;
-		/**/log.debug("pushToGuild "+JSON.stringify(message)+" to "+guild.memberNames());
 
 		if(guild){
 			if(typeof except === "undefined"){
 				guild.forEachMember(function (player, id){
-					/**/log.debug("will send "+JSON.stringify(message)+" to "+player+"("+id+")");
 					self.pushToPlayer(self.getEntityById(id), message);
 				});
 			}
 			else{
 				guild.forEachMember(function (player, id){
 					if(parseInt(id,10)!==except.id){
-						/**/log.debug("will send "+JSON.stringify(message)+" to "+player+"("+id+") ≠ "+except.id);
 						self.pushToPlayer(self.getEntityById(id), message);
 					}
 				});
@@ -388,13 +383,9 @@ module.exports = World = cls.Class.extend({
 	joinGuild: function(player, guildId, answer){
 		if( typeof this.guilds[guildId] === 'undefined' ){
 			this.pushToPlayer(player, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.DOESNOTEXIST,guildId));
-			/**/log.info(guildId + " does not exist");
 		}
-		/*else if(false){//for when there are rules
-			this.pushToPlayer(player, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.GUILDRULES,guildName));
-		}*/
+		//#guildupdate (guildrules)
 		else {
-			/**/log.info(guildId + " exists");
 			if(player.hasGuild()){
 				var formerGuildId = player.guildId;
 			}
@@ -407,22 +398,7 @@ module.exports = World = cls.Class.extend({
 		return false;
 	},
 	
-	getGuildId: function(guildName){
-		var guildId = false;
-		_.every(this.guilds,function(guild, key){
-			if(guild.name === guildName){
-				guildId = parseInt(key,10);
-				return false;
-			}
-			else{
-				return true;
-			}
-		});
-		return guildId;
-	},
-	
 	reloadGuild: function(guildId, guildName){
-		/**/log.info("reloadGuild: "+this.getStringGuilds()+" id:"+guildId+" val:"+guildName + '(' + this.guilds[guildId]+')');
 			var res = false;
 			var lastItem = 0;
 			if(typeof this.guilds[guildId] !== "undefined"){
@@ -430,10 +406,8 @@ module.exports = World = cls.Class.extend({
 					res = guildId;
 				}
 			}
-/**/log.info("la même qu'avant?→"+res);
 			if(res===false){
 				_.every(this.guilds, function(guild, key){
-/**/log.info("test"+guild.name+" =? "+guildName);
 					if(guild.name === guildName){
 						res = parseInt(key,10);
 						return false;
@@ -444,7 +418,6 @@ module.exports = World = cls.Class.extend({
 					}
 				});
 			}
-/**/log.info("retrouvé la même à l'indice…"+res+" vs "+lastItem);
 
 			if(res===false){//first connected after reboot.
 				if(typeof this.guilds[guildId] !== "undefined"){
@@ -466,19 +439,9 @@ module.exports = World = cls.Class.extend({
 		if (res) { 
 			this.guilds[id] = new Guild(id, guildName, this);
 			res = id;
-			log.info("test id addGuild→"+id);/**/
 		}
 		return res;
 	},
-	/**///Debug
-	getStringGuilds: function(){
-		return _.map(this.guilds, function(guild,keyg){
-			return "{id:"+keyg+"/"+guild.id+", name:"+guild.name+",members:{" + _.map(guild.members, function(player,keyp){
-				return keyp + ":" + player ;
-			}) +"}}";
-		});
-	},
-	/**///end debug
 
     addPlayer: function(player, guildId) {
         this.addEntity(player);
@@ -486,11 +449,9 @@ module.exports = World = cls.Class.extend({
         this.outgoingQueues[player.id] = [];
         var res = true;
         if(typeof guildId !== 'undefined'){
-			/**/log.info(player.name + " is about to join guild " + guildId);
 			res = this.joinGuild(player, guildId);
 		}
 		return res;
-        //log.info("Added player : " + player.id);
     },
 
     removePlayer: function(player) {

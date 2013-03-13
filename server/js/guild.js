@@ -16,7 +16,6 @@ module.exports = Guild = cls.Class.extend({
         //with DB also update structure to make members permanent
     },
     addMember: function(player, reply) {
-		/**/var message = (this.name + ", ajout de membre"+_.size(this.members));
 		if(typeof this.members[player.id] !== "undefined"){
 			log.error('Add to guild: player conflict (' + player.id + ' already exists)');
 			this.deleteInvite(player.id);
@@ -36,8 +35,6 @@ module.exports = Guild = cls.Class.extend({
 			if(proceed){
 				this.members[player.id] = player.name;
 				player.setGuildId(this.id);
-		/**/log.info(message + "→" + this.id + "→" + player.id + "member #" + _.size(this.members));
-		/**/log.debug("(add) send guild population "+this.name+", "+this.onlineMemberCount());
 				this.server.pushToGuild(this, new Messages.Guild(Types.Messages.GUILDACTION.POPULATION, [this.name, this.onlineMemberCount()]));
 				if (typeof reply !== "undefined"){
 					this.server.pushToGuild(this, new Messages.Guild(Types.Messages.GUILDACTION.JOIN, [player.name, player.id,this.id,this.name]));
@@ -54,24 +51,19 @@ module.exports = Guild = cls.Class.extend({
 		}
 		else{
 			this.sentInvites[invitee.id]=new Date().valueOf();
-			/**/log.debug("invite():"+JSON.stringify(this.sentInvites));
 			this.server.pushToPlayer(invitee, new Messages.Guild(Types.Messages.GUILDACTION.INVITE, [this.id, this.name, invitor.name]));
 		}
 	},
 	
 	deleteInvite: function(inviteeId){
-		/**/log.debug("invites del:"+JSON.stringify(this.sentInvites));
 		delete this.sentInvites[inviteeId];
-		/**/log.debug("invites deleted:"+JSON.stringify(this.sentInvites));
 	},
 	
 	checkInvite: function(invitee){
-		/**/log.debug("checkinvites:"+JSON.stringify(this.sentInvites));
 		var now = new Date().valueOf(), self=this;
 		_.each(this.sentInvites, function(time, id){
 			if (now - time > 600000){
 				var belated = self.server.getEntityById(id);
-				/**/log.debug("too late→"+id+"("+belated.name+")");
 				self.deleteInvite(id);
 				self.server.pushToGuild(self, new Messages.Guild(Types.Messages.GUILDACTION.JOIN, belated.name), belated);
 			}});
@@ -81,7 +73,6 @@ module.exports = Guild = cls.Class.extend({
 	removeMember: function(player) {
 		if(typeof this.members[player.id] !== undefined){
 			delete this.members[player.id];
-/**/log.debug("(add) send guild population "+this.name+", "+this.onlineMemberCount());
 			this.server.pushToGuild(this, new Messages.Guild(Types.Messages.GUILDACTION.POPULATION, [this.name, this.onlineMemberCount()]));
 			return true;
         }
@@ -96,7 +87,6 @@ module.exports = Guild = cls.Class.extend({
 	},
 
 	memberNames: function(){
-		/**/log.debug(JSON.stringify(this.onlineMemberCount()));
 		return _.map(this.members, function(name){return name;});
 	},
 	

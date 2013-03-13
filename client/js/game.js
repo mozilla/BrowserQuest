@@ -397,11 +397,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 this.hoveringTarget = false;
                 this.targetCellVisible = false;
             }
-            else if(this.hoveringOtherPlayer && this.started) {
-                this.setCursor("join");//#cli will need to change that to silhouette other player and handle join
-                this.hoveringTarget = false;
-                this.targetCellVisible = false;
-            }
             else if((this.hoveringItem || this.hoveringChest) && this.started) {
                 this.setCursor("loot");
                 this.hoveringTarget = false;
@@ -1346,14 +1341,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 								self.storage.setPlayerGuild();
 								self.showNotification("You successfully left “"+guildName+"”.");
 							}
-							else{
-								/**/$('footer').html("could not leave pas le bonnom");
-							}
 						}
-						else{
-							/**/$('footer').html("quoi j'ai pas e guilde ?");
-						}
-						//else error…
+						//missing elses above should not happen (errors)
 					}
 					else{
 						self.showNotification(name + " has left “"+guildName+"”.");//#updateguild
@@ -1361,7 +1350,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 				});
 				
 				self.client.onGuildTalk(function(name, id, message) {
-					/**/$('header').html("putaiiiin"+name+id+message);
 					if(id===self.player.id){
 						self.showNotification("YOU: "+message);
 					}
@@ -2394,24 +2382,20 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 					case "invite":
 						if(this.player.hasGuild()){
 							this.client.sendGuildInvite(args[2]);
-							/**/$('footer').html(message +  "(arg: "+args[2]+") — message set");
 						}
 						else{
-							this.showNotification("Invite "+args[2]+" to where");
+							this.showNotification("Invite "+args[2]+" to where?");
 						}
 						break;
 					case "create":
 						this.client.sendNewGuild(args[2]);
-						/**/$('footer').html(message +  "(arg: "+args[2]+") — message set");
 						break;
 					case undefined:
 						if(args[5]==="leaveguild"){
 							this.client.sendLeaveGuild();
-							/**/$('footer').html(message +  "leaveguild: no args — message set");						
 						}
 						else if(this.player.hasGuild()){
 							this.client.talkToGuild(args[4]);
-						/**/$('footer').html("(talk: "+args[4]+") — message set");
 						}
 						else{
 							this.showNotification("You got no-one to talk to…");
@@ -2423,27 +2407,23 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 							status = this.player.checkInvite();
 							if(status === false){
 								this.showNotification("You were not invited anyway…");
-								footer.html(this.player.invite);/**/
 							}
 							else if (status < 0) {
 								this.showNotification("Sorry to say it's too late…");
 								setTimeout(function(){self.showNotification("Find someone and ask for another invite.")},2500);
 							}
 							else{
-								/**/$('footer').html(new Date().getMilliseconds()+ message +  "(accept: "+this.player.invite.guildId+") — message set");
 								this.client.sendGuildInviteReply(this.player.invite.guildId, true);
 							}
 						}
 						else if(args[2] === "no"){
 							status = this.player.checkInvite();
 							if(status!==false){
-								/**/$('footer').html(new Date().getMilliseconds()+ message +  "(decline: "+this.player.invite.guildId+") — message set");
 								this.client.sendGuildInviteReply(this.player.invite.guildId, false);
 								this.player.deleteInvite();
 							}
 							else{
 								this.showNotification("Whatever…");
-								footer.html(this.player.invite);/**/							
 							}
 						}
 						else{
@@ -2609,7 +2589,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         showNotification: function(message) {
-			/**/$('footer').html('.'+$('footer').html());
             if(this.notification_callback) {
                 this.notification_callback(message);
             }

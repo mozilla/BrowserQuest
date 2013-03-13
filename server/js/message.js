@@ -221,7 +221,6 @@ Messages.Guild = Message.extend({
 	init: function (action, info) {
 		this.action = action;
 		this.info = info;
-		/**/log.info("Guild message created: (actionID:"+this.action+"/info:"+this.info+")");
 	},
 	serialize: function () {
 		return [Types.Messages.GUILD, this.action].concat(this.info);

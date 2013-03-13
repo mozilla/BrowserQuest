@@ -326,13 +326,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
 
         receivePopulation: function(data) {
-			/**/$('footer').html($('footer').html() + " receivePop " + data);
             var worldPlayers = data[1],
                 totalPlayers = data[2];
-                guildPlayers = data[3];
 
             if(this.population_callback) {
-                this.population_callback(worldPlayers, totalPlayers, guildPlayers);
+                this.population_callback(worldPlayers, totalPlayers);
             }
         },
 
@@ -385,52 +383,41 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 		},
 		
 		receiveGuild: function(data) {
-			/**/$('footer').html($('footer').html()+"/←"+JSON.stringify(data));
 			if( (data[1] === Types.Messages.GUILDACTION.CONNECT) &&
 				this.guildmemberconnect_callback ){
-					$('footer').html($('footer').html()+data[1]+"/connect");/**/
 				this.guildmemberconnect_callback(data[2]); //member name
 			}
 			else if( (data[1] === Types.Messages.GUILDACTION.DISCONNECT) &&
 				this.guildmemberdisconnect_callback ){
-					$('footer').html($('footer').html()+data[1]+"/disconnect");/**/
 				this.guildmemberdisconnect_callback(data[2]); //member name
 			}
 			else if( (data[1] === Types.Messages.GUILDACTION.ONLINE) &&
 				this.guildonlinemembers_callback ){
 					data.splice(0,2);
-					$('footer').html($('footer').html()+data.join(',')+"/online");/**/
 				this.guildonlinemembers_callback(data); //member names
 			}
 			else if( (data[1] === Types.Messages.GUILDACTION.CREATE) &&
 				this.guildcreate_callback){
-					$('footer').html($('footer').html()+data[1]+"/create");/**/
 				this.guildcreate_callback(data[2], data[3]);//id, name
 			}
 			else if( (data[1] === Types.Messages.GUILDACTION.INVITE) &&
 				this.guildinvite_callback){
-					$('footer').html($('footer').html()+data[1]+"/invite by"+data[4]);/**/
 				this.guildinvite_callback(data[2], data[3], data[4]);//id, name, invitor name
 			}
 			else if( (data[1] === Types.Messages.GUILDACTION.POPULATION) &&
 				this.guildpopulation_callback){
-					$('footer').html($('footer').html()+data[1]+"/population");/**/					
 				this.guildpopulation_callback(data[2], data[3]);//name, count
 			}
 			else if( (data[1] === Types.Messages.GUILDACTION.JOIN) &&
-				this.guildjoin_callback){
-		$('footer').html($('footer').html()+data[2]+" replied '"+data[3]+"' to the invitation to "+data[5]);/**/
-				
+				this.guildjoin_callback){				
 					this.guildjoin_callback(data[2], data[3], data[4], data[5]);//name, (id, (guildId, guildName))
 			}
 			else if( (data[1] === Types.Messages.GUILDACTION.LEAVE) &&
 				this.guildleave_callback){
-		$('footer').html($('footer').html()+data[2]+" left the guild");/**/
 					this.guildleave_callback(data[2], data[3], data[4]);//name, id, guildname
 			}
 			else if( (data[1] === Types.Messages.GUILDACTION.TALK) &&
 				this.guildtalk_callback){
-		$('footer').html($('footer').html()+data[2]+" ("+data[3]+") said "+data[4]);/**/
 					this.guildtalk_callback(data[2], data[3], data[4]);//name, id, message
 			}
 		},

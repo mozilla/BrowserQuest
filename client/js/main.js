@@ -278,12 +278,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             });
 
             game.onNotification(function(message) {
-				if(_.isArray(message)){
-					app.showMessages(message);
-				}
-				else{
-					app.showMessage(message);
-				}
+				app.showMessage(message);
             });
 
             app.initHealthBar();

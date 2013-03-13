@@ -57,22 +57,17 @@ var Types = require('../../shared/js/gametypes');
 					return (message.length === 2 && _.isString(message[1]));
 				}
 				else if (message[0] === Types.Messages.GUILDACTION.JOIN){
-					/**/log.debug("JOIN "+message.join(','));
 					return (message.length === 3 && _.isNumber(message[1]) && _.isBoolean(message[2]));
 				}
 				else if (message[0] === Types.Messages.GUILDACTION.LEAVE){
-					/**/log.debug("LEAVE ");
 					return (message.length === 1);
 				}
 				else if (message[0] === Types.Messages.GUILDACTION.TALK){
-					/**/log.debug("talk "+message.join(','));
 					return (message.length === 2 && _.isString(message[1]));
 				}
 				else {
 					log.error('Unknown message type: ' + type);
 					return false;
-				// TODO
-			    //return _.isNumber(message[0]) && (  || (_.isNumber(message[1]) && _.isString(message[2]) && (message.length==3 || (_.isBoolean(message[3]) && message.length==4) ) ) );
 				}
 			}
             else {

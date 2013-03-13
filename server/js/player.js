@@ -68,7 +68,6 @@ module.exports = Player = Character.extend({
                 self.updatePosition();
 
                 self.server.addPlayer(self, aGuildId);
-		/**/log.info("End reloadGuild: "+self.server.getStringGuilds());
                 self.server.enter_callback(self);
 
                 self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints]);
@@ -236,10 +235,7 @@ module.exports = Player = Character.extend({
 							self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.ALREADYEXISTS, guildname));
 						}
 						else{
-							//it should always say OK or the rules forbid some people to be in guilds
-							//there should not be anyone in the guild
 							self.server.joinGuild(self, guildId);
-							/**/log.info("user: "+self.name+" guild:"+self.guildId + "/" + self.server.guilds[self.guildId].name);
 							self.server.pushToPlayer(self, new Messages.Guild(Types.Messages.GUILDACTION.CREATE, [guildId, guildname]));
 						}
 					}
@@ -253,20 +249,16 @@ module.exports = Player = Character.extend({
 										return (entity instanceof Player && entity.name == userName) ? entity : false;});
 						if(invitee) {
 							self.getGuild().invite(invitee,self);
-							/**/log.info("user: "+invitee.name+"("+invitee.id+") guild:"+invitee.guildId);
 						}
 					}
 				}
 				else if(message[1] === Types.Messages.GUILDACTION.JOIN) {
-					log.info(self.name+" said "+(message[3]===true)?"'yes'":"'no'"+"to the invite to "+messsage[2]);/**/
 					self.server.joinGuild(self, message[2], message[3]);
 				}
 				else if(message[1] === Types.Messages.GUILDACTION.LEAVE) {
-					log.info(self.name+" is gonna leave "+self.getGuild().name);/**/
 					self.leaveGuild();
 				}
 				else if(message[1] === Types.Messages.GUILDACTION.TALK){
-					log.info("send to "+self.getGuild().name+":"+message[2]+" from "+self.name);/**/
 					self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
 				}
 			}

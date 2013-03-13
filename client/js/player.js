@@ -36,10 +36,8 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 		},
 		
 		unsetGuild: function(){
-			$('header').html("on y est");/**/
 			delete this.guild;
 			$('#guild-population').removeClass("visible");
-			$('footer').html("c'est censé marcher :"+this.hasGuild());/**/
 		},
 		
         hasGuild: function(){

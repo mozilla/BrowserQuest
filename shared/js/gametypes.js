@@ -31,7 +31,7 @@ Types = {
         GUILD: 27,
         GUILDERROR: 28,
         GUILDERRORTYPE: {
-        	CONNECT: 1,
+        	DOESNOTEXIST: 1,
         	BADNAME: 2,
         	ALREADYEXISTS: 3,
         	NOLEAVE: 4,
