@@ -27,7 +27,29 @@ Types = {
         HP: 23,
         BLINK: 24,
         OPEN: 25,
-        CHECK: 26
+        CHECK: 26,
+        GUILD: 27,
+        GUILDERROR: 28,
+        GUILDERRORTYPE: {
+        	DOESNOTEXIST: 1,
+        	BADNAME: 2,
+        	ALREADYEXISTS: 3,
+        	NOLEAVE: 4,
+        	BADINVITE: 5,
+        	GUILDRULES: 6,
+        	IDWARNING: 7
+        },
+        GUILDACTION: {
+			CONNECT: 8,
+			ONLINE: 9,
+			DISCONNECT: 10,
+			INVITE: 11,
+			LEAVE: 12,
+			CREATE: 13,
+			TALK: 14,
+			JOIN: 15,
+			POPULATION: 16
+		}
     },
 
     Entities: {

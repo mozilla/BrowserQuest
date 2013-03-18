@@ -4,10 +4,14 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
     var Player = Character.extend({
         MAX_LEVEL: 10,
 
-        init: function(id, name, kind) {
+        init: function(id, name, kind, guild) {
             this._super(id, kind);
 
             this.name = name;
+            
+            if (typeof guild !== 'undefined') {
+				this.setGuild(guild);
+			}
 
             // Renderer
              this.nameOffsetY = -10;
@@ -20,6 +24,49 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             this.isLootMoving = false;
             this.isSwitchingWeapon = true;
         },
+
+        getGuild: function() {
+			return this.guild;
+		},
+		
+		setGuild: function(guild) {
+			this.guild = guild;
+			$('#guild-population').addClass("visible");
+			$('#guild-name').html(guild.name);
+		},
+		
+		unsetGuild: function(){
+			delete this.guild;
+			$('#guild-population').removeClass("visible");
+		},
+		
+        hasGuild: function(){
+			return (typeof this.guild !== 'undefined');
+		},
+		
+			
+		addInvite: function(inviteGuildId){
+			this.invite = {time:new Date().valueOf(), guildId: inviteGuildId};
+		},
+		
+		deleteInvite: function(){
+			delete this.invite;
+		},
+		
+		checkInvite: function(){
+			if(this.invite && ( (new Date().valueOf() - this.invite.time) < 595000)){
+				return this.invite.guildId;
+			}
+			else{
+				if(this.invite){
+					this.deleteInvite();
+					return -1;
+				}
+				else{
+					return false;
+				}
+			}
+		},
 
         loot: function(item) {
             if(item) {
@@ -88,7 +135,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         getWeaponName: function() {
             return this.weaponName;
         },
-
+        
         setWeaponName: function(name) {
             this.weaponName = name;
         },
@@ -178,7 +225,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         onInvincible: function(callback) {
             this.invincible_callback = callback;
         },
-
+        
         startInvincibility: function() {
             var self = this;
 

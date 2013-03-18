@@ -57,11 +57,17 @@ module.exports = Player = Character.extend({
                 self.kind = Types.Entities.WARRIOR;
                 self.equipArmor(message[2]);
                 self.equipWeapon(message[3]);
+                if(typeof message[4] !== 'undefined'){	
+					var aGuildId = self.server.reloadGuild(message[4],message[5]);				
+					if( aGuildId !== message[4]){
+						self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.IDWARNING,message[5]));
+					}
+				}
                 self.orientation = Utils.randomOrientation();
                 self.updateHitPoints();
                 self.updatePosition();
 
-                self.server.addPlayer(self);
+                self.server.addPlayer(self, aGuildId);
                 self.server.enter_callback(self);
 
                 self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints]);
@@ -217,6 +223,45 @@ module.exports = Player = Character.extend({
                     self.lastCheckpoint = checkpoint;
                 }
             }
+            else if(action === Types.Messages.GUILD) {
+				if(message[1] === Types.Messages.GUILDACTION.CREATE) {
+					var guildname = Utils.sanitize(message[2]);
+					if(guildname === ""){//inaccurate name
+						self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.BADNAME,message[2]));
+					}
+					else{
+						var guildId = self.server.addGuild(guildname);
+						if(guildId === false) {
+							self.server.pushToPlayer(self, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.ALREADYEXISTS, guildname));
+						}
+						else{
+							self.server.joinGuild(self, guildId);
+							self.server.pushToPlayer(self, new Messages.Guild(Types.Messages.GUILDACTION.CREATE, [guildId, guildname]));
+						}
+					}
+				}
+				else if(message[1] === Types.Messages.GUILDACTION.INVITE) {
+					var userName = message[2];
+					var invitee;
+					if(self.group in self.server.groups) {
+						invitee = _.find(self.server.groups[self.group].entities,
+									function(entity, key){
+										return (entity instanceof Player && entity.name == userName) ? entity : false;});
+						if(invitee) {
+							self.getGuild().invite(invitee,self);
+						}
+					}
+				}
+				else if(message[1] === Types.Messages.GUILDACTION.JOIN) {
+					self.server.joinGuild(self, message[2], message[3]);
+				}
+				else if(message[1] === Types.Messages.GUILDACTION.LEAVE) {
+					self.leaveGuild();
+				}
+				else if(message[1] === Types.Messages.GUILDACTION.TALK){
+					self.server.pushToGuild(self.getGuild(), new Messages.Guild(Types.Messages.GUILDACTION.TALK, [self.name, self.id, message[2]]));
+				}
+			}
             else {
                 if(self.message_callback) {
                     self.message_callback(message);
@@ -381,5 +426,36 @@ module.exports = Player = Character.extend({
     timeout: function() {
         this.connection.sendUTF8("timeout");
         this.connection.close("Player was idle for too long");
-    }
+    },
+    
+    setGuildId: function(id) {
+		if(typeof this.server.guilds[id] !== "undefined"){
+			this.guildId = id;
+		}
+		else{
+			log.error(this.id + " cannot add guild " + id + ", it does not exist");
+		}
+	},
+	
+	getGuild: function() {
+		return this.hasGuild ? this.server.guilds[this.guildId] : undefined;
+	},
+	
+	hasGuild: function() {
+		return (typeof this.guildId !== "undefined");
+	},
+	
+	leaveGuild: function(){
+		if(this.hasGuild()){
+			var leftGuild = this.getGuild();
+			leftGuild.removeMember(this);
+			this.server.pushToGuild(leftGuild, new Messages.Guild(Types.Messages.GUILDACTION.LEAVE, [this.name, this.id, leftGuild.name]));
+			delete this.guildId;
+			this.server.pushToPlayer(this, new Messages.Guild(Types.Messages.GUILDACTION.LEAVE, [this.name, this.id, leftGuild.name]));
+		}
+		else{
+			this.server.pushToPlayer(this, new Messages.GuildError(Types.Messages.GUILDERRORTYPE.NOLEAVE,""));
+		}
+	}
+	
 });

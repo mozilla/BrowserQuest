@@ -258,13 +258,27 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     setTotalPlayersString("players");
                 }
             });
+            					
+            game.onGuildPopulationChange( function(guildName, guildPopulation) {
+				var setGuildPlayersString = function(string) {
+					$("#guild-population").find("span:nth-child(2)").text(string);
+				};
+				$('#guild-population').addClass("visible");
+                $("#guild-population").find("span").text(guildPopulation);
+				$('#guild-name').text(guildName);
+                if(guildPopulation == 1) {
+                    setGuildPlayersString("player");
+                } else {
+                    setGuildPlayersString("players");
+                }
+			});
 
             game.onAchievementUnlock(function(id, name, description) {
                 app.unlockAchievement(id, name);
             });
 
             game.onNotification(function(message) {
-                app.showMessage(message);
+				app.showMessage(message);
             });
 
             app.initHealthBar();
