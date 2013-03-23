@@ -149,3 +149,4 @@ Many other people are contributing through GitHub:
 * Dylen Rivera [@dylenbrivera](https://github.com/dylenbrivera)
 * Mathieu Loiseau [@lzbk](https://github.com/lzbk)
 * Jason Culwell [@Mawgamoth](https://github.com/Mawgamoth)
+* Bryan Biedenkapp [@gatekeep](https://github.com/gatekeep)
