@@ -29,7 +29,7 @@ mode & destination values:
 * `direct` (default) → updates current server and map files (WARNING: SHOULD ONLY BE CALLED FROM `BrowserQuest/tools/maps` see 1);
 * `client destination_file` → will generate `destination_file.js` and `destination_file.json` for client side map;
 * `server destination_file.json` → will generate `destination_file.json` for server side map;
-* `both destination_directory` → will generate `world_client.js`, `world_client.json` and `world_server.json` in `destination_directory`.");
+* `both destination_directory` → will generate `world_client.js`, `world_client.json` and `world_server.json` in `destination_directory`.
 
 
 Things to know
