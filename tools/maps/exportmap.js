@@ -57,24 +57,38 @@ function processClient(json, dest){
 	var jsonMap = JSON.stringify(processMap(json, {mode:"client"})); // Save the processed map object as JSON data
 	// map in a .json file for ajax loading
 	fs.writeFile(dest+".json", jsonMap, function(err, file) {
-		log.info("Finished processing map file: "+ dest + ".json was saved.");
+		if(err){
+			log.error(JSON.stringify(err));
+		}
+		else{
+			log.info("Finished processing map file: "+ dest + ".json was saved.");
+		}
 	});
 	
 	// map in a .js file for web worker loading
 	jsonMap = "var mapData = "+jsonMap;
 	fs.writeFile(dest+".js", jsonMap, function(err, file) {
-		log.info("Finished processing map file: "+ dest + ".js was saved.");
+		if(err){
+			log.error(JSON.stringify(err));
+		}
+		else{
+			log.info("Finished processing map file: "+ dest + ".js was saved.");
+		}
 	});
 }
 
 function processServer(json, dest){
 	var jsonMap = JSON.stringify(processMap(json, {mode:"server"})); // Save the processed map object as JSON data
 	fs.writeFile(dest, jsonMap, function(err, file) {
-		log.info("Finished processing map file: "+ dest + " was saved.");
+		if(err){
+			log.error(JSON.stringify(err));
+		}
+		else{
+			log.info("Finished processing map file: "+ dest + " was saved.");
+		}
 	});
 }
 
-// Loads the temporary JSON Tiled map converted by tmx2json.py
 function getTiledJSONmap(filename, callback) {
     var self = this;
     

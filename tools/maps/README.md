@@ -13,6 +13,9 @@ Open the `tmx/map.tmx` file in Tiled and start editing.
 
 **Note:** Some unexhaustive documentation can be found in the [wiki of the repository](https://github.com/browserquest/BrowserQuest/wiki/Create-a-map-using-tiled-map-editor).
 
+Editing the map
+---------------
+Pre-process map allows to create attributes patterns to reuse various times in your tilesheet. And also to create rectangles of tiles of same attributes…
 
 Using the exporter
 ------------------
@@ -29,7 +32,7 @@ mode & destination values:
 * `direct` (default) → updates current server and map files (WARNING: SHOULD ONLY BE CALLED FROM `BrowserQuest/tools/maps` see 1);
 * `client destination_file` → will generate `destination_file.js` and `destination_file.json` for client side map;
 * `server destination_file.json` → will generate `destination_file.json` for server side map;
-* `both destination_directory` → will generate `world_client.js`, `world_client.json` and `world_server.json` in `destination_directory`.
+* `both destination_directory` → will generate `world_client.js`, `world_client.json` and `world_server.json` in `destination_directory`, which must exist, otherwise an error is triggered.
 
 
 Things to know
