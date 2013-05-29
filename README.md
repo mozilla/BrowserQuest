@@ -12,12 +12,12 @@ It has two major parts:
 Browser Support
 ---------------
 
-* Firefox (any recent) - Works well.
+* Firefox - Works well.
 * Chrome - Works well.
 * Chromium - Works well.
 * Safari 6.x - Background music doesn't play.  Everything else works well.
 * Opera - Doesn't work, no WebSocket support.
-* IE 10 - Doesn't work.  Other versions untested.
+* IE 10.x - Doesn't work.  Other versions untested.
 
 
 How to get it going
