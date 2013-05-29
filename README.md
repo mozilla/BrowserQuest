@@ -6,7 +6,18 @@ BrowserQuest
 It has two major parts:
 
 * the server side, which runs using Node.js
-* the client side, which runs in your browser
+* the client side, which runs using javascript in your browser
+
+
+Browser Support
+---------------
+
+* Firefox (any recent) - Works well.
+* Chrome - Works well.
+* Chromium - Works well.
+* Safari 6.x - Background music doesn't play.  Everything else works well.
+* Opera - Doesn't work, no WebSocket support.
+* IE 10 - Doesn't work.  Other versions untested.
 
 
 How to get it going
@@ -49,17 +60,6 @@ That means its working.  There should not be any warnings or errors.
 Using a browser, connect to port 8000 of the server entered above.  The BrowserQuest start page should appear, and the game should work.
 
 
-Browser Support
----------------
-
-* Firefox (any recent) - Works well.
-* Safari 6.x - Background music doesn't play.  Everything else works well.
-* Chrome - Sounds effects don't work.
-* Chromium - Varies wildly.  Some releases display using BrowserQuest's "mobile" layout, with very small screen.  Not recommended.
-* Opera - Doesn't work, no WebSocket support.
-* IE (any version) - Untested.
-
-
 Node.js for Fedora 16 and RHEL6/CentOS
 --------------------------------------
 
@@ -74,11 +74,11 @@ most welcome to improve on them. :)
 Mac OS X
 --------
 
-Node installed through Homebrew is known to work:
+Node.je installed through Homebrew is known to work:
 
+    $ brew install node
     $ git clone git://github.com/browserquest/BrowserQuest.git
     $ cd BrowserQuest
-    $ brew install node
     $ npm install -d
     $ node server/js/main.js
 
