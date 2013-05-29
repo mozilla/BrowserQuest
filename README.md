@@ -74,13 +74,13 @@ most welcome to improve on them. :)
 Mac OS X
 --------
 
-Node installed through Homebrew is known to work. i.e.:
+Node installed through Homebrew is known to work:
 
-* git clone git://github.com/browserquest/BrowserQuest.git
-* cd BrowserQuest
-* brew install node
-* npm install -d
-* node server/js/main.js
+    $ git clone git://github.com/browserquest/BrowserQuest.git
+    $ cd BrowserQuest
+    $ brew install node
+    $ npm install -d
+    $ node server/js/main.js
 
 
 Windows
