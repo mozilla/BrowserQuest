@@ -871,13 +871,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
                     }
 
-                    self.player.forEachAttacker(function(attacker) {
-                        if(attacker.isAdjacent(attacker.target)) {
-                            attacker.lookAtTarget();
-                        } else {
-                            attacker.follow(self.player);
-                        }
-                    });
+                    self.player.forEachAttacker(self.makeAttackerFollow);
 
                     if((self.player.gridX <= 85 && self.player.gridY <= 179 && self.player.gridY > 178) || (self.player.gridX <= 85 && self.player.gridY <= 266 && self.player.gridY > 265)) {
                         self.tryUnlockingAchievement("INTO_THE_WILD");
@@ -1127,6 +1121,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                     entity.onStep(function() {
                                         if(!entity.isDying) {
                                             self.registerEntityDualPosition(entity);
+
+                                            if(self.player.target === entity) {
+                                                self.makeAttackerFollow(self.player)
+                                            }
 
                                             entity.forEachAttacker(function(attacker) {
                                                 if(attacker.isAdjacent(attacker.target)) {
@@ -2669,6 +2667,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 if(music.name === 'cave') {
                     this.tryUnlockingAchievement("UNDERGROUND");
                 }
+            }
+        },
+
+        makeAttackerFollow: function(attacker) {
+            var target = attacker.target;
+
+            if(attacker.isAdjacent(attacker.target)) {
+                attacker.lookAtTarget();
+            } else {
+                attacker.follow(target);
             }
         },
 
