@@ -150,3 +150,4 @@ Many other people are contributing through GitHub:
 * Mathieu Loiseau [@lzbk](https://github.com/lzbk)
 * Jason Culwell [@Mawgamoth](https://github.com/Mawgamoth)
 * Bryan Biedenkapp [@gatekeep](https://github.com/gatekeep)
+* Aaron Hill [@Aaron1011](https://github.com/Aaron1011)
