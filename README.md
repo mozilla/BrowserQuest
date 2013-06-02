@@ -74,7 +74,7 @@ most welcome to improve on them. :)
 Mac OS X
 --------
 
-Node.je installed through Homebrew is known to work:
+Node.js installed through Homebrew is known to work:
 
     $ brew install node
     $ git clone git://github.com/browserquest/BrowserQuest.git
