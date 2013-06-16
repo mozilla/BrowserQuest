@@ -60,7 +60,7 @@ That means its working.  There should not be any warnings or errors.
 Using a browser, connect to port 8000 of the server entered above.  The
 BrowserQuest start page should appear, and the game should work.
 
-Node.js and redis for Fedora 16 and RHEL6/CentOS
+Node.js and Redis for Fedora 16 and RHEL6/CentOS
 --------------------------------------
 
 On Fedora 16+ and RHEL 6/CentOS 6, you can add the EPEL repository and then run:
