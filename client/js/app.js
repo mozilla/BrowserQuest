@@ -39,7 +39,7 @@ define(['jquery', 'storage'], function($, Storage) {
             }
         },
 
-        tryStartingGame: function(username, starting_callback) {
+        tryStartingGame: function(username, userpw, email, starting_callback) {
             var self = this,
                 $play = this.$playButton;
 
@@ -59,17 +59,17 @@ define(['jquery', 'storage'], function($, Storage) {
                                 }
                             }, 1500);
                             clearInterval(watchCanStart);
-                            self.startGame(username, starting_callback);
+                            self.startGame(username, userpw, email, starting_callback);
                         }
                     }, 100);
                 } else {
                     this.$playDiv.unbind('click');
-                    this.startGame(username, starting_callback);
+                    this.startGame(username, userpw, email, starting_callback);
                 }
             }
         },
 
-        startGame: function(username, starting_callback) {
+        startGame: function(username, userpw, email, starting_callback) {
             var self = this;
 
             if(starting_callback) {
@@ -81,11 +81,11 @@ define(['jquery', 'storage'], function($, Storage) {
                     // on the PLAY button instead of loading it in a web worker.
                     self.game.loadMap();
                 }
-                self.start(username);
+                self.start(username, userpw, email);
             });
         },
 
-        start: function(username) {
+        start: function(username, userpw, email) {
             var self = this,
                 firstTimePlaying = !self.storage.hasAlreadyPlayed();
 
@@ -96,10 +96,10 @@ define(['jquery', 'storage'], function($, Storage) {
                 //>>includeStart("devHost", pragmas.devHost);
                 if(config.local) {
                     log.debug("Starting game with local dev config.");
-                    this.game.setServerOptions(config.local.host, config.local.port, username);
+                    this.game.setServerOptions(config.local.host, config.local.port, username, userpw, email);
                 } else {
                     log.debug("Starting game with default dev config.");
-                    this.game.setServerOptions(config.dev.host, config.dev.port, username);
+                    this.game.setServerOptions(config.dev.host, config.dev.port, username, userpw, email);
                 }
                 optionsSet = true;
                 //>>includeEnd("devHost");
@@ -107,7 +107,7 @@ define(['jquery', 'storage'], function($, Storage) {
                 //>>includeStart("prodHost", pragmas.prodHost);
                 if(!optionsSet) {
                     log.debug("Starting game with build config.");
-                    this.game.setServerOptions(config.build.host, config.build.port, username);
+                    this.game.setServerOptions(config.build.host, config.build.port, username, userpw, email);
                 }
                 //>>includeEnd("prodHost");
 
@@ -142,6 +142,67 @@ define(['jquery', 'storage'], function($, Storage) {
             } else if(mouse.y >= height) {
                 mouse.y = height - 1;
             }
+        },
+        //Init the hud that makes it show what creature you are mousing over and attacking
+        initTargetHud: function(){
+            var self = this;
+            var scale = self.game.renderer.getScaleFactor(),
+                healthMaxWidth = $("#target .health").width() - (12 * scale),
+                timeout;
+
+            this.game.player.onSetTarget(function(target, name, mouseover){
+                var el = '#target';
+                if(mouseover) el = '#inspector';
+                var sprite = target.sprite,
+                    x = ((sprite.animationData.idle_down.length-1)*sprite.width),
+                    y = ((sprite.animationData.idle_down.row)*sprite.height);
+                $(el+' .name').text(name);
+                if(el === '#inspector'){
+                  //Show both Name and Level when mousing over the target
+                  $(el + ' .health').text("Level " + Types.getMobLevel(Types.getKindFromString(name)));
+                }
+                //Show how much Health creature has left. Currently does not work. The reason health doesn't currently go down has to do with the lines below down to initExpBar...
+                if(target.healthPoints){
+                    $(el + ' .health').text("Level " + Types.getMobLevel(Types.getKindFromString(name)));
+                    $(el+" .health").css('width', Math.round(target.healthPoints/target.maxHp*100)+'%');
+                } else{
+                    $(el + ' .health').text("Level " + Types.getMobLevel(Types.getKindFromString(name)));
+                    $(el+" .health").css('width', '100%');
+                }
+
+                $(el).fadeIn('fast');
+                if(mouseover){
+                    clearTimeout(timeout);
+                    timeout = null;
+                    timeout = setTimeout(function(){
+                        $('#inspector').fadeOut('fast');
+                        self.game.player.inspecting = null;
+                    }, 2000);
+                }
+            });
+
+            self.game.onUpdateTarget(function(target){
+                $("#target .health").css('width', Math.round(target.healthPoints/target.maxHp*100) + "%");
+                if(self.game.player.inspecting && self.game.player.inspecting.id === target.id){
+                    $("#inspector .health").css('width', Math.round(target.healthPoints/target.maxHp*100) + "%");
+                }
+            });
+
+            self.game.player.onRemoveTarget(function(targetId){
+                $('#target').fadeOut('fast');
+                if(self.game.player.inspecting && self.game.player.inspecting.id === targetId){
+                    $('#inspector').fadeOut('fast');
+                    self.game.player.inspecting = null;
+                }
+            });
+        },
+         initExpBar: function(){
+            var maxHeight = $("#expbar").height();
+
+            this.game.onPlayerExpChange(function(expInThisLevel, expForLevelUp){
+               var barHeight = Math.round((maxHeight / expForLevelUp) * (expInThisLevel > 0 ? expInThisLevel : 0));
+               $("#expbar").css('height', barHeight + "px");
+            });
         },
 
         initHealthBar: function() {
@@ -493,6 +554,8 @@ define(['jquery', 'storage'], function($, Storage) {
                 if(this.game.started) {
                     this.game.resize();
                     this.initHealthBar();
+                    this.initTargetHud();
+                    this.initExpBar();
                     this.game.updateBars();
                 } else {
                     var newScale = this.game.renderer.getScaleFactor();

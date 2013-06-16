@@ -21,13 +21,14 @@ var cls = require("./lib/class"),
 // ======= GAME SERVER ========
 
 module.exports = World = cls.Class.extend({
-    init: function(id, maxPlayers, websocketServer) {
+    init: function(id, maxPlayers, websocketServer, databaseHandler) {
         var self = this;
 
         this.id = id;
         this.maxPlayers = maxPlayers;
         this.server = websocketServer;
         this.ups = 50;
+        this.databaseHandler = databaseHandler;
 
         this.map = null;
 
@@ -62,7 +63,7 @@ module.exports = World = cls.Class.extend({
         });
 
         this.onPlayerEnter(function(player) {
-            log.info(player.name + " has joined "+ self.id + " in guild " + player.guildId);
+            log.info(player.name + "(" + player.connection._connection.remoteAddress + ") has joined " + self.id + " in guild " + player.guildId);
 
             if(!player.hasEnteredGame) {
                 self.incrementPlayerCount();
@@ -81,9 +82,14 @@ module.exports = World = cls.Class.extend({
 
             var move_callback = function(x, y) {
                 log.debug(player.name + " is moving to (" + x + ", " + y + ").");
-
-                player.forEachAttacker(function(mob) {
-                    var target = self.getEntityById(mob.target);
+                 var isPVP = self.map.isPVP(x, y);
+                player.flagPVP(isPVP); 
+               player.forEachAttacker(function(mob) {
+                     if(mob.target === null){
+                        player.removeAttacker(mob);
+                        return;
+                    }
+                   var target = self.getEntityById(mob.target);
                     if(target) {
                         var pos = self.findPositionNextTo(mob, target);
                         if(mob.distanceToSpawningPoint(pos.x, pos.y) > 50) {
@@ -463,6 +469,15 @@ module.exports = World = cls.Class.extend({
         delete this.players[player.id];
         delete this.outgoingQueues[player.id];
     },
+    loggedInPlayer: function(name){
+        for(var id in this.players) {
+            if(this.players[id].name === name){
+                if(!this.players[id].isDead)
+                    return true;
+            }
+        }
+        return false;
+    },
 
     addMob: function(mob) {
         this.addEntity(mob);
@@ -634,7 +649,7 @@ module.exports = World = cls.Class.extend({
 
         if(entity.type === 'mob') {
             // Let the mob's attacker (player) know how much damage was inflicted
-            this.pushToPlayer(attacker, new Messages.Damage(entity, damage));
+            this.pushToPlayer(attacker, new Messages.Damage(entity, damage, entity.hitPoints, entity.maxHitPoints));
         }
 
         // If the entity is about to die
@@ -642,9 +657,17 @@ module.exports = World = cls.Class.extend({
             if(entity.type === "mob") {
                 var mob = entity,
                     item = this.getDroppedItem(mob);
+                var mainTanker = this.getEntityById(mob.getMainTankerId());
 
-                this.pushToPlayer(attacker, new Messages.Kill(mob));
-                this.pushToAdjacentGroups(mob.group, mob.despawn()); // Despawn must be enqueued before the item drop
+                if(mainTanker && mainTanker instanceof Player){
+                  mainTanker.incExp(Types.getMobExp(mob.kind));
+                  this.pushToPlayer(mainTanker, new Messages.Kill(mob, mainTanker.level, mainTanker.experience));
+                } else{
+                  attacker.incExp(Types.getMobExp(mob.kind));
+                  this.pushToPlayer(attacker, new Messages.Kill(mob, attacker.level, attacker.experience));
+                }
+
+               this.pushToAdjacentGroups(mob.group, mob.despawn()); // Despawn must be enqueued before the item drop
                 if(item) {
                     this.pushToAdjacentGroups(mob.group, mob.drop(item));
                     this.handleItemDespawn(item);
@@ -942,6 +965,30 @@ module.exports = World = cls.Class.extend({
             this.handleItemDespawn(item);
         }
     },
+    getPlayerByName: function(name){
+        for(var id in this.players) {
+            if(this.players[id].name === name){
+                return this.players[id];
+            }
+        }
+        return null;
+    },
+     removePlayer: function(player) {
+        player.broadcast(player.despawn());
+        this.removeEntity(player);
+        delete this.players[player.id];
+        delete this.outgoingQueues[player.id];
+    },
+    loggedInPlayer: function(name){
+        for(var id in this.players) {
+            if(this.players[id].name === name){
+                if(!this.players[id].isDead)
+                    return true;
+            }
+        }
+        return false;
+    },
+
 
     tryAddingMobToChestArea: function(mob) {
         _.each(this.chestAreas, function(area) {

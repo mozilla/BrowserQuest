@@ -11,6 +11,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.spawn_callback = null;
             this.movement_callback = null;
 
+            this.wrongpw_callback = null;
+
+            this.notify_callback = null;
+
             this.handlers = [];
             this.handlers[Types.Messages.WELCOME] = this.receiveWelcome;
             this.handlers[Types.Messages.MOVE] = this.receiveMove;
@@ -33,7 +37,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.BLINK] = this.receiveBlink;
             this.handlers[Types.Messages.GUILDERROR] = this.receiveGuildError;
             this.handlers[Types.Messages.GUILD] = this.receiveGuild;
-
+            this.handlers[Types.Messages.PVP] = this.receivePVP;
             this.useBison = false;
             this.enable();
         },
@@ -86,8 +90,14 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                         self.isTimeout = true;
                         return;
                     }
+                    if(e.data === 'wrongpw'){
+                        if(self.wrongpw_callback){
+                            self.wrongpw_callback();
+                        }
+                        return;
+                    }
 
-                    self.receiveMessage(e.data);
+                   self.receiveMessage(e.data);
                 };
 
                 this.connection.onerror = function(e) {
@@ -168,10 +178,15 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 name = data[2],
                 x = data[3],
                 y = data[4],
-                hp = data[5];
+                hp = data[5],
+                armor = data[6],
+                weapon = data[7],
+                avatar = data[8],
+                weaponAvatar = data[9],
+                experience = data[10];
 
             if(this.welcome_callback) {
-                this.welcome_callback(id, name, x, y, hp);
+                this.welcome_callback(id, name, x, y, hp, armor, weapon, avatar, weaponAvatar, experience);
             }
         },
 
@@ -222,7 +237,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                     this.spawn_chest_callback(item, x, y);
                 }
             } else {
-                var name, orientation, target, weapon, armor;
+                var name, orientation, target, weapon, armor, level;
 
                 if(Types.isPlayer(kind)) {
                     name = data[5];
@@ -319,9 +334,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         receiveDamage: function(data) {
             var id = data[1],
                 dmg = data[2];
+                hp = parseInt(data[3]),
+                maxHp = parseInt(data[4]);
 
             if(this.dmg_callback) {
-                this.dmg_callback(id, dmg);
+                this.dmg_callback(id, dmg, hp, maxHp);
             }
         },
 
@@ -336,9 +353,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 
         receiveKill: function(data) {
             var mobKind = data[1];
+            var level = data[2];
+            var exp = data[3];
 
             if(this.kill_callback) {
-                this.kill_callback(mobKind);
+                this.kill_callback(mobKind, level, exp);
             }
         },
 
@@ -373,7 +392,13 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.blink_callback(id);
             }
         },
-        
+         receivePVP: function(data){
+            var pvp = data[1];
+            if(this.pvp_callback){
+                this.pvp_callback(pvp);
+            }
+        },
+       
         receiveGuildError: function(data) {
 			var errorType = data[1];
 			var guildName = data[2];
@@ -513,7 +538,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onItemBlink: function(callback) {
             this.blink_callback = callback;
         },
-        
+        onPVPChange: function(callback){
+            this.pvp_callback = callback;
+        },
         onGuildError: function(callback) {
 			this.guilderror_callback = callback;
 		},
@@ -555,20 +582,31 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 		},
 
         sendHello: function(player) {
-			if(player.hasGuild()){
-				this.sendMessage([Types.Messages.HELLO,
-								  player.name,
-								  Types.getKindFromString(player.getSpriteName()),
-								  Types.getKindFromString(player.getWeaponName()),
-								  player.guild.id, player.guild.name]);
-			}
-			else{
-				this.sendMessage([Types.Messages.HELLO,
-								  player.name,
-								  Types.getKindFromString(player.getSpriteName()),
-								  Types.getKindFromString(player.getWeaponName())]);
-			}
+            this.sendMessage([Types.Messages.HELLO,
+                              player.name,
+                              player.pw,
+                              player.email]);
         },
+
+      //  sendHello: function(player) {
+			//if(player.hasGuild()){
+			//	this.sendMessage([Types.Messages.HELLO,
+			//					  player.name,
+      //            player.pw,
+       //           player.email,
+			//					  Types.getKindFromString(player.getSpriteName()),
+			//					  Types.getKindFromString(player.getWeaponName()),
+			//					  player.guild.id, player.guild.name]);
+			//}
+			//else{
+				//this.sendMessage([Types.Messages.HELLO,
+								  //player.name,
+                  //player.pw,
+                  //player.email,
+								  //Types.getKindFromString(player.getSpriteName()),
+								  //Types.getKindFromString(player.getWeaponName())]);
+			//}
+       // },
 
         sendMove: function(x, y) {
             this.sendMessage([Types.Messages.MOVE,

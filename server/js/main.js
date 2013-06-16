@@ -1,8 +1,8 @@
 var fs = require('fs'),
     Metrics = require('./metrics');
 
+
 function main(config) {
-    // Configure logging
     var Log = require('log');
     switch(config.debug_level) {
         case "error":
@@ -20,6 +20,7 @@ function main(config) {
         metrics = config.metrics_enabled ? new Metrics(config) : null,
         worlds = [],
         lastTotalPlayers = 0,
+        DatabaseHandler = require("./databasehandler");
         checkPopulationInterval = setInterval(function() {
             if(metrics && metrics.isReady) {
                 metrics.getTotalPlayers(function(totalPlayers) {
@@ -34,12 +35,13 @@ function main(config) {
         }, 1000);
 
     log.info("Starting BrowserQuest game server...");
+    databaseHandler = new DatabaseHandler();
 
     server.onConnect(function(connection) {
         var world, // the one in which the player will be spawned
             connect = function() {
                 if(world) {
-                    world.connect_callback(new Player(connection, world));
+                    world.connect_callback(new Player(connection, world, databaseHandler));
                 }
             };
 
@@ -74,7 +76,7 @@ function main(config) {
     };
 
     _.each(_.range(config.nb_worlds), function(i) {
-        var world = new WorldServer('world'+ (i+1), config.nb_players_per_world, server);
+        var world = new WorldServer('world'+ (i+1), config.nb_players_per_world, server, databaseHandler);
         world.run(config.map_filepath);
         worlds.push(world);
         if(metrics) {

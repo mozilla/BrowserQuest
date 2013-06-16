@@ -181,5 +181,8 @@ Properties.getWeaponLevel = function(kind) {
 Properties.getHitPoints = function(kind) {
     return Properties[Types.getKindAsString(kind)].hp;
 };
+Properties.getExp = function(kind){
+    return Properties[Types.getKindAsString(kind)].exp;
+};
 
 module.exports = Properties;

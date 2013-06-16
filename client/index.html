@@ -81,59 +81,53 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                     <article id="createcharacter">
           	           <h1>
           	               <span class="left-ornament"></span>
-          	               A Massively Multiplayer Adventure
+          	               Create New Character
           	               <span class="right-ornament"></span>
                          </h1>
-                         <div id="character" class="disabled">
-                             <div></div>
-                         </div>
                          <form action="none" method="get" accept-charset="utf-8">
-                             <label id="name-tooltip" for="player">Try to think of a cool nickname!</label>
-                             <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Name your character" maxlength="15" autofocus>
+                             <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength=8">
+                             <input type="password" id="pwinput" class="stroke" name="player-pw" placeholder="Password" maxlength="15">
+                             <input type="password" id="pwinput2" class="stroke" name="player-pw2" placeholder="Confirm Password" maxlength="15">
+                             <input type="text" id="emailinput" class="stroke" name="player-email" placeholder="Email address" maxlength="48">
                          </form>
-                         <div class="play button disabled">
-                             <div></div>
-                             <img src="img/common/spinner.gif" alt="">
-                         </div>
-                         <div class="ribbon">
-                            <div class="top"></div>
-                            <div class="bottom"></div>
+                         <div id="playbutton">
+                           <span>Create</span>
                          </div>
                     </article>
                     <article id="loadcharacter">
           	           <h1>
           	               <span class="left-ornament"></span>
-          	               Load your character
+          	               BrowserQuest
           	               <span class="right-ornament"></span>
                          </h1>
-                         <div class="ribbon">
-                            <div class="top"></div>
-                            <div class="bottom"></div>
+                         <form action="none" method="get" accept-charset="utf-8">
+                             <input type="text" id="loginnameinput" class="stroke" name="player-name" placeholder="Character Name" maxlength="8" autofocus>
+                             <input type="password" id="loginpwinput" class="stroke" name="player-loginpw" placeholder="Password" maxlength="15">
+                         </form>
+                         <br>
+                         <div id="playbutton">
+                           <span>Login</span>
                          </div>
-                         <img id="playerimage" src="">
-                         <div id="playername" class="stroke">
-                         </div>
-                         <div class="play button">
-                             <div></div>
-                             <img src="img/common/spinner.gif" alt="">
-                         </div>
+                          <br>
+                          <br>
+                          <br>
+                          <br>
                          <div id="create-new">
-                            <span><span>or</span> reset your character</span>
+                            <span>New Character</span>
                          </div>
                     </article>
                     <article id="confirmation">
           	           <h1>
           	               <span class="left-ornament"></span>
-          	               Delete your character?
+                           You need to accept the following terms of usage before creating a new character.<br>
+                           None right now - just Continue!<br><br>
           	               <span class="right-ornament"></span>
                          </h1>
-                         <p>
-                             All your items and achievements will be lost.<br>
-                             Are you sure you wish to continue?
-                         </p>
-                         <div class="delete button"></div>
+                         <div id="continue">
+                         <span>Continue</span>
+                         </div>
                          <div id="cancel">
-                            <span>cancel</span>
+                            <span>Cancel</span>
                          </div>
                     </article>
     	            <article id="credits">
@@ -198,10 +192,10 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                                 <a target="_blank" class="clickable" href="http://github.com/browserquest/BrowserQuest">Grab the source</a> on Github
                             </span>
                         </div>
-	                    <div id="close-about">
-	                        <span>- click anywhere to close -</span>
+                      <div id="close-about">
+                          <span>- click anywhere to close -</span>
                         </div>
-    	            </article>
+                  </article>
     	            <article id="death">
                         <p>You are dead...</p>
     					<div id="respawn" class="button"></div>
@@ -234,6 +228,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
 	            <div class="parchment-right"></div>
 	        </section>
 	    </div>
+
 		<div id="container">
 		    <div id="canvasborder">
 		        <article id="instructions" class="clickable">
@@ -244,9 +239,9 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
      	               <span class="right-ornament"></span>
 	                </h1>
 	                <ul>
-	                   <li><span class="icon"></span>Left click or tap to move, attack and pick up items.</li>
+	                   <li><span class="icon"></span>Left click or tap to move, attack and pick up items. Hold SHIFT to attack another player.</li>
 	                   <li><span class="icon"></span>Press ENTER to chat.</li>
-	                   <li><span class="icon"></span>Your character is automatically saved as you play.</li>
+	                   <li><span class="icon"></span>Your character is automatically saved as you play. The blue line on the right is your exp bar.</li>
 	                </ul>
 	                    <p>- click anywhere to close -</p>
 		        </article>
@@ -263,6 +258,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
     		                /
     		                <span id="total-achievements"></span>
     		            </div> 
+                    Close
     		        </div>
 		            <nav class="clickable">
 		                <div id="previous"></div>
@@ -274,9 +270,32 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
     				<canvas id="entities"></canvas>
     				<canvas id="foreground" class="clickable"></canvas>
     			</div>
-    			<div id="bubbles">				
-    			</div>
-    			<div id="achievement-notification">
+    			<div id="bubbles"></div>
+     			<div id="expbar"></div>
+     			<div id="textWindow"></div>
+    			<div id="target">
+                            <div class="headshot"><div></div></div>
+                            <div class="details">
+                                <div class="name"></div>
+                                <div class="health"></div>
+                            </div>
+                        </div>
+    			<div id="inspector">
+                    <div class="headshot"><div> </div></div>
+                    <div class="details">
+                        <div class="name"></div>
+                        <div class="health"></div>
+                    </div>
+                </div>
+                <div id="dropDialog">
+                    <div id="dropTitle">Input drop count.</div>
+                    <div align="center">
+                        <input type="text" id="dropCount" size="6" maxlength="6">
+                        <span id="dropAccept">&nbsp;Accept&nbsp;</span>
+                        <span id="dropCancel">&nbsp;Cancel&nbsp;</span>
+                    </div>
+                </div>
+ 			<div id="achievement-notification">
     			    <div class="coin">
     			        <div id="coinsparks"></div>
     			    </div>
@@ -310,7 +329,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
     			</div>
 				<div id="chatbox">
 				    <form action="none" method="get" accept-charset="utf-8">
-					    <input id="chatinput" class="gp placeholder" type="text" maxlength="60" placeholder="What do you want to say? (Remember to protect your privacy!)">
+					    <input id="chatinput" class="gp" type="text" maxlength="60">
 				    </form>
 				</div>
 				<!-- TODO div id="dialogbox">
@@ -375,18 +394,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                 document.querySelector('body').className += ' upscaled';
             }
             
-            if(!Modernizr.localstorage) {
-                var alert = document.createElement("div");
-                    alert.className = 'alert';
-                var alertMsg = document.createTextNode("You need to enable cookies/localStorage to play BrowserQuest");
-                    alert.appendChild(alertMsg);
-
-                target = document.getElementById("intro");
-                document.body.insertBefore(alert, target);
-            } else if(localStorage && localStorage.data) {
-                document.body.className += " returning";
-                parchment.className = "loadcharacter";
-            }
+            parchment.className = "loadcharacter";
         </script>
         
         <script src="js/lib/log.js"></script>

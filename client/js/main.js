@@ -100,7 +100,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 app.animateParchment('loadcharacter', 'confirmation');
             });
 
-            $('.delete').click(function() {
+            $('#continue span').click(function() {
                 app.storage.clear();
                 app.animateParchment('confirmation', 'createcharacter');
                 $('body').removeClass('returning');
@@ -115,6 +115,15 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             });
 
             $('#nameinput').bind("keyup", function() {
+                app.toggleButton();
+            });
+            $('#pwinput').bind("keyup", function() {
+                app.toggleButton();
+            });
+            $('#pwinput2').bind("keyup", function() {
+                app.toggleButton();
+            });
+            $('#emailinput').bind("keyup", function() {
                 app.toggleButton();
             });
 
@@ -170,12 +179,21 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 }
             }
 
-            $('.play div').click(function(event) {
-                var nameFromInput = $('#nameinput').attr('value'),
-                    nameFromStorage = $('#playername').html(),
-                    name = nameFromInput || nameFromStorage;
+            $('#playbutton span').click(function(event) {
+                var name = $('#nameinput').attr('value');
+                var pw = $('#pwinput').attr('value');
+                var pw2 = $('#pwinput2').attr('value');
+                var email = $('#emailinput').attr('value');
+                var loginname = $('#loginnameinput').attr('value');
+                var loginpw = $('#loginpwinput').attr('value');
 
-                app.tryStartingGame(name);
+                if(loginpw === undefined || loginpw === ''){
+                    if(pw2 !== '' && pw2 !== undefined && pw === pw2){
+                        app.tryStartingGame(name, pw, email);
+                    }
+                } else{
+                    app.tryStartingGame(loginname, loginpw, email);
+                }
             });
 
             document.addEventListener("touchstart", function() {},false);
@@ -251,7 +269,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     setWorldPlayersString("players");
                 }
 
-                $("#world-population").find("span").text(totalPlayers);
+                $("#world-population").find("string").text(Types.getLevel);
                 if(totalPlayers == 1) {
                     setTotalPlayersString("player");
                 } else {
@@ -282,9 +300,13 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             });
 
             app.initHealthBar();
-
+            app.initTargetHud();
+            app.initExpBar();
             $('#nameinput').attr('value', '');
-            $('#chatbox').attr('value', '');
+            $('#pwinput').attr('value', '');
+            $('#pwinput2').attr('value', '');
+            $('#emailinput').attr('value', '');
+           $('#chatbox').attr('value', '');
 
             if(game.renderer.mobile || game.renderer.tablet) {
                 $('#foreground').bind('touchstart', function(event) {
@@ -297,10 +319,11 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 $('#foreground').click(function(event) {
                     app.center();
                     app.setMouseCoordinates(event);
-                    if(game) {
-                        game.click();
-                    }
-                    app.hideWindows();
+                     if(game && !app.dropDialogPopuped) {
+                	    game.pvpFlag = event.shiftKey;
+                	    game.click();
+                	}
+                   app.hideWindows();
                 });
             }
 
@@ -349,7 +372,8 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             $(document).mousemove(function(event) {
                 app.setMouseCoordinates(event);
                 if(game.started) {
-                    game.movecursor();
+            	    game.pvpFlag = event.shiftKey;
+                  game.movecursor();
                 }
             });
 
@@ -400,7 +424,11 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                         app.showChat();
                     }
                 }
-                if (game.started && !$('#chatbox').hasClass('active'))
+                 else if(key === 16)
+                    game.pvpFlag = true;
+                else if(key === 27)
+                    app.hideDropDialog();
+               if (game.started && !$('#chatbox').hasClass('active'))
                 {
                     pos = {
                         x: game.player.gridX,
@@ -448,18 +476,24 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 }
             });
 
-            $('#chatinput').keydown(function(e) {
+             $(document).keyup(function(e) {
+            	var key = e.which;
+
+                if(key === 16)
+                    game.pvpFlag = false;
+            });
+           $('#chatinput').keydown(function(e) {
                 var key = e.which,
                     $chat = $('#chatinput'),
                     placeholder = $(this).attr("placeholder");
 
-                if (!(e.shiftKey && e.keyCode === 16) && e.keyCode !== 9) {
-                    if ($(this).val() === placeholder) {
-                        $(this).val('');
-                        $(this).removeAttr('placeholder');
-                        $(this).removeClass('placeholder');
-                    }
-                }
+             //   if (!(e.shiftKey && e.keyCode === 16) && e.keyCode !== 9) {
+            //        if ($(this).val() === placeholder) {
+             //           $(this).val('');
+            //            $(this).removeAttr('placeholder');
+            //            $(this).removeClass('placeholder');
+            //        }
+            //    }
 
                 if(key === 13) {
                     if($chat.attr('value') !== '') {
@@ -505,12 +539,19 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             $('#nameinput').keypress(function(event) {
                 var $name = $('#nameinput'),
                     name = $name.attr('value');
+                var $pw = $('#pwinput'),
+                    pw = $pw.attr('value');
+                var $pw2 = $('#pwinput2'),
+                    pw2 = $pw2.attr('value');
+                var $email = $('#emailinput'),
+                    email = $email.attr('value');
 
                 $('#name-tooltip').removeClass('visible');
 
                 if(event.keyCode === 13) {
                     if(name !== '') {
-                        app.tryStartingGame(name, function() {
+                       if(pw2 !== '' && pw2 !== undefined && pw === pw2)
+                          app.tryStartingGame(name, pw, email, function() {
                             $name.blur(); // exit keyboard on mobile
                         });
                         return false; // prevent form submit
@@ -519,6 +560,68 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                     }
                 }
             });
+            $('#pwinput').keypress(function(event) {
+                var $name = $('#nameinput'),
+                    name = $name.attr('value');
+                var $pw = $('#pwinput'),
+                    pw = $pw.attr('value');
+                var $pw2 = $('#pwinput2'),
+                    pw2 = $pw2.attr('value');
+                var $email = $('#emailinput'),
+                    email = $email.attr('value');
+
+                if(event.keyCode === 13) {
+                    if(name !== '') {
+                        if(pw2 !== '' && pw2 !== undefined && pw === pw2)
+                            app.tryStartingGame(name, pw, email, function() {
+                                $name.blur(); // exit keyboard on mobile
+                            });
+                        return false; // prevent form submit
+                    } else {
+                        return false; // prevent form submit
+                    }
+                }
+            });
+            $('#pwinput2').keypress(function(event) {
+                var $name = $('#nameinput'),
+                    name = $name.attr('value');
+                var $pw = $('#pwinput'),
+                    pw = $pw.attr('value');
+                var $pw2 = $('#pwinput2'),
+                    pw2 = $pw2.attr('value');
+                var $email = $('#emailinput'),
+                    email = $email.attr('value');
+
+                if(event.keyCode === 13) {
+                    if(name !== '') {
+                        if(pw2 !== '' && pw2 !== undefined && pw === pw2)
+                            app.tryStartingGame(name, pw, email, function() {
+                                $name.blur(); // exit keyboard on mobile
+                            });
+                        return false; // prevent form submit
+                    } else {
+                        return false; // prevent form submit
+                    }
+                }
+            });
+            $('#loginpwinput').keypress(function(event) {
+                var $name = $('#nameinput'),
+                    name = $name.attr('value');
+                var $loginpw = $('#loginpwinput'),
+                    loginpw = $loginpw.attr('value');
+
+                if(event.keyCode === 13) {
+                    if(name !== '') {
+                        app.tryStartingGame(name, loginpw, "", function() {
+                            $name.blur(); // exit keyboard on mobile
+                        });
+                        return false; // prevent form submit
+                    } else {
+                        return false; // prevent form submit
+                    }
+                }
+            });
+            
 
             $('#mutebutton').click(function() {
                 game.audioManager.toggle();
@@ -562,7 +665,36 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 }
             });
 
-            if(game.renderer.tablet) {
+             $('#healthbar').click(function(e) {
+                var hb = $('#healthbar'),
+                    hp = $('#hitpoints'),
+                    hpg = $('#hpguide');
+
+                var hbp = hb.position(),
+                    hpp = hp.position();
+
+                if((e.offsetX >= hpp.left) && (e.offsetX < hb.width())) {
+                    if(hpg.css('display') === 'none') {
+                        hpg.css('display', 'block');
+
+                        setInterval(function () {
+                            if(((game.player.hitPoints / game.player.maxHitPoints) <= game.hpGuide) && 
+                               (game.healShortCut >= 0) && 
+                               Types.isHealingItem(game.player.inventory[game.healShortCut]) &&
+                               (game.player.inventoryCount[game.healShortCut] > 0)
+                              ) {
+                                game.eat(game.healShortCut);
+                            }
+                        }, 100);
+                    }
+                    hpg.css('left', e.offsetX + 'px');
+
+                    game.hpGuide = (e.offsetX - hpp.left) / (hb.width()- hpp.left);
+                }
+
+                return false;
+            });
+           if(game.renderer.tablet) {
                 $('body').addClass('tablet');
             }
         });

@@ -152,7 +152,7 @@ footer, header, hgroup, menu, nav, section {
 	#hitpoints {background:#d83939;-moz-transition:.5s width ease;-webkit-transition:.5s width ease;-o-transition:.5s width ease;-ms-transition:.5s width ease;transition:.5s width ease;}
     #hitpoints.white {-moz-animation:flash 0.5s linear 1;-webkit-animation:flash 0.5s linear 1;-o-animation:flash 0.5s linear 1;-ms-animation:flash 0.5s linear 1;animation:flash 0.5s linear 1;}
 	#hitpoints.invincible {-moz-animation:invincible 0.3s steps(3, end) alternate infinite;-webkit-animation:invincible 0.3s steps(3, end) alternate infinite;-o-animation:invincible 0.3s steps(3, end) alternate infinite;-ms-animation:invincible 0.3s steps(3, end) alternate infinite;}
-    
+	#hpguide {background: rgb(128,64,64); position: absolute; display: none; }
     #notifications {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel';overflow:hidden;}
     #notifications div {position:absolute;-moz-transition:none;-webkit-transition:none;top:0;width:100%;}
     #notifications div.top {-moz-transition:0.5s top ease;-webkit-transition:0.5s top ease;-o-transition:0.5s top ease;-ms-transition:0.5s top ease;transition:0.5s top ease;}
@@ -173,6 +173,101 @@ footer, header, hgroup, menu, nav, section {
     #chatbox {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;left:50%;z-index:5;-moz-transition:0.2s bottom ease;-webkit-transition:0.2s bottom ease;-o-transition:0.2s bottom ease;-ms-transition:0.2s bottom ease;transition:0.2s bottom ease;}
     #chatinput {color:#eee;}
     #chatinput.placeholder {color:#aaa;}
+
+    div.clear{
+      float: left;
+      clear: both;
+      width: 100%;
+    }
+
+    #target{
+      font-family:'GraphicPixel';
+      color:#e3e3e3;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 140px;
+      height: 70px;
+      margin-left: 0px;
+      padding: 4px;
+      display: none;
+      border-radius: 0 0 6px 0;
+    }
+    #target .details {
+      float: left;
+      margin-bottom: 8px;
+      width: 100px;
+      text-transform: capitalize;
+    }
+    #target .name {
+      float: left;
+      margin-bottom: 8px;
+      text-transform: capitalize;
+    }
+    #target .health {
+      float: left;
+      height: 10px;
+      width: 100%;
+      background: red;
+      clear: left;
+    }
+
+    #inspector {
+      font-family:'GraphicPixel';
+      color:#e3e3e3;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 140px;
+      margin-left: 0px;
+      padding: 4px;
+      display: none;
+      border-radius: 0 0 6px 0;
+   }
+    #inspector .details {
+      float: left;
+      magin-bottom: 8px
+      width: 100px;
+      text-transform: capitalize;
+    }
+     #inspector .name {
+      float: left;
+      margin-bottom: 8px;
+      text-transform: capitalize;
+    }
+
+   #inspector .health {
+      float: left;
+      height: 15px;
+      width: 100%;
+      clear: left;
+    }
+
+    #dropDialog {
+      font-family:'GraphicPixel';
+      font-size: 9pt;
+      color:#e3e3e3;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -76px;
+      margin-top: -23px;
+      padding: 5px;
+      background: rgba(45, 45, 45, 0.8);
+      border-radius: 6px 6px 6px 6px;
+      display: none;
+    }
+    #dropDialog.active {
+      display: block;
+    }
+    #dropTitle {
+      text-align: center;
+    }
+    #dropAccept, #dropCancel {
+      background: rgb(120, 120, 120);
+      cursor: hand;
+    }
+
     .bubble p {-moz-user-select:none;-webkit-user-select:none;}
     
     #instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
@@ -202,6 +297,12 @@ footer, header, hgroup, menu, nav, section {
     #create-new span:hover, #cancel span:hover {cursor:pointer;color:#d83939;}
     #create-new span span {color:#b2af9b;}
     #create-new span span:hover {color:#b2af9b;}
+    #playbutton span:hover, #cancel span:hover {cursor:pointer;color:#d83939;}
+    #playbutton span span {color:#b2af9b;}
+    #playbutton span span:hover {color:#b2af9b;}
+    #continue span:hover, #cancel span:hover {cursor:pointer;color:#d83939;}
+    #continue span span {color:#b2af9b;}
+    #continue span span:hover {color:#b2af9b;}
     #playername {color:#fff;}
 
     #credits, #loadcharacter, #confirmation, #death, #error, #about, #legal {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel', sans-serif;z-index:1000;}
@@ -474,7 +575,19 @@ footer, header, hgroup, menu, nav, section {
         .button.delete:active {background-position:0 -2178px;}
         
 		#container {width:1470px;margin:0 auto;position:absolute;top:50%;margin-top:-378px;left:50%;margin-left:-735px;}
-		#canvasborder {padding:15px;background:url('../img/3/border.png') no-repeat;}
+    #expbar{
+      position: absolute;
+      bottom: 8.5%;
+      left: 98%;
+      width: 1%;
+      background: rgba(0,0,255,0.3);
+      height: 90%;
+      margin-left: 0px;
+      padding: 0px;
+      border: 0px;
+    }
+
+    #canvasborder {padding:15px;background:url('../img/3/border.png') no-repeat;}
 		#canvas {width:100%;height:672px;}
 		#fade {width:1440px;height:672px;top:15px;left:15px;}
 		
@@ -518,6 +631,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#healthbar {height:39px;background-position:0 -51px;width:306px;top:9px;background-size:1440px;z-index:20;}
 		#hitpoints {width:0px;height:33px;top:12px;left:33px;z-index:10;position:absolute;}
+		#hpguide {left: 33x; top: 12px; width: 2px; height: 33px; z-index: 30; }
 
         #armor, #weapon {width:48px;height:48px;position:absolute;background-size:288px;background-position:-96px;}
         #weapon {left:312px;top:3px;background-size:288px;}
@@ -635,7 +749,20 @@ footer, header, hgroup, menu, nav, section {
         .button.delete:active {background-position:0 -1452px;}
         
 		#container {width:980px;margin:0 auto;position:absolute;top:50%;margin-top:-252px;left:50%;margin-left:-490px;}
-		#canvasborder {padding:10px;background:url('../img/2/border.png') no-repeat;}
+    #expbar{
+      position: absolute;
+      bottom: 8.5%;
+      left: 98.6%;
+      width: 0.5%;
+      background: rgba(0,0,255,0.3);
+      height: 90%;
+      margin-left: 0px;
+      padding: 0px;
+      border: 0px;
+    }
+
+
+    #canvasborder {padding:10px;background:url('../img/2/border.png') no-repeat;}
 		#canvas {width:100%;height:448px;}
 		#fade {width:960px;height:448px;top:10px;left:10px;}
 
@@ -680,6 +807,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#healthbar {height:26px;background-position:0 -34px;width:204px;top:6px;background-size:960px;z-index:20;}
 		#hitpoints {width:0px;height:22px;top:8px;left:22px;z-index:10;position:absolute;}
+		#hpguide {left: 22x; top: 8px; width: 2px; height: 22px; z-index: 30; }
 
         #armor, #weapon {width:32px;height:32px;position:absolute;background-size:192px;background-position:-64px;}
         #weapon {left:208px;top:2px;}
@@ -765,7 +893,20 @@ footer, header, hgroup, menu, nav, section {
         
         #name-tooltip {font-size:14px;width:280px;margin-left:-140px;height:20px;line-height:18px;top:-30px;}
         #name-tooltip:after {bottom:-8px;}
-	}
+
+	  #expbar{
+      position: absolute;
+      bottom: 8.5%;
+      left: 98.6%;
+      width: 0.5%;
+      background: rgba(0,0,255,0.3);
+      height: 90%;
+      margin-left: 0px;
+      padding: 0px;
+      border: 0px;
+    }
+
+}
 	
 	@media screen and (max-width: 1000px) {
 
@@ -848,7 +989,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#healthbar {height:13px;background-position:0 -17px;width:102px;top:3px;background-size:480px;z-index:20;}
 		#hitpoints {width:0px;height:11px;top:4px;left:11px;z-index:10;position:absolute;}
-
+		#hpguide {left: 11x; top: 4px; width: 1px; height: 11px; z-index: 30; }
         #armor, #weapon {width:16px;height:16px;position:absolute;background-size:96px;background-position:-32px;}
         #weapon {left:104px;top:1px;}
         #armor {left:121px;top:1px;}
@@ -999,6 +1140,8 @@ footer, header, hgroup, menu, nav, section {
 	    #createcharacter{padding-bottom:20px;}
 		#playername {font-size:20px;margin:10px 0px;}
 		#create-new {margin:20px 0px;font-size:16px;}
+		#playbutton {margin:20px 0px;font-size:16px;}
+		#continue {margin:20px 0px;font-size:16px;}
 		.button.delete {background-position:-612px -1398px;}
 		.button.delete:active {background-position:-250px -1452px;}
 		#confirmation, #error {top:70%;}
@@ -1012,6 +1155,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#healthbar {height:26px;background-position:0 -34px;width:204px;top:6px;background-size:960px;z-index:20;}
 		#hitpoints {width:0px;height:22px;top:8px;left:22px;z-index:10;position:absolute;}
+		#hpguide {left: 22x; top: 8px; width: 2px; height: 22px; z-index: 30; }
 
         #armor, #weapon {width:32px;height:32px;position:absolute;background-size:192px;background-position:-64px;}
         #weapon {left:208px;top:2px;}

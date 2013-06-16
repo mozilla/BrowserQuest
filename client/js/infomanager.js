@@ -8,11 +8,11 @@ define(function() {
             this.destroyQueue = [];
         },
 
-        addDamageInfo: function(value, x, y, type) {
+        addDamageInfo: function(value, x, y, type, duration) {
             var time = this.game.currentTime,
-                id = time+""+Math.abs(value)+""+x+""+y,
+                id = time+""+(isNaN(value*1)?value:value*1)+""+x+""+y,
                 self = this,
-                info = new DamageInfo(id, value, x, y, DamageInfo.DURATION, type);
+                info = new HoveringInfo(id, value, x, y, (duration)?duration:1000, type);
 
             info.onDestroy(function(id) {
                 self.destroyQueue.push(id);
@@ -55,11 +55,19 @@ define(function() {
         "healed": {
             fill: "rgb(80, 255, 80)",
             stroke: "rgb(50, 120, 50)"
-        }
+         },
+        "health": {
+            fill: "white",
+            stroke: "#373737"
+        },
+        "exp": {
+            fill: "rgb(80, 80, 255)",
+            stroke: "rgb(50, 50, 255)"
+       }
     };
 
 
-    var DamageInfo = Class.extend({
+    var HoveringInfo = Class.extend({
         DURATION: 1000,
 
         init: function(id, value, x, y, duration, type) {
@@ -87,8 +95,8 @@ define(function() {
         },
 
         tick: function() {
-            this.y -= 1;
-            this.opacity -= 0.07;
+            if(this.type !== 'health') this.y -= 1;
+            this.opacity -= (70/this.duration);
             if(this.opacity < 0) {
                 this.destroy();
             }

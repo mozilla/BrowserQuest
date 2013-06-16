@@ -11,6 +11,7 @@
     , "sanitizer": ">0"
     , "semver": ">0"
     , "memcache": ">0"
+    , "redis": ">0"
     , "connect": ">2"
   }
 }

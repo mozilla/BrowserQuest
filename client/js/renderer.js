@@ -25,6 +25,7 @@ function(Camera, Item, Character, Player, Timer) {
             this.frameCount = 0;
             this.maxFPS = this.FPS;
             this.realFPS = 0;
+            //Turn on or off Debuginfo (FPS Counter)
             this.isDebugInfoVisible = false;
 
             this.animatedTileCount = 0;
@@ -164,6 +165,18 @@ function(Camera, Item, Character, Player, Timer) {
             this.context.translate(x+2, y+2);
             this.context.strokeRect(0, 0, (this.tilesize * this.scale) - 4, (this.tilesize * this.scale) - 4);
             this.context.restore();
+        },
+        drawRectStroke: function(x, y, width, height, color) {
+            this.context.fillStyle = color;
+            this.context.fillRect(x, y, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
+            this.context.fill();
+            this.context.lineWidth = 5;
+            this.context.strokeStyle = 'black';
+            this.context.strokeRect(x, y, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
+        },
+        drawRect: function(x, y, width, height, color) {
+            this.context.fillStyle = color;
+            this.context.fillRect(x, y, (this.tilesize * this.scale)*width, (this.tilesize * this.scale)*height);
         },
 
         drawCellHighlight: function(x, y, color) {
@@ -554,6 +567,7 @@ function(Camera, Item, Character, Player, Timer) {
             this.context.save();
             if(entity.name && entity instanceof Player) {
                 var color = (entity.id === this.game.playerId) ? "#fcda5c" : "white";
+                var name = (entity.level) ? "lv." + entity.level + " " + entity.name : entity.name;
                 this.drawText(entity.name,
                               (entity.x + 8) * this.scale,
                               (entity.y + entity.nameOffsetY) * this.scale,
@@ -635,8 +649,8 @@ function(Camera, Item, Character, Player, Timer) {
         drawDebugInfo: function() {
             if(this.isDebugInfoVisible) {
                 this.drawFPS();
-                this.drawText("A: " + this.animatedTileCount, 100, 30, false);
-                this.drawText("H: " + this.highTileCount, 140, 30, false);
+                //this.drawText("A: " + this.animatedTileCount, 100, 30, false);
+                //this.drawText("H: " + this.highTileCount, 140, 30, false);
             }
         },
 

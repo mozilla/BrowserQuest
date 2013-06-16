@@ -4,10 +4,11 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
     var Player = Character.extend({
         MAX_LEVEL: 10,
 
-        init: function(id, name, kind, guild) {
+        init: function(id, name, pw, kind, guild) {
             this._super(id, kind);
 
             this.name = name;
+            this.pw = pw;
             
             if (typeof guild !== 'undefined') {
 				this.setGuild(guild);
@@ -18,11 +19,15 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
             // sprites
             this.spriteName = "clotharmor";
+            this.armorName = "clotharmor";
             this.weaponName = "sword1";
 
             // modes
             this.isLootMoving = false;
             this.isSwitchingWeapon = true;
+
+            // PVP Flag
+            this.pvpFlag = true;
         },
 
         getGuild: function() {
@@ -131,6 +136,9 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
                 return this.sprite;
             }
         },
+        setArmorName: function(name){
+            this.armorName = name;
+        },
 
         getWeaponName: function() {
             return this.weaponName;
@@ -143,7 +151,33 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         hasWeapon: function() {
             return this.weaponName !== null;
         },
+        equipFromInventory: function(type, inventoryNumber, sprites){
+            var itemString = Types.getKindAsString(this.inventory[inventoryNumber]);
 
+            if(itemString){
+                var itemSprite = sprites[itemString];
+                if(itemSprite){
+                    if(type === "armor"){
+                        this.inventory[inventoryNumber] = Types.getKindFromString(this.getArmorName());
+                        this.setSpriteName(itemString);
+                        this.setSprite(itemSprite);
+                        this.setArmorName(itemString);
+                    } else if(type === "avatar"){
+                        this.inventory[inventoryNumber] = null;
+                        this.setSpriteName(itemString);
+                        this.setSprite(itemSprite);
+                    }
+                }
+            }
+        },
+        switchArmor: function(armorName, sprite){
+            this.setSpriteName(armorName);
+            this.setSprite(sprite);
+            this.setArmorName(armorName);
+            if(this.switch_callback) {
+              this.switch_callback();
+            }
+        },
         switchWeapon: function(newWeaponName) {
             var count = 14,
                 value = false,
@@ -258,7 +292,10 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             if(this.invincibleTimeout) {
                 clearTimeout(this.invincibleTimeout);
             }
-        }
+         },
+        flagPVP: function(pvpFlag){
+            this.pvpFlag = pvpFlag;
+       }
     });
 
     return Player;

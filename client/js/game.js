@@ -1,11 +1,12 @@
 
-define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile',
-        'warrior', 'gameclient', 'audio', 'updater', 'transition', 'pathfinder',
-        'item', 'mob', 'npc', 'player', 'character', 'chest', 'mobs', 'exceptions', 'config', 'guild', '../../shared/js/gametypes'],
+define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite',
+        'tile', 'warrior', 'gameclient', 'audio', 'updater', 'transition',
+        'pathfinder', 'item', 'mob', 'npc', 'player', 'character', 'chest',
+        'mobs', 'exceptions', 'config', 'guild', '../../shared/js/gametypes'],
 function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedTile,
          Warrior, GameClient, AudioManager, Updater, Transition, Pathfinder,
-         Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config, Guild) {
-
+         Item, Mob, Npc, Player, Character, Chest, Mobs, Exceptions, config,
+         Guild) {
     var Game = Class.extend({
         init: function(app) {
             this.app = app;
@@ -48,6 +49,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.targetColor = "rgba(255, 255, 255, 0.5)";
             this.targetCellVisible = true;
             this.hoveringTarget = false;
+            this.hoveringPlayer = false;
             this.hoveringMob = false;
             this.hoveringItem = false;
             this.hoveringCollidingTile = false;
@@ -67,6 +69,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
             // debug
             this.debugPathing = false;
+            
+            // pvp
+            this.pvpFlag = false;
 
             // sprites
             this.spriteNames = ["hand", "sword", "loot", "target", "talk", "sparks", "shadow16", "rat", "skeleton", "skeleton2", "spectre", "boss", "deathknight",
@@ -388,11 +393,21 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             else {
                 this.targetColor = "rgba(255, 255, 255, 0.5)";
             }
-
-            if(this.hoveringMob && this.started) {
+            
+            if(this.hoveringPlayer && this.started) {
+                if(this.pvpFlag)
+                    this.setCursor("sword");
+                else
+                    this.setCursor("hand");
+                this.hoveringTarget = false;
+                this.hoveringMob = false;
+                this.targetCellVisible = false;
+            } else if(this.hoveringMob && this.started) {
                 this.setCursor("sword");
                 this.hoveringTarget = false;
+                this.hoveringPlayer = false;
                 this.targetCellVisible = false;
+ 
             }
             else if(this.hoveringNpc && this.started) {
                 this.setCursor("talk");
@@ -407,6 +422,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             else {
                 this.setCursor("hand");
                 this.hoveringTarget = false;
+                this.hoveringPlayer = false;
                 this.targetCellVisible = true;
             }
         },
@@ -621,12 +637,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
 
-        setServerOptions: function(host, port, username) {
+        setServerOptions: function(host, port, username, userpw, email) {
             this.host = host;
             this.port = port;
             this.username = username;
+            this.userpw = userpw;
+            this.email = email;
         },
-
+ 
         loadAudio: function() {
             this.audioManager = new AudioManager(this);
         },
@@ -727,6 +745,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 connecting = false; // always in dispatcher mode in the build version
 
             this.client = new GameClient(this.host, this.port);
+            this.client.wrongpw_callback = function(){
+                self.textWindowHandler.setHtml("<center><h1>Wrong Password</h1></center>");
+            };
 
             //>>excludeStart("prodHost", pragmas.prodHost);
             var config = this.app.config.local || this.app.config.dev;
@@ -754,6 +775,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 log.info("Starting client/server handshake");
 
                 self.player.name = self.username;
+                self.player.pw = self.userpw;
+                self.player.email = self.email;
                 self.started = true;
 
                 self.sendHello(self.player);
@@ -777,7 +800,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
             });
 
-            this.client.onWelcome(function(id, name, x, y, hp) {
+            this.client.onWelcome(function(id, name, x, y, hp, armor, weapon,
+                                           avatar, weaponAvatar, experience) {
                 log.info("Received player ID from server : "+ id);
                 self.player.id = id;
                 self.playerId = id;
@@ -786,8 +810,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.name = name;
                 self.player.setGridPosition(x, y);
                 self.player.setMaxHitPoints(hp);
+                self.player.setArmorName(armor);
+                self.player.setSpriteName(avatar);
+                self.player.setWeaponName(weapon);
+                self.initPlayer();
+                self.player.experience = experience;
+                self.player.level = Types.getLevel(experience);
 
                 self.updateBars();
+                self.updateExpBar();
                 self.resetCamera();
                 self.updatePlateauMode();
                 self.audioManager.updateMusic();
@@ -807,7 +838,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                             self.player.getGuild());
                     self.showNotification("Welcome to BrowserQuest!");
                 } else {
-                    self.showNotification("Welcome back to BrowserQuest!");
+                    self.showNotification("Welcome Back. You are level " + self.player.level + ".");
                     self.storage.setPlayerName(name);
                 }
 
@@ -872,6 +903,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
 
                     self.player.forEachAttacker(self.makeAttackerFollow);
+
 
                     if((self.player.gridX <= 85 && self.player.gridY <= 179 && self.player.gridY > 178) || (self.player.gridX <= 85 && self.player.gridY <= 266 && self.player.gridY > 265)) {
                         self.tryUnlockingAchievement("INTO_THE_WILD");
@@ -1056,6 +1088,14 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.onHasMoved(function(player) {
                     self.assignBubbleTo(player);
                 });
+                self.client.onPVPChange(function(pvpFlag){
+                    self.player.flagPVP(pvpFlag);
+                    if(pvpFlag){
+                        self.showNotification("PVP is on.");
+                    } else{
+                        self.showNotification("PVP is off.");
+                    }
+                });
 
                 self.player.onArmorLoot(function(armorName) {
                     self.player.switchArmor(self.sprites[armorName]);
@@ -1125,6 +1165,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                             if(self.player.target === entity) {
                                                 self.makeAttackerFollow(self.player)
                                             }
+
 
                                             entity.forEachAttacker(function(attacker) {
                                                 if(attacker.isAdjacent(attacker.target)) {
@@ -1311,7 +1352,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 				self.client.onGuildInvite(function(guildId, guildName, invitorName) {
 					self.showNotification(invitorName + " invited you to join “"+guildName+"”.");
 					self.player.addInvite(guildId);
-					setTimeout(function(){$("#chatinput").attr("placeholder", "Do you want to join "+guildName+" ? (You've got 10 minutes to answer ”guildjoin yes” or “guildjoin no“).");
+					setTimeout(function(){$("#chatinput").attr("placeholder", "Do you want to join "+guildName+" ? Type /guild accept yes or /guild accept no");
 					self.app.showChat();},2500);
 				});
 				
@@ -1430,14 +1471,30 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     }
                 });
 
-                self.client.onPlayerDamageMob(function(mobId, points) {
+                self.client.onPlayerDamageMob(function(mobId, points, healthPoints, maxHp) {
                     var mob = self.getEntityById(mobId);
                     if(mob && points) {
                         self.infoManager.addDamageInfo(points, mob.x, mob.y - 15, "inflicted");
                     }
+                    if(self.player.hasTarget()){
+                        self.updateTarget(mobId, points, healthPoints, maxHp);
+                    }
                 });
 
-                self.client.onPlayerKillMob(function(kind) {
+                self.client.onPlayerKillMob(function(kind, level, exp) {
+                    var mobExp = Types.getMobExp(kind);
+                    self.player.level = level;
+                    self.player.experience = exp;
+                    self.updateExpBar();
+                    
+                    self.infoManager.addDamageInfo("+"+mobExp+" exp", self.player.x, self.player.y - 15, "exp", 3000);
+
+                    var expInThisLevel = self.player.experience - Types.expForLevel[self.player.level-1];
+                    var expForLevelUp = Types.expForLevel[self.player.level] - Types.expForLevel[self.player.level-1];
+                    var expPercentThisLevel = (100*expInThisLevel/expForLevelUp);
+
+                    self.showNotification( "Total xp: " + self.player.experience + ". " + expPercentThisLevel.toFixed(0) + "% of this level done." );
+
                     var mobName = Types.getKindAsString(kind);
 
                     if(mobName === 'skeleton2') {
@@ -1454,12 +1511,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
                     if(mobName === 'boss') {
                         self.showNotification("You killed the skeleton king");
-                    } else {
-                        if(_.include(['a', 'e', 'i', 'o', 'u'], mobName[0])) {
-                            self.showNotification("You killed an " + mobName);
-                        } else {
-                            self.showNotification("You killed a " + mobName);
-                        }
                     }
 
                     self.storage.incrementTotalKills();
@@ -1901,17 +1952,17 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             return null;
         },
 
-        getNpcAt: function(x, y) {
-            var entity = this.getEntityAt(x, y);
-            if(entity && (entity instanceof Npc)) {
+        getPlayerAt: function(x, y) {
+          var entity = this.getEntityAt(x, y);
+            if(entity && (entity instanceof Player) && (entity !== this.player) && this.player.pvpFlag) {
                 return entity;
             }
             return null;
         },
-        
-        getOtherPlayerAt: function(x, y) {
-			var entity = this.getEntityAt(x,y);
-			if(entity && entity != this.player && (entity instanceof Player)) {
+
+       getNpcAt: function(x, y) {
+            var entity = this.getEntityAt(x, y);
+            if(entity && (entity instanceof Npc)) {
                 return entity;
             }
             return null;
@@ -1959,6 +2010,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         isMobAt: function(x, y) {
             return !_.isNull(this.getMobAt(x, y));
         },
+        isPlayerAt: function(x, y) {
+            return !_.isNull(this.getPlayerAt(x, y));
+        },
 
         isItemAt: function(x, y) {
             return !_.isNull(this.getItemAt(x, y));
@@ -1966,10 +2020,6 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         isNpcAt: function(x, y) {
             return !_.isNull(this.getNpcAt(x, y));
-        },
-        
-        isOtherPlayerAt: function(x, y) {
-            return !_.isNull(this.getOtherPlayerAt(x, y));
         },
 
         isChestAt: function(x, y) {
@@ -2044,14 +2094,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 this.hoveringCollidingTile = this.map.isColliding(x, y);
                 this.hoveringPlateauTile = this.player.isOnPlateau ? !this.map.isPlateau(x, y) : this.map.isPlateau(x, y);
                 this.hoveringMob = this.isMobAt(x, y);
+                this.hoveringPlayer = this.isPlayerAt(x, y);
                 this.hoveringItem = this.isItemAt(x, y);
                 this.hoveringNpc = this.isNpcAt(x, y);
-                this.hoveringOtherPlayer = this.isOtherPlayerAt(x, y);
+                this.hoveringOtherPlayer = this.isPlayerAt(x, y);
                 this.hoveringChest = this.isChestAt(x, y);
 
-                if(this.hoveringMob || this.hoveringNpc || this.hoveringChest || this.hoveringOtherPlayer) {
+                if(this.hoveringMob || this.hoveringPlayer || this.hoveringNpc || this.hoveringChest || this.hoveringOtherPlayer) {
                     var entity = this.getEntityAt(x, y);
 
+                    this.player.showTarget(entity);
                     if(!entity.isHighlighted && this.renderer.supportsSilhouettes) {
                         if(this.lastHovered) {
                             this.lastHovered.setHighlight(false);
@@ -2117,7 +2169,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             && !this.hoveringPlateauTile) {
                 entity = this.getEntityAt(pos.x, pos.y);
 
-                if(entity instanceof Mob) {
+        	    if(entity instanceof Mob || (entity instanceof Player && entity !== this.player && this.player.pvpFlag && this.pvpFlag)) {
                     this.makePlayerAttack(entity);
                 }
                 else if(entity instanceof Item) {
@@ -2241,7 +2293,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
             }
 
-            if(character.isAttacking() && !character.previousTarget) {
+            if(character.isAttacking() && (!character.previousTarget || character.id === this.playerId)) {
                 var isMoving = this.tryMovingToADifferentTile(character); // Don't let multiple mobs stack on the same tile when attacking a player.
 
                 if(character.canAttack(time)) {
@@ -2386,7 +2438,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         say: function(message) {
 			//#cli guilds
-			var regexp = /^(invite|create|guildjoin)\s+([^\s]*)|(guild:)\s*(.*)$|^(leaveguild)$/i;
+			var regexp = /^\/guild\ (invite|create|accept)\s+([^\s]*)|(guild:)\s*(.*)$|^\/guild\ (leave)$/i;
 			var args = message.match(regexp);
 			if(args != undefined){
 				switch(args[1]){
@@ -2402,7 +2454,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 						this.client.sendNewGuild(args[2]);
 						break;
 					case undefined:
-						if(args[5]==="leaveguild"){
+						if(args[5]==="leave"){
 							this.client.sendLeaveGuild();
 						}
 						else if(this.player.hasGuild()){
@@ -2412,7 +2464,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 							this.showNotification("You got no-one to talk to…");
 						}
 						break;
-					case "guildjoin":
+					case "accept":
 						var status;
 						if(args[2] === "yes") {
 							status = this.player.checkInvite();
@@ -2438,7 +2490,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 							}
 						}
 						else{
-							this.showNotification("“guildjoin” is a YES or NO question!!");
+							this.showNotification("“guild accept” is a YES or NO question!!");
 						}
 						break;
 				}	
@@ -2496,7 +2548,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.initRenderingGrid();
 
             this.player = new Warrior("player", this.username);
+            this.player.pw = this.userpw;
+            this.player.email = this.email;
             this.initPlayer();
+            this.app.initTargetHud();
 
             this.started = true;
             this.client.enable();
@@ -2521,6 +2576,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
 
         onPlayerDeath: function(callback) {
             this.playerdeath_callback = callback;
+        },
+
+        onUpdateTarget: function(callback){
+          this.updatetarget_callback = callback;
+        },
+        onPlayerExpChange: function(callback){
+            this.playerexp_callback = callback;
         },
 
         onPlayerHealthChange: function(callback) {
@@ -2569,7 +2631,24 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 this.playerhp_callback(this.player.hitPoints, this.player.maxHitPoints);
             }
         },
-
+        updateExpBar: function(){
+            if(this.player && this.playerexp_callback){
+                var expInThisLevel = this.player.experience - Types.expForLevel[this.player.level-1];
+                var expForLevelUp = Types.expForLevel[this.player.level] - Types.expForLevel[this.player.level-1];
+                this.playerexp_callback(expInThisLevel, expForLevelUp);
+            }
+        },
+        updateTarget: function(targetId, points, healthPoints, maxHp){
+            if(this.player.hasTarget() && this.updatetarget_callback){
+                var target = this.getEntityById(targetId);
+                target.name = Types.getKindAsString(target.kind);
+                target.points = points;
+                target.healthPoints = healthPoints;
+                target.maxHp = maxHp;
+                this.updatetarget_callback(target);
+            }
+        },
+    
         getDeadMobPosition: function(mobId) {
             var position;
 
@@ -2671,13 +2750,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
 
         makeAttackerFollow: function(attacker) {
-            var target = attacker.target;
+              var target = attacker.target;
 
-            if(attacker.isAdjacent(attacker.target)) {
-                attacker.lookAtTarget();
-            } else {
-                attacker.follow(target);
-            }
+              if(attacker.isAdjacent(attacker.target)) {
+                    attacker.lookAtTarget();
+              } else {
+                  attacker.follow(target);
+              }
         },
 
         forEachEntityAround: function(x, y, r, callback) {

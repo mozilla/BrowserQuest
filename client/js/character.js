@@ -38,6 +38,8 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
             this.isDead = false;
             this.attackingMode = false;
             this.followingMode = false;
+
+            this.inspecting = null;
         },
 
         clean: function() {
@@ -443,10 +445,29 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
                 }
                 this.unconfirmedTarget = null;
                 this.target = character;
+
+                if(this.settarget_callback){
+                    var targetName = Types.getKindAsString(character.kind);
+                    this.settarget_callback(character, targetName);
+                }
+
             } else {
                 log.debug(character.id + " is already the target of " + this.id);
             }
         },
+        onSetTarget: function(callback){
+          this.settarget_callback = callback;
+        },
+        showTarget: function(character){
+          if(this.inspecting !== character){
+            this.inspecting = character;
+            if(this.settarget_callback){
+              var targetName = Types.getKindAsString(character.kind);
+              this.settarget_callback(character, targetName, true);
+            }
+          }
+        },
+
 
         /**
          * Removes the current attack target.
@@ -458,8 +479,12 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
                 if(this.target instanceof Character) {
                     this.target.removeAttacker(this);
                 }
+                if(this.removetarget_callback) this.removetarget_callback(this.target.id);
                 this.target = null;
             }
+        },
+        onRemoveTarget: function(callback){
+            this.removetarget_callback = callback;
         },
 
         /**

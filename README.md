@@ -3,11 +3,11 @@ BrowserQuest
 
 [BrowserQuest](http://browserquest.mozilla.org/) is a HTML5/JavaScript multiplayer game experiment.
 
-It has two major parts:
+It has three major parts:
 
 * the server side, which runs using Node.js
 * the client side, which runs using javascript in your browser
-
+* the database side, which runs using redis
 
 Browser Support
 ---------------
@@ -29,6 +29,7 @@ Getting the server up and running is pretty easy. You need to have the following
 * gcc-c++ ← optional.  Not needed on windows.
 * GNU make ← optional.  Not needed on windows.
 * zlib-devel ← this is the Fedora/RHEL package name, others may be slightly different.  Not needed on windows.
+* redis server ← this is needed for the game to connect to the backend database
 
 Clone the git repo:
 
@@ -60,16 +61,19 @@ That means its working.  There should not be any warnings or errors.
 Using a browser, connect to port 8000 of the server entered above.  The BrowserQuest start page should appear, and the game should work.
 
 
-Node.js for Fedora 16 and RHEL6/CentOS
+Node.js and redis for Fedora 16 and RHEL6/CentOS
 --------------------------------------
 
-On Fedora 16 and RHEL 6/CentOS 6, the rpms here are known to work:
+On Fedora 16 and RHEL 6/CentOS 6, you can add the EPEL repository and then run:
 
-  http://justinclift.fedorapeople.org/nodejs/
+    $ yum update -y
+    $ rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    $ yum install zlib-devel gcc gcc-c++ autoconf automake make redis nodejs npm
+    $ chkconfig redis on
 
-Note, those rpms are ugly, unofficial builds by [@justinclift](https://github.com/justinclift).  You are
-most welcome to improve on them. :)
+You can now start redis by running:
 
+    $ service start redis
 
 Mac OS X
 --------
@@ -82,6 +86,24 @@ Node.js installed through Homebrew is known to work:
     $ npm install -d
     $ node server/js/main.js
 
+Download the latest redis source from http://redis.io/download
+
+    $ tar xzf redis-<version>.tar.gz
+    $ cd redis-<version>
+    $ make
+
+To start redis now, you can simply run:
+
+    $ src/redis-server
+
+You can try interacting with it by starting another terminal and typing:
+
+    $ redis-<version>/src/redis-cli
+    redis> set foo bar
+    OK
+    redis> get foo 
+    "bar"
+
 
 Windows
 -------
@@ -90,6 +112,7 @@ Windows 8 is known to work ok with just the base Node v0.8.18
 installed, without Visual Studio, nor Python, nor the native
 extensions for npm modules installed.
 
+You can download an experimental  Win32/64 version of redis from here: http://redis.io/download
 
 Documentation
 -------------
@@ -151,3 +174,4 @@ Many other people are contributing through GitHub:
 * Jason Culwell [@Mawgamoth](https://github.com/Mawgamoth)
 * Bryan Biedenkapp [@gatekeep](https://github.com/gatekeep)
 * Aaron Hill [@Aaron1011](https://github.com/Aaron1011)
+* Fredrik Svantes [@speedis](https://github.com/speedis)
