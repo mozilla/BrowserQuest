@@ -72,7 +72,7 @@ On Fedora 16+ and RHEL 6/CentOS 6, you can add the EPEL repository and then run:
 
 You can now start Redis by running:
 
-    $ sudo service start redis
+    $ sudo service redis start
 
 Mac OS X
 --------
