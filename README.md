@@ -27,6 +27,7 @@ Getting the server up and running is pretty easy. You need to have the following
 * Node.js ← **versions 0.6.x-0.10.x work**. 
 * gcc-c++ ← optional.  Not needed on windows.
 * GNU make ← optional.  Not needed on windows.
+* Memcached ← optional. This is needed to enable metrics.
 * zlib-devel ← this is the Fedora/RHEL package name, others may be sightly different.  Not needed on windows.
 * Redis server ← this is needed for the game to connect to the backend database.
 
@@ -60,26 +61,28 @@ That means its working.  There should not be any warnings or errors.
 Using a browser, connect to port 8000 of the server entered above.  The
 BrowserQuest start page should appear, and the game should work.
 
-Node.js and Redis for Fedora 16 and RHEL6/CentOS
+Node.js, Memcached, and Redis for Fedora 16 and RHEL6/CentOS
 --------------------------------------
 
 On Fedora 16+ and RHEL 6/CentOS 6, you can add the EPEL repository and then run:
 
     $ sudo yum update -y
     $ sudo rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-    $ sudo yum install zlib-devel gcc gcc-c++ autoconf automake make redis nodejs npm
+    $ sudo yum install zlib-devel gcc gcc-c++ autoconf automake make redis nodejs npm memcached
     $ sudo chkconfig redis on
+    $ sudo chkconfig memcached on
 
-You can now start Redis by running:
+You can now start Redis and Memcached by running:
 
     $ sudo service redis start
+    $ sudo service memcached start
 
 Mac OS X
 --------
 
-Node.js and Redis installed through Homebrew are known to work:
+Node.js, Memcached, and Redis installed through Homebrew are known to work:
 
-    $ brew install node redis
+    $ brew install node redis memcached
     $ ln -sfv /usr/local/opt/redis/*.plist ~/Library/LaunchAgents
     $ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
     $ git clone git://github.com/browserquest/BrowserQuest.git
@@ -114,6 +117,9 @@ extensions for npm modules installed.
 
 You can download an experimental Win32/64 version of Redis
 from here: http://redis.io/download
+
+You can download the latest version of Memcached for Win32/64 from here:
+http://blog.elijaa.org/index.php?post/2010/10/15/Memcached-for-Windows&similar
 
 Documentation
 -------------

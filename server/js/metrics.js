@@ -2,7 +2,6 @@ var _ = require('underscore');
 var cls = require('./lib/class');
 var Metrics = {};
 
-module.exports = Metrics;
 
 Metrics = cls.Class.extend({
     init: function(config) {
@@ -64,6 +63,10 @@ Metrics = cls.Class.extend({
         this.client.set('world_distribution_' + this.config.server_name, worlds);
     },
 
+    updateWorldCount: function() {
+        this.client.set('world_count_' + this.config.server_name, this.config.nb_worlds);
+    },
+
     getOpenWorldCount: function (callback) {
         this.client.get('world_count_' + this.config.server_name, function (error, result) {
             callback(result);
@@ -76,3 +79,5 @@ Metrics = cls.Class.extend({
         });
     }
 });
+
+module.exports = Metrics;

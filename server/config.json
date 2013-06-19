@@ -7,5 +7,9 @@
     "metrics_enabled": false,
     "use_one_port": true,
     "redis_port": 6379,
-    "redis_host": "127.0.0.1"
+    "redis_host": "127.0.0.1",
+    "memcached_host": "127.0.0.1",
+    "memcached_port": 11211,
+    "game_servers": ["localhost"],
+    "server_name" : "localhost"
 }

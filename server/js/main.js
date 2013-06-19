@@ -23,6 +23,7 @@ function main(config) {
         DatabaseHandler = require("./databasehandler");
         checkPopulationInterval = setInterval(function() {
             if(metrics && metrics.isReady) {
+                metrics.updateWorldCount();
                 metrics.getTotalPlayers(function(totalPlayers) {
                     if(totalPlayers !== lastTotalPlayers) {
                         lastTotalPlayers = totalPlayers;
