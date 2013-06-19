@@ -3,11 +3,11 @@ var Utils = require('./utils');
 var cls = require("./lib/class"),
     Player = require('./player'),
     Messages = require("./message"),
-    redis = require("redis"),
-    client = redis.createClient(6379, "127.0.0.1", {socket_nodelay: true});
-
+    redis = require("redis");
+    
 module.exports = DatabaseHandler = cls.Class.extend({
-    init: function(){
+    init: function(config){
+        client = redis.createClient(config.redis_port, config.redis_host, {socket_nodelay: true});
     },
     loadPlayer: function(player){
         var self = this;

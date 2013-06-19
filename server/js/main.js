@@ -35,7 +35,7 @@ function main(config) {
         }, 1000);
 
     log.info("Starting BrowserQuest game server...");
-    databaseHandler = new DatabaseHandler();
+    databaseHandler = new DatabaseHandler(config);
 
     server.onConnect(function(connection) {
         var world, // the one in which the player will be spawned

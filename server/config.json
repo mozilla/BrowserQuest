@@ -5,5 +5,7 @@
     "nb_worlds": 5,
     "map_filepath": "./server/maps/world_server.json",
     "metrics_enabled": false,
-    "use_one_port": true
+    "use_one_port": true,
+    "redis_port": 6379,
+    "redis_host": "127.0.0.1"
 }
