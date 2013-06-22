@@ -61,22 +61,6 @@ That means its working.  There should not be any warnings or errors.
 Using a browser, connect to port 8000 of the server entered above.  The
 BrowserQuest start page should appear, and the game should work.
 
-Node.js, Memcached, and Redis for Fedora 16 and RHEL6/CentOS
---------------------------------------
-
-On Fedora 16+ and RHEL 6/CentOS 6, you can add the EPEL repository and then run:
-
-    $ sudo yum update -y
-    $ sudo rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-    $ sudo yum install zlib-devel gcc gcc-c++ autoconf automake make redis nodejs npm memcached
-    $ sudo chkconfig redis on
-    $ sudo chkconfig memcached on
-
-You can now start Redis and Memcached by running:
-
-    $ sudo service redis start
-    $ sudo service memcached start
-
 Mac OS X
 --------
 
@@ -107,6 +91,34 @@ You can try interacting with it by starting another terminal and typing:
     OK
     redis> get foo 
     "bar"
+
+Node.js, Memcached, and Redis for Fedora 16+ and RHEL/CentOS/SL 6.x
+-------------------------------------------------------------------
+
+On Fedora 16+ and RHEL/CentOS/SL 6.x, you can install Redis (required) and Memcached (optional) using
+yum.
+
+For just RHEL/CentOS/SL 6.x, you need to add the EPEL repo first.  Not needed for Fedora:
+
+    $ sudo rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+Then install Node.js and everything else needed:
+
+    $ sudo yum install zlib-devel gcc gcc-c++ autoconf automake make redis nodejs npm memcached
+    $ sudo chkconfig redis on
+    $ sudo chkconfig memcached on
+
+Start Redis and Memcached by running:
+
+    $ sudo service redis start
+    $ sudo service memcached start
+
+Now continue on with the normal steps to clone the BrowserQuest git repo, and start up BrowserQuest:
+
+    $ git clone git://github.com/browserquest/BrowserQuest.git
+    $ cd BrowserQuest
+    $ npm install -d
+    $ node server/js/main.js
 
 Windows
 -------
