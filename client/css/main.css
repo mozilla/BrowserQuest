@@ -183,6 +183,7 @@ footer, header, hgroup, menu, nav, section {
     #target{
       font-family:'GraphicPixel';
       color:#e3e3e3;
+      background-color:rgba(0, 0, 0, 0.43);
       position: absolute;
       top: 15px;
       left: 15px;
@@ -215,6 +216,7 @@ footer, header, hgroup, menu, nav, section {
     #inspector {
       font-family:'GraphicPixel';
       color:#e3e3e3;
+      background-color:rgba(0, 0, 0, 0.43);
       position: absolute;
       top: 15px;
       left: 15px;
