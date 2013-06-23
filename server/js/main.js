@@ -16,7 +16,7 @@ function main(config) {
     var ws = require("./ws"),
         WorldServer = require("./worldserver"),
         _ = require('underscore'),
-        server = new ws.MultiVersionWebsocketServer(config.port, config.use_one_port),
+        server = new ws.MultiVersionWebsocketServer(process.env.OPENSHIFT_NODEJS_PORT || config.port, config.use_one_port),
         metrics = config.metrics_enabled ? new Metrics(config) : null,
         worlds = [],
         lastTotalPlayers = 0,

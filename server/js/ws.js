@@ -208,7 +208,7 @@ WS.MultiVersionWebsocketServer = Server.extend({
                 response.end();
             });
 
-            this._httpServer = http.createServer(app).listen(port, function serverEverythingListening() {
+            this._httpServer = http.createServer(app).listen(port, process.env.OPENSHIFT_NODEJS_IP || undefined, function serverEverythingListening() {
                 log.info('Server (everything) is listening on port ' + port);
             });
         } else {
@@ -223,7 +223,7 @@ WS.MultiVersionWebsocketServer = Server.extend({
                 }
                 response.end();
             });
-            this._httpServer.listen(port, function serverOnlyListening() {
+            this._httpServer.listen(port, process.env.OPENSHIFT_NODEJS_IP || undefined, function serverOnlyListening() {
                 log.info('Server (only) is listening on port ' + port);
             });
         }
