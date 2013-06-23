@@ -3,3 +3,7 @@
 echo "Installing Memcache"
 $OPENSHIFT_REPO_DIR/.openshift/action_hooks/install_memcache.sh
 echo "Memcache installed!"
+
+echo "Installing Nodejs"
+$OPENSHIFT_REPO_DIR/.openshift/lib/build_nodejs.sh
+echo "Node installed!"
