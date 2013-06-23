@@ -1,4 +1,5 @@
-# Openshift build hook. Currently, this installs Redis and Memcache, as they are not provided by Openshift
+# Openshift build hook. Currently, this installs Memcache, as it is not provided by Openshift
 
-./install_redis.sh
-./install_memcache.sh
+echo "Installing Memcache"
+$OPENSHIFT_REPO_DIR/.openshift/action_hooks/install_memcache.sh
+echo "Memcache installed!"
