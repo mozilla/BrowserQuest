@@ -1,4 +1,5 @@
 #!/bin/bash
+# This script was taken from https://github.com/ramr/nodejs-custom-version-openshift
 # This deploy hook gets executed after dependencies are resolved and the
 # build hook has been run but before the application has been started back
 # up again.  This script gets executed directly, so it could be python, php,

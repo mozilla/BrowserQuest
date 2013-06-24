@@ -1,4 +1,5 @@
 #!/bin/bash
+# This script was taken from https://github.com/zfdang/memcached-in-openshift
 # This is a simple build script and will be executed on your CI system if 
 # available.  Otherwise it will execute while your application is stopped
 # before the deploy step.  This script gets executed directly, so it

@@ -1,4 +1,5 @@
 #!/bin/bash
+# This script was taken from https://github.com/ramr/nodejs-custom-version-openshift
 #
 #  Utility functions.
 #

@@ -1,3 +1,4 @@
+#  This script was taken from https://github.com/ramr/nodejs-custom-version-openshift
 #  Utility functions for bash session - sourced in via the user's
 #  bash profile ($OPENSHIFT_DATA_DIR/.bash_profile).
 
