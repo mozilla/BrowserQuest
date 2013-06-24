@@ -8,8 +8,8 @@ var cls = require("./lib/class"),
 module.exports = DatabaseHandler = cls.Class.extend({
     init: function(config){
         client = redis.createClient(process.env.OPENSHIFT_REDIS_DB_PORT || config.redis_port, process.env.OPENSHIFT_REDIS_DB_HOST || config.redis_host, 
-		{socket_nodelay: true});
-	client.auth(process.env.REDIS_PASSWORD || "");
+          {socket_nodelay: true});
+        client.auth(process.env.REDIS_PASSWORD || "");
     },
     loadPlayer: function(player){
         var self = this;
