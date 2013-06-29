@@ -11,5 +11,6 @@
     "memcached_host": "127.0.0.1",
     "memcached_port": 11211,
     "game_servers": ["localhost"],
-    "server_name" : "localhost"
+    "server_name" : "localhost",
+    "production": "openshift"
 }

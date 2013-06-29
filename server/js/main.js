@@ -1,5 +1,7 @@
 var fs = require('fs'),
-    Metrics = require('./metrics');
+    Metrics = require('./metrics'),
+    ProductionConfig = require('./productionconfig'),
+    _ = require('underscore');
 
 
 function main(config) {
@@ -13,9 +15,14 @@ function main(config) {
             log = new Log(Log.INFO); break;
     };
 
+    var production_config = new ProductionConfig(config);
+    console.info(production_config.getProductionSettings());
+    if(production_config.inProduction()) {
+        _.extend(config, production_config.getProductionSettings());
+    }
+
     var ws = require("./ws"),
         WorldServer = require("./worldserver"),
-        _ = require('underscore'),
         server = new ws.MultiVersionWebsocketServer(process.env.OPENSHIFT_NODEJS_PORT || config.port, config.use_one_port),
         metrics = config.metrics_enabled ? new Metrics(config) : null,
         worlds = [],
