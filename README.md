@@ -133,6 +133,47 @@ from here: http://redis.io/download
 You can download the latest version of Memcached for Win32/64 from here:
 http://blog.elijaa.org/index.php?post/2010/10/15/Memcached-for-Windows&similar
 
+Deploying BrowserQuest
+----------------------
+
+Currently, BrowserQuest can run on the following PAAS (Platform as a Service) providers:
+* [OpenShift](https://www.openshift.com)
+
+### Instructions for OpenShift ###
+1. Follow the instructions to get started with the OpenShift client tools [here](https://www.openshift.com/get-started).
+
+2. Create a new application by running this command:
+
+        $ rhc app create <app-name> nodejs-0.6
+        $ cd <app-name>
+
+   where \<app-name\> is the name of your app, e.g. browserquest.
+
+3. Add the Redis cartridge (necessary for BrowserQuest to be able to store data) with the following command:
+
+        $ rhc add-cartridge http://cartreflect-claytondev.rhcloud.com/reflect?github=smarterclayton/openshift-redis-cart --app <app-name>
+
+4. Add the BrowserQuest repository, and pull its contents with the following commands:
+
+        $ git remote add github https://github.com/browserquest/BrowserQuest.git
+        $ git fetch github
+        $ git reset --hard github/master
+
+
+5. Now, deploy to OpenShift with one final command (this will take several minutes):
+
+        $ git push -f
+
+Congratulations! You have now deployed BrowserQuest to Openshift! You can see the url of your instance by running
+
+
+    $ rhc app show <app-name>
+
+Visit the url shown by the above command to see BrowserQuest running. You will need to add ":8000" to the end. Use the url below as a guide: 
+
+    http://your_openshift_browserquest_url.rhcloud.com:8000/
+
+
 Documentation
 -------------
 
