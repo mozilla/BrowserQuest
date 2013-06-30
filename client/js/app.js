@@ -162,7 +162,7 @@ define(['jquery', 'storage'], function($, Storage) {
                 if(target.healthPoints){
                     $(el+" .health").css('width', Math.round(target.healthPoints/target.maxHp*100)+'%');
                 } else{
-                    $(el+" .health").css('width', '100%');
+                    $(el+" .health").css('width', '0%');
                 }
                 var level = Types.getMobLevel(Types.getKindFromString(name));
                 if(level !== undefined) {
@@ -175,6 +175,7 @@ define(['jquery', 'storage'], function($, Storage) {
                     timeout = null;
                     timeout = setTimeout(function(){
                         $('#inspector').fadeOut('fast');
+                        $('#inspector .health').text('');
                         self.game.player.inspecting = null;
                     }, 2000);
                 }
@@ -189,8 +190,10 @@ define(['jquery', 'storage'], function($, Storage) {
 
             self.game.player.onRemoveTarget(function(targetId){
                 $('#target').fadeOut('fast');
+                $('#target .health').text('');
                 if(self.game.player.inspecting && self.game.player.inspecting.id === targetId){
                     $('#inspector').fadeOut('fast');
+                    $('#inspector .health').text('');
                     self.game.player.inspecting = null;
                 }
             });
