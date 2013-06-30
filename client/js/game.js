@@ -2073,12 +2073,21 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         if(this.lastHovered) {
                             this.lastHovered.setHighlight(false);
                         }
-                        this.lastHovered = entity;
                         entity.setHighlight(true);
                     }
+                    this.lastHovered = entity;
                 }
                 else if(this.lastHovered) {
-                    this.lastHovered.setHighlight(false);
+                    this.lastHovered.setHighlight(null);
+                    if(this.timeout === undefined) {
+                        var self = this;
+                        this.timeout = setTimeout(function(){
+                            $('#inspector').fadeOut('fast');
+                            $('#inspector .health').text('');
+                            self.player.inspecting = null;
+                        }, 2000);
+                        this.timeout = undefined;
+                    }
                     this.lastHovered = null;
                 }
             }

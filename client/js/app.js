@@ -170,15 +170,6 @@ define(['jquery', 'storage'], function($, Storage) {
                 }
 
                 $(el).fadeIn('fast');
-                if(mouseover){
-                    clearTimeout(timeout);
-                    timeout = null;
-                    timeout = setTimeout(function(){
-                        $('#inspector').fadeOut('fast');
-                        $('#inspector .health').text('');
-                        self.game.player.inspecting = null;
-                    }, 2000);
-                }
             });
 
             self.game.onUpdateTarget(function(target){
