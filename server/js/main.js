@@ -16,7 +16,6 @@ function main(config) {
     };
 
     var production_config = new ProductionConfig(config);
-    console.info(production_config.getProductionSettings());
     if(production_config.inProduction()) {
         _.extend(config, production_config.getProductionSettings());
     }
