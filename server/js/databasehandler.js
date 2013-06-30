@@ -4,10 +4,10 @@ var cls = require("./lib/class"),
     Player = require('./player'),
     Messages = require("./message"),
     redis = require("redis");
-    
+
 module.exports = DatabaseHandler = cls.Class.extend({
     init: function(config){
-        client = redis.createClient(process.env.OPENSHIFT_REDIS_DB_PORT || config.redis_port, process.env.OPENSHIFT_REDIS_DB_HOST || config.redis_host, 
+        client = redis.createClient(process.env.OPENSHIFT_REDIS_PORT || config.redis_port, process.env.OPENSHIFT_REDIS_HOST || config.redis_host,
           {socket_nodelay: true});
         client.auth(process.env.REDIS_PASSWORD || "");
     },
@@ -171,7 +171,7 @@ module.exports = DatabaseHandler = cls.Class.extend({
                                 achievementFound, achievementProgress,
                                 x, y,
                                 chatBanEndTime);
-                    }); 
+                    });
                     return;
                 }
             }
