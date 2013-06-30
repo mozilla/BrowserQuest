@@ -24,7 +24,7 @@ How to get it going
 
 Getting the server up and running is pretty easy. You need to have the following installed:
 
-* Node.js ← **versions 0.6.x-0.10.x work**. 
+* Node.js ← **versions 0.6.x-0.10.x work**.
 * gcc-c++ ← optional.  Not needed on windows.
 * GNU make ← optional.  Not needed on windows.
 * Memcached ← optional. This is needed to enable metrics.
@@ -89,7 +89,7 @@ You can try interacting with it by starting another terminal and typing:
     $ redis-<version>/src/redis-cli
     redis> set foo bar
     OK
-    redis> get foo 
+    redis> get foo
     "bar"
 
 Node.js, Memcached, and Redis for Fedora 16+ and RHEL/CentOS/SL 6.x
@@ -151,7 +151,9 @@ Currently, BrowserQuest can run on the following PAAS (Platform as a Service) pr
 
 3. Add the Redis cartridge (necessary for BrowserQuest to be able to store data) with the following command:
 
-        $ rhc add-cartridge http://cartreflect-claytondev.rhcloud.com/reflect?github=smarterclayton/openshift-redis-cart --app <app-name>
+        $ rhc add-cartridge \
+          http://cartreflect-claytondev.rhcloud.com/reflect?github=smarterclayton/openshift-redis-cart \
+          --app <app-name>
 
 4. Add the BrowserQuest repository, and pull its contents with the following commands:
 
@@ -169,7 +171,7 @@ Congratulations! You have now deployed BrowserQuest to Openshift! You can see th
 
     $ rhc app show <app-name>
 
-Visit the url shown by the above command to see BrowserQuest running. You will need to add ":8000" to the end. Use the url below as a guide: 
+Visit the url shown by the above command to see BrowserQuest running. You will need to add ":8000" to the end. Use the url below as a guide:
 
     http://your_openshift_browserquest_url.rhcloud.com:8000/
 
