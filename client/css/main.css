@@ -180,39 +180,6 @@ footer, header, hgroup, menu, nav, section {
       width: 100%;
     }
 
-    #target{
-      font-family:'GraphicPixel';
-      color:#e3e3e3;
-      background-color:rgba(0, 0, 0, 0.43);
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      width: 140px;
-      height: 70px;
-      margin-left: 0px;
-      padding: 4px;
-      display: none;
-      border-radius: 0 0 6px 0;
-    }
-    #target .details {
-      float: left;
-      margin-bottom: 8px;
-      width: 100px;
-      text-transform: capitalize;
-    }
-    #target .name {
-      float: left;
-      margin-bottom: 8px;
-      text-transform: capitalize;
-    }
-    #target .health {
-      float: left;
-      height: 10px;
-      width: 100%;
-      background: red;
-      clear: left;
-    }
-
     #inspector {
       font-family:'GraphicPixel';
       color:#e3e3e3;
@@ -227,22 +194,25 @@ footer, header, hgroup, menu, nav, section {
       border-radius: 0 0 6px 0;
    }
     #inspector .details {
-      float: left;
-      magin-bottom: 8px
-      width: 100px;
+      margin-bottom: 8px;
       text-transform: capitalize;
     }
      #inspector .name {
-      float: left;
       margin-bottom: 8px;
       text-transform: capitalize;
     }
 
+   #inspector .level {
+      margin-bottom: 8px;
+      text-transform: capitalize;
+   }
+
    #inspector .health {
-      float: left;
-      height: 15px;
+      height: 10px;
       width: 100%;
+      background: red;
       clear: left;
+      margin-top: 8px;
     }
 
     #dropDialog {

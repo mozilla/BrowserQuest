@@ -147,12 +147,11 @@ define(['jquery', 'storage'], function($, Storage) {
         initTargetHud: function(){
             var self = this;
             var scale = self.game.renderer.getScaleFactor(),
-                healthMaxWidth = $("#target .health").width() - (12 * scale),
+                healthMaxWidth = $("#inspector .health").width() - (12 * scale),
                 timeout;
 
             this.game.player.onSetTarget(function(target, name, mouseover){
-                var el = '#target';
-                if(mouseover) el = '#inspector';
+                var el = '#inspector';
                 var sprite = target.sprite,
                     x = ((sprite.animationData.idle_down.length-1)*sprite.width),
                     y = ((sprite.animationData.idle_down.row)*sprite.height);
@@ -166,27 +165,23 @@ define(['jquery', 'storage'], function($, Storage) {
                 }
                 var level = Types.getMobLevel(Types.getKindFromString(name));
                 if(level !== undefined) {
-                    $(el + ' .health').text("Level " + level);
+                    $(el + ' .level').text("Level " + level);
+                }
+                else {
+                    $('#inspector .level').text('');
                 }
 
                 $(el).fadeIn('fast');
             });
 
             self.game.onUpdateTarget(function(target){
-                $("#target .health").css('width', Math.round(target.healthPoints/target.maxHp*100) + "%");
-                if(self.game.player.inspecting && self.game.player.inspecting.id === target.id){
-                    $("#inspector .health").css('width', Math.round(target.healthPoints/target.maxHp*100) + "%");
-                }
+                $("#inspector .health").css('width', Math.round(target.healthPoints/target.maxHp*100) + "%");
             });
 
             self.game.player.onRemoveTarget(function(targetId){
-                $('#target').fadeOut('fast');
-                $('#target .health').text('');
-                if(self.game.player.inspecting && self.game.player.inspecting.id === targetId){
-                    $('#inspector').fadeOut('fast');
-                    $('#inspector .health').text('');
-                    self.game.player.inspecting = null;
-                }
+                $('#inspector').fadeOut('fast');
+                $('#inspector .level').text('');
+                self.game.player.inspecting = null;
             });
         },
          initExpBar: function(){

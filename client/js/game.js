@@ -2079,7 +2079,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
                 else if(this.lastHovered) {
                     this.lastHovered.setHighlight(null);
-                    if(this.timeout === undefined) {
+                    if(this.timeout === undefined && !this.player.hasTarget()) {
                         var self = this;
                         this.timeout = setTimeout(function(){
                             $('#inspector').fadeOut('fast');
