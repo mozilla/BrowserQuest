@@ -1,15 +1,5 @@
-var requirejs = require('requirejs'),
-    should = require('should'),
-    sinon = require('sinon');
-var globals = new Object();
-
-requirejs.config({noderequire: require, baseurl: 'js/'});
-
-requirejs(['lib/class', '../../shared/js/gametypes'], function(_class, _types) {
-    globals.class = _class;
-    globals.types = _types;
-    global.window = globals
-});
+load_boilerplate = require('../boilerplate.js');
+eval(load_boilerplate());
 
 describe('Area', function() {
     var Area;
