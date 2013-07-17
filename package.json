@@ -17,6 +17,7 @@
     , "requirejs": ">2"
     , "should": ">1"
     , "sinon": ">1"
+    , "uglify-js": ">2"
   }
   , "scripts": {
       "test": "make test"

@@ -1,8 +1,8 @@
 var fs = require('fs'),
     Metrics = require('./metrics'),
     ProductionConfig = require('./productionconfig'),
-    _ = require('underscore');
-
+    _ = require('underscore'),
+    spawn = require('child_process').spawn;
 
 function main(config) {
     var Log = require('log');
@@ -20,9 +20,15 @@ function main(config) {
         _.extend(config, production_config.getProductionSettings());
     }
 
+    staticDir = 'client'
+    if(config.minimize_js) {
+        spawn('sh', ['bin/ugly.sh']);
+        staticDir = 'client-build';
+    }
+
     var ws = require("./ws"),
         WorldServer = require("./worldserver"),
-        server = new ws.MultiVersionWebsocketServer(process.env.OPENSHIFT_NODEJS_PORT || config.port, config.use_one_port),
+        server = new ws.MultiVersionWebsocketServer(process.env.OPENSHIFT_NODEJS_PORT || config.port, config.use_one_port, staticDir),
         metrics = config.metrics_enabled ? new Metrics(config) : null,
         worlds = [],
         lastTotalPlayers = 0,
