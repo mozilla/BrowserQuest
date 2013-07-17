@@ -1,4 +1,4 @@
-load_boilerplate = require('../boilerplate.js');
+load_boilerplate = require('../../shared/js/boilerplate.js');
 eval(load_boilerplate());
 
 describe('Area', function() {
