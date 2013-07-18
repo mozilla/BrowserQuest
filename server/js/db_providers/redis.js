@@ -1,8 +1,8 @@
-var Utils = require('./utils');
+var Utils = require('../utils');
 
-var cls = require("./lib/class"),
-    Player = require('./player'),
-    Messages = require("./message"),
+var cls = require("../lib/class"),
+    Player = require('../player'),
+    Messages = require("../message"),
     redis = require("redis");
 
 module.exports = DatabaseHandler = cls.Class.extend({

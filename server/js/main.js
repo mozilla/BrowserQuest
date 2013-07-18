@@ -26,7 +26,7 @@ function main(config) {
         metrics = config.metrics_enabled ? new Metrics(config) : null,
         worlds = [],
         lastTotalPlayers = 0,
-        DatabaseHandler = require("./databasehandler");
+        DatabaseSelector = require("./databaseselector");
         checkPopulationInterval = setInterval(function() {
             if(metrics && metrics.isReady) {
                 metrics.updateWorldCount();
@@ -42,7 +42,8 @@ function main(config) {
         }, 1000);
 
     log.info("Starting BrowserQuest game server...");
-    databaseHandler = new DatabaseHandler(config);
+    selector = DatabaseSelector(config);
+    databaseHandler = new selector(config);
 
     server.onConnect(function(connection) {
         var world, // the one in which the player will be spawned
