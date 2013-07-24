@@ -3,3 +3,11 @@ node_js:
   - "0.6"
   - "0.8"
   - "0.10"
+
+deploy:
+  provider: openshift
+  user: aa1ronham@gmail.com
+  password:
+    - secure: "mb4theacKXluhnGZnaza7vcboJAyJnUYpmoMPrRNrYGuCovF8ljeRdHCeVasofNY03twH7SR5qHlKoAl1QLz8z6PNxzEOMPCCaqgW29LUC5hZqIGSwUdsYnFN1RxFI+7XLpUMee4jT1t3r6YOMvcFzLYIhGRcrfv8R/LECoHonQ="
+  app: browserquest
+  domain: aaron1011
