@@ -11,5 +11,3 @@ deploy:
     - secure: "mb4theacKXluhnGZnaza7vcboJAyJnUYpmoMPrRNrYGuCovF8ljeRdHCeVasofNY03twH7SR5qHlKoAl1QLz8z6PNxzEOMPCCaqgW29LUC5hZqIGSwUdsYnFN1RxFI+7XLpUMee4jT1t3r6YOMvcFzLYIhGRcrfv8R/LECoHonQ="
   app: browserquest
   domain: aaron1011
-  on:
-    node: 0.10
