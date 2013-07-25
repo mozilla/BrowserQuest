@@ -13,4 +13,3 @@ deploy:
   domain: aaron1011
   on:
     node: 0.10
-    repository: browserquest/BrowserQuest
