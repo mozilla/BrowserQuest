@@ -4,20 +4,22 @@
   , "private": false
   , "dependencies": {
     "underscore": "<1.4.0"
-    , "log": ">0"
-    , "bison": ">0"
-    , "websocket": ">0"
-    , "websocket-server": ">0"
-    , "sanitizer": ">0"
-    , "semver": ">0"
-    , "memcache": ">0"
-    , "redis": ">0"
-    , "connect": ">2"
-    , "mocha": ">1"
-    , "requirejs": ">2"
-    , "should": ">1"
-    , "sinon": ">1"
-    , "uglify-js": ">2"
+    , "log": ">=0"
+    , "bison": ">=0"
+    , "websocket": ">=0"
+    , "websocket-server": ">=0"
+    , "sanitizer": ">=0"
+    , "semver": ">=0"
+    , "memcache": ">=0"
+    , "redis": ">=0"
+    , "connect": ">=2"
+    , "requirejs": ">=2"
+    , "uglify-js": ">=2"
+  }
+  , "devDependencies": {
+      "mocha": ">=1"
+    , "should": ">=1"
+    , "sinon": ">=1"
   }
   , "scripts": {
       "test": "make test"
