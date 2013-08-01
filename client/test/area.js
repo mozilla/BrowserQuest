@@ -18,7 +18,7 @@ describe('Area', function() {
         });
     });
 
-    describe('#init', function() {
+    describe('.init', function() {
         it('sets x to be the passed value', function() {
             self.area.x.should.equal(self.x);
         });
