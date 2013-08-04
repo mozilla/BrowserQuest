@@ -12,3 +12,6 @@ deploy:
     - secure: "JnV0E7jqoIOYvOY2DLG0dnPgz4n7ZsS8pCYalJ86M8AxK1L1oUhtDJtcPqXEw94Jzi/SOAfx8i/h1EXMoL4KlrPmAat6MVGa59+1v7VGspkbuQrbZTw8p7hvUyeYyDbXFEiPcPPv45XIwe09qqR9QTzs4lw0mkxyh5/PZTQfOno="
   app: browserquest
   domain: teambq
+
+notifications:
+  irc: "irc.synirc.net#browserquest"
