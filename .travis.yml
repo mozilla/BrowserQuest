@@ -6,10 +6,9 @@ node_js:
 
 deploy:
   provider: openshift
-  user:
-    - secure: "DR41KHnrBzPzdaoeOTxiElg+eiCnytQ3hnztZvqAieY4WK9ZSn8gfmJEIuieJEsoi7Iw6rr1ZBxA/pQxszfGayR1UyGl9qlCZ7w5zrzBfuToVUeDnxfe7OVDoEFT0GNv453yzGeZ8R6b9yBmymEk3TZ5BPUn1ZXXqaUclb0y3Yg="
+  user: "aa1ronham@gmail.com"
   password:
-    - secure: "JnV0E7jqoIOYvOY2DLG0dnPgz4n7ZsS8pCYalJ86M8AxK1L1oUhtDJtcPqXEw94Jzi/SOAfx8i/h1EXMoL4KlrPmAat6MVGa59+1v7VGspkbuQrbZTw8p7hvUyeYyDbXFEiPcPPv45XIwe09qqR9QTzs4lw0mkxyh5/PZTQfOno="
+    - secure: "DS4Jb8l3otZGvkEjNZjGJtM1C5F0Nu6x50M/FjriHxZfAbYHoGbCTAZZb0JmjI16BJfCjkHVfDTwur1FHdn5D311CVE1vObkPP4ANz7kUNIXYqgDseGfKS7rOK1XtQTZ7FGSGoG+x2EvBZrWdimUTn/LGMj6qHZ2WaEQ4cUKhCk="
   app: browserquest
   domain: teambq
 
