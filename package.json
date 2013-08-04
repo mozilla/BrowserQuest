@@ -1,5 +1,9 @@
 {
     "name": "BrowserQuest"
+  , "repository": {
+      "type": "git"
+    , "url": "https://github.com/browserquest/BrowserQuest.git"
+  }
   , "version": "0.0.1"
   , "private": false
   , "dependencies": {
