@@ -27,7 +27,7 @@ How to get it going
 
 Getting the server up and running is pretty easy. You need to have the following installed:
 
-* Node.js ← **versions 0.6.x-0.10.x work**.
+* Node.js ← Versions 0.8.x-0.10.x work.  **Do not use 0.6.x, it [does not work](https://github.com/senchalabs/connect/issues/858).**
 * gcc-c++ ← optional.  Not needed on windows.
 * GNU make ← optional.  Not needed on windows.
 * Memcached ← optional. This is needed to enable metrics.
