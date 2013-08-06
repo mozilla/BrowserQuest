@@ -8,7 +8,7 @@ deploy:
   provider: openshift
   user: "aa1ronham@gmail.com"
   password:
-    - secure: "DS4Jb8l3otZGvkEjNZjGJtM1C5F0Nu6x50M/FjriHxZfAbYHoGbCTAZZb0JmjI16BJfCjkHVfDTwur1FHdn5D311CVE1vObkPP4ANz7kUNIXYqgDseGfKS7rOK1XtQTZ7FGSGoG+x2EvBZrWdimUTn/LGMj6qHZ2WaEQ4cUKhCk="
+    - secure: "D4F+CKpbIG1WvJJQNYiHrWwFoNNouOPQgE4dV4h1AgTCRiSyV/x3nhn4LA9PvMPeQ8zranY8MCL6mEvOCzahd+NCbLIiauBeBlIazmySXei8OmESGr2lasEm+xDbOcM58uB/g9ascWZSSgcLTUK7TeZw64iO6A8XEBdsv+5u2Uo="
   app: browserquest
   domain: teambq
 
