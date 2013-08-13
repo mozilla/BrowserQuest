@@ -1,7 +1,7 @@
 BrowserQuest
 ============
 
-[![Build Status](https://travis-ci.org/browserquest/BrowserQuest.png)](https://travis-ci.org/browserquest/BrowserQuest)
+[![Build Status](https://travis-ci.org/browserquest/BrowserQuest.png)](https://travis-ci.org/browserquest/BrowserQuest) [![Dependency Status](https://gemnasium.com/browserquest/BrowserQuest.png)](https://gemnasium.com/browserquest/BrowserQuest)
 
 [BrowserQuest](http://browserquest-teambq.rhcloud.com:8000) is a HTML5/JavaScript multiplayer game experiment.
 
