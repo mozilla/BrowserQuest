@@ -7,7 +7,7 @@
   , "version": "0.0.1"
   , "private": false
   , "dependencies": {
-    "underscore": "<1.4.0"
+    "underscore": ">=1.4"
     , "log": ">=0"
     , "bison": ">=0"
     , "websocket": ">=0"
