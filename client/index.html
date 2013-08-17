@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- 
+<!--
 
- , __                                   __                      
-/|/  \                                 /  \                     
- | __/ ,_    __           ,   _   ,_  | __ |          _   , _|_ 
- |   \/  |  /  \_|  |  |_/ \_|/  /  | |/  \|  |   |  |/  / \_|  
+ , __                                   __
+/|/  \                                 /  \
+ | __/ ,_    __           ,   _   ,_  | __ |          _   , _|_
+ |   \/  |  /  \_|  |  |_/ \_|/  /  | |/  \|  |   |  |/  / \_|
  |(__/   |_/\__/  \/ \/   \/ |__/   |_/\__/\_/ \_/|_/|__/ \/ |_/
 
 Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworkshop.fr
@@ -56,6 +56,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
     <!--[if lt IE 9]>
 	<body class="intro upscaled">
     <![endif]-->
+    <a href="https://github.com/browserquest/BrowserQuest"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 	<body class="intro">
 	    <noscript>
 	       <div class="alert">
@@ -66,7 +67,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
 	    <div id="intro">
 	        <h1 id="logo">
 	           <span id="logosparks">
-	               
+
 	           </span>
 	        </h1>
 	        <article id="portrait">
@@ -151,10 +152,10 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                             </div>
                         </div>
                         <div id="seb">
-                            
+
                             <span id="note"></span>
                             Music by <a class="clickable" target="_blank" href="http://soundcloud.com/gyrowolf">Terrel O'Brien</a>, <a class="clickable" target="_blank" href="http://blog.dayjo.org">Joel Day</a>, <a class="clickable" target="_blank" href="http://www.dantilden.com">Dan Tilden</a>, &amp; <a target="_blank" class="clickable" href="http://soundcloud.com/aaron-anderson-11">Aaron Krogh</a>
-                           
+
                         </div>
 	                    <div id="close-credits">
 	                        <span>- click anywhere to close -</span>
@@ -257,7 +258,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
     		                <span id="unlocked-achievements">0</span>
     		                /
     		                <span id="total-achievements"></span>
-    		            </div> 
+    		            </div>
                     Close
     		        </div>
 		            <nav class="clickable">
@@ -344,7 +345,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
 		</div>
 		<footer>
 		    <div id="sharing" class="clickable">
-		      Share this on 
+		      Share this on
               <a href="http://twitter.com/share?url=http%3A%2F%2Fbrowserquest.mozilla.org&amp;text=Mozilla%27s%20BrowserQuest%3A%20HTML5%20massively%20multiplayer%20adventure%20game%20%23demo%20%23websockets&amp;related=glecollinet:Creators%20of%20BrowserQuest%2Cwhatthefranck" class="twitter"></a>
               <a href="http://www.facebook.com/share.php?u=http://browserquest.mozilla.org/" class="facebook"></a>
 		    </div>
@@ -358,7 +359,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
 		      <span class="dash">&ndash;</span> <span id="toggle-credits">Credits</span>
 		    </div>
 		</footer>
-		
+
 		<ul id="page-tmpl" class="clickable" style="display:none">
         </ul>
         <ul>
@@ -371,26 +372,26 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                 </div>
             </li>
         </ul>
-        
+
         <img src="img/common/thingy.png" alt="" class="preload">
-        
+
         <div id="resize-check"></div>
-		
+
         <script type="text/javascript">
             var ctx = document.querySelector('canvas').getContext('2d'),
                 parchment = document.getElementById("parchment");
-            
+
             if(!Detect.supportsWebSocket()) {
                 parchment.className = "error";
             }
-            
+
             if(ctx.mozImageSmoothingEnabled === undefined) {
                 document.querySelector('body').className += ' upscaled';
             }
-            
+
             parchment.className = "loadcharacter";
         </script>
-        
+
         <script src="js/lib/log.js"></script>
         <script>
                 var require = { waitSeconds: 60 };
