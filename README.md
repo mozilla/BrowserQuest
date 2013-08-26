@@ -187,10 +187,9 @@ Lots of useful info on the [wiki](https://github.com/browserquest/BrowserQuest/w
 Mailing List
 ------------
 
-The mailing list for development is at browserquest@librelist.com. ([archives](http://librelist.com/browser/browserquest/))
+The new mailing list for development is [here](https://mail.mozilla.org/listinfo/browserquest). ([archives](https://mail.mozilla.org/private/browserquest/))
 
-To subscribe, just send an email to that address.  Your initial
-email will be dropped, but will start the subscription.
+The old mailing list on librelist.com is no longer used.  Its archives are online [here](http://librelist.com/browser/browserquest/).
 
 IRC Channel
 -----------
