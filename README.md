@@ -239,3 +239,4 @@ Many other people are contributing through GitHub:
 * Bryan Biedenkapp [@gatekeep](https://github.com/gatekeep)
 * Aaron Hill [@Aaron1011](https://github.com/Aaron1011)
 * Fredrik Svantes [@speedis](https://github.com/speedis)
+* Sergey Krilov [@sergkr](https://github.com/sergkr)
