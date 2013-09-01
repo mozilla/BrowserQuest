@@ -424,12 +424,9 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                         app.showChat();
                     }
                 }
-                 else if(key === 16)
+                else if(key === 16)
                     game.pvpFlag = true;
-                else if(key === 27)
-                    app.hideDropDialog();
-               if (game.started && !$('#chatbox').hasClass('active'))
-                {
+                if (game.started && !$('#chatbox').hasClass('active')) {
                     pos = {
                         x: game.player.gridX,
                         y: game.player.gridY
@@ -631,21 +628,12 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 var key = e.which,
                     $chat = $('#chatinput');
 
-                if($('#chatinput:focus').size() == 0 && $('#nameinput:focus').size() == 0) {
-                    if(key === 13) { // Enter
-                        if(game.ready) {
-                            $chat.focus();
-                            return false;
-                        }
-                    }
-                    if(key === 32) { // Space
-                        // game.togglePathingGrid();
-                        return false;
-                    }
-                    if(key === 70) { // F
-                        // game.toggleDebugInfo();
-                        return false;
-                    }
+                if(key === 13 && game.ready) { // Enter
+                    $chat.focus();
+                    return false;
+                }
+
+                if($('#chatinput:focus').size() == 0 && $('#nameinput:focus').size() == 0) {                    
                     if(key === 27) { // ESC
                         app.hideWindows();
                         _.each(game.player.attackers, function(attacker) {
@@ -653,15 +641,17 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                         });
                         return false;
                     }
-                    if(key === 65) { // a
-                        // game.player.hit();
-                        return false;
-                    }
-                } else {
-                    if(key === 13 && game.ready) {
-                        $chat.focus();
-                        return false;
-                    }
+
+                    // The following may be uncommented for debugging purposes.
+                    //
+                    // if(key === 32 && game.ready) { // Space
+                    //     game.togglePathingGrid();
+                    //     return false;
+                    // }
+                    // if(key === 70 && game.ready) { // F
+                    //     game.toggleDebugInfo();
+                    //     return false;
+                    // }
                 }
             });
 
