@@ -180,20 +180,7 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             }
 
             $('#playbutton span').click(function(event) {
-                var name = $('#nameinput').attr('value');
-                var pw = $('#pwinput').attr('value');
-                var pw2 = $('#pwinput2').attr('value');
-                var email = $('#emailinput').attr('value');
-                var loginname = $('#loginnameinput').attr('value');
-                var loginpw = $('#loginpwinput').attr('value');
-
-                if(loginpw === undefined || loginpw === ''){
-                    if(pw2 !== '' && pw2 !== undefined && pw === pw2){
-                        app.tryStartingGame(name, pw, email);
-                    }
-                } else{
-                    app.tryStartingGame(loginname, loginpw, email);
-                }
+                app.tryStartingGame();
             });
 
             document.addEventListener("touchstart", function() {},false);
@@ -534,91 +521,8 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
             });
 
             $('#nameinput').keypress(function(event) {
-                var $name = $('#nameinput'),
-                    name = $name.attr('value');
-                var $pw = $('#pwinput'),
-                    pw = $pw.attr('value');
-                var $pw2 = $('#pwinput2'),
-                    pw2 = $pw2.attr('value');
-                var $email = $('#emailinput'),
-                    email = $email.attr('value');
-
                 $('#name-tooltip').removeClass('visible');
-
-                if(event.keyCode === 13) {
-                    if(name !== '') {
-                       if(pw2 !== '' && pw2 !== undefined && pw === pw2)
-                          app.tryStartingGame(name, pw, email, function() {
-                            $name.blur(); // exit keyboard on mobile
-                        });
-                        return false; // prevent form submit
-                    } else {
-                        return false; // prevent form submit
-                    }
-                }
             });
-            $('#pwinput').keypress(function(event) {
-                var $name = $('#nameinput'),
-                    name = $name.attr('value');
-                var $pw = $('#pwinput'),
-                    pw = $pw.attr('value');
-                var $pw2 = $('#pwinput2'),
-                    pw2 = $pw2.attr('value');
-                var $email = $('#emailinput'),
-                    email = $email.attr('value');
-
-                if(event.keyCode === 13) {
-                    if(name !== '') {
-                        if(pw2 !== '' && pw2 !== undefined && pw === pw2)
-                            app.tryStartingGame(name, pw, email, function() {
-                                $name.blur(); // exit keyboard on mobile
-                            });
-                        return false; // prevent form submit
-                    } else {
-                        return false; // prevent form submit
-                    }
-                }
-            });
-            $('#pwinput2').keypress(function(event) {
-                var $name = $('#nameinput'),
-                    name = $name.attr('value');
-                var $pw = $('#pwinput'),
-                    pw = $pw.attr('value');
-                var $pw2 = $('#pwinput2'),
-                    pw2 = $pw2.attr('value');
-                var $email = $('#emailinput'),
-                    email = $email.attr('value');
-
-                if(event.keyCode === 13) {
-                    if(name !== '') {
-                        if(pw2 !== '' && pw2 !== undefined && pw === pw2)
-                            app.tryStartingGame(name, pw, email, function() {
-                                $name.blur(); // exit keyboard on mobile
-                            });
-                        return false; // prevent form submit
-                    } else {
-                        return false; // prevent form submit
-                    }
-                }
-            });
-            $('#loginpwinput').keypress(function(event) {
-                var $name = $('#nameinput'),
-                    name = $name.attr('value');
-                var $loginpw = $('#loginpwinput'),
-                    loginpw = $loginpw.attr('value');
-
-                if(event.keyCode === 13) {
-                    if(name !== '') {
-                        app.tryStartingGame(name, loginpw, "", function() {
-                            $name.blur(); // exit keyboard on mobile
-                        });
-                        return false; // prevent form submit
-                    } else {
-                        return false; // prevent form submit
-                    }
-                }
-            });
-            
 
             $('#mutebutton').click(function() {
                 game.audioManager.toggle();
@@ -628,12 +532,20 @@ define(['jquery', 'app', 'entrypoint'], function($, App, EntryPoint) {
                 var key = e.which,
                     $chat = $('#chatinput');
 
-                if(key === 13 && game.ready) { // Enter
-                    $chat.focus();
-                    return false;
+                if(key === 13) { // Enter
+                    if(game.ready) {
+                        $chat.focus();
+                        return false;
+                    } else {
+                        if(app.loginFormActive() || app.createNewCharacterFormActive()) {
+                            $('input').blur();      // exit keyboard on mobile
+                            app.handleEnter();
+                            return false;           // prevent form submit
+                        }
+                    }
                 }
 
-                if($('#chatinput:focus').size() == 0 && $('#nameinput:focus').size() == 0) {                    
+                if($('#chatinput:focus').size() == 0 && $('#nameinput:focus').size() == 0) {
                     if(key === 27) { // ESC
                         app.hideWindows();
                         _.each(game.player.attackers, function(attacker) {
