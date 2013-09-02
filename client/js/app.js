@@ -75,29 +75,29 @@ define(['jquery', 'storage'], function($, Storage) {
                 userpw2 = this.$pwinput2.attr('value');
             }
 
-            if(username !== '') {
-                if(!this.ready || !this.canStartGame()) {
-                    if(!this.isMobile) {
-                        // on desktop and tablets, add a spinner to the play button
-                        $play.addClass('loading');
-                    }
-                    this.$playDiv.unbind('click');
-                    var watchCanStart = setInterval(function() {
-                        log.debug("waiting...");
-                        if(self.canStartGame()) {
-                            setTimeout(function() {
-                                if(!self.isMobile) {
-                                    $play.removeClass('loading');
-                                }
-                            }, 1500);
-                            clearInterval(watchCanStart);
-                            self.startGame(username, userpw, email);
-                        }
-                    }, 100);
-                } else {
-                    this.$playDiv.unbind('click');
-                    this.startGame(username, userpw, email);
+            if(!this.validateFormFields(username, userpw, userpw2, email)) return;
+
+            if(!this.ready || !this.canStartGame()) {
+                if(!this.isMobile) {
+                    // on desktop and tablets, add a spinner to the play button
+                    $play.addClass('loading');
                 }
+                this.$playDiv.unbind('click');
+                var watchCanStart = setInterval(function() {
+                    log.debug("waiting...");
+                    if(self.canStartGame()) {
+                        setTimeout(function() {
+                            if(!self.isMobile) {
+                                $play.removeClass('loading');
+                            }
+                        }, 1500);
+                        clearInterval(watchCanStart);
+                        self.startGame(username, userpw, email);
+                    }
+                }, 100);
+            } else {
+                this.$playDiv.unbind('click');
+                this.startGame(username, userpw, email);
             }
         },
 
@@ -181,6 +181,40 @@ define(['jquery', 'storage'], function($, Storage) {
                     firstMissingField.focus();
                 }
             }
+        },
+
+        /**
+         * Performs some basic validation on the login / create new character forms (required fields are filled
+         * out, passwords match, email looks valid). Assumes either the login or the create new character form
+         * is currently active.
+         */
+        validateFormFields: function(username, userpw, userpw2, email) {
+            if(!username || !userpw) {
+                return false;
+            }
+
+            if(this.createNewCharacterFormActive()) {     // In Create New Character form (rather than login form)
+                if(userpw !== userpw2) {
+                    alert('The passwords you entered do not match. Please make sure you typed the password correctly.');
+                    this.$pwinput.select();
+                    return false;
+                }
+
+                // Email field is not required, but if it's filled out, then it should look like a valid email.
+                if(email && !this.validateEmail(email)) {
+                    alert('The email you entered appears to be invalid. Please enter a valid email (or leave the email blank).');
+                    this.$email.select();
+                    return false;
+                }
+            }
+
+            return true;
+        },
+
+        validateEmail: function(email) {
+            // Regex borrowed from http://stackoverflow.com/a/46181/393005
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
         },
 
         setMouseCoordinates: function(event) {
