@@ -9,12 +9,12 @@ define(['jquery', 'storage'], function($, Storage) {
             this.ready = false;
             this.storage = new Storage();
             this.watchNameInputInterval = setInterval(this.toggleButton.bind(this), 100);
-            this.$playButton = $('.play'),
-            this.$playDiv = $('.play div');
-            this.frontPage = 'createcharacter';
+            this.initFormFields();
 
             if(localStorage && localStorage.data) {
                 this.frontPage = 'loadcharacter';
+            } else {
+                this.frontPage = 'createcharacter';
             }
         },
 
@@ -25,6 +25,29 @@ define(['jquery', 'storage'], function($, Storage) {
             this.isDesktop = !(this.isMobile || this.isTablet);
             this.supportsWorkers = !!window.Worker;
             this.ready = true;
+        },
+
+        initFormFields: function() {
+            // Play button
+            this.$playButton = $('.play'),
+            this.$playDiv = $('.play div');
+
+            // Login form fields
+            this.$loginnameinput = $('#loginnameinput');
+            this.$loginpwinput = $('#loginpwinput');
+            this.loginFormFields = [this.$loginnameinput, this.$loginpwinput];
+
+            // Create new character form fields
+            this.$nameinput = $('#nameinput');
+            this.$pwinput = $('#pwinput');
+            this.$pwinput2 = $('#pwinput2');
+            this.$email = $('#emailinput');
+            this.createNewCharacterFormFields = [this.$nameinput, this.$pwinput, this.$pwinput2, this.$email];
+
+            // Functions to return the proper username / password fields to use, depending on which form
+            // (login or create new character) is currently active.
+            this.getUsernameField = function() { return this.createNewCharacterFormActive() ? this.$nameinput : this.$loginnameinput; };
+            this.getPasswordField = function() { return this.createNewCharacterFormActive() ? this.$pwinput : this.$loginpwinput; };
         },
 
         center: function() {
@@ -39,9 +62,18 @@ define(['jquery', 'storage'], function($, Storage) {
             }
         },
 
-        tryStartingGame: function(username, userpw, email, starting_callback) {
-            var self = this,
-                $play = this.$playButton;
+        tryStartingGame: function() {
+            var self = this;
+            var $play = this.$playButton;
+
+            var username = this.getUsernameField().attr('value');
+            var userpw = this.getPasswordField().attr('value');
+            var email = '';
+            var userpw2;
+            if(this.createNewCharacterFormActive()) {
+                email = this.$email.attr('value');
+                userpw2 = this.$pwinput2.attr('value');
+            }
 
             if(username !== '') {
                 if(!this.ready || !this.canStartGame()) {
@@ -59,22 +91,19 @@ define(['jquery', 'storage'], function($, Storage) {
                                 }
                             }, 1500);
                             clearInterval(watchCanStart);
-                            self.startGame(username, userpw, email, starting_callback);
+                            self.startGame(username, userpw, email);
                         }
                     }, 100);
                 } else {
                     this.$playDiv.unbind('click');
-                    this.startGame(username, userpw, email, starting_callback);
+                    this.startGame(username, userpw, email);
                 }
             }
         },
 
-        startGame: function(username, userpw, email, starting_callback) {
+        startGame: function(username, userpw, email) {
             var self = this;
 
-            if(starting_callback) {
-                starting_callback();
-            }
             this.hideIntro(function() {
                 if(!self.isDesktop) {
                     // On mobile and tablet we load the map after the player has clicked
@@ -118,6 +147,39 @@ define(['jquery', 'storage'], function($, Storage) {
                         self.toggleInstructions();
                     }
                 });
+            }
+        },
+
+        loginFormActive: function() {
+            return $('#parchment').hasClass("loadcharacter");
+        },
+
+        createNewCharacterFormActive: function() {
+            return $('#parchment').hasClass("createcharacter");
+        },
+
+        /**
+         * Handles the Enter key in the Login / Create New Character forms. (Assumes one of these forms is
+         * currently active.)
+         */
+        handleEnter: function() {
+            var fields = this.loginFormActive() ? this.loginFormFields : this.createNewCharacterFormFields;
+            
+            var isFieldEmpty = function (field) { return $.trim(field.val()) == 0; };
+            var isEmpty = function () { return isFieldEmpty($(this)); };
+            var allFieldsFilledOut = function (fields) {
+                return $.map(fields, isFieldEmpty).every(function (v) { return !v; });
+            };
+
+            if (allFieldsFilledOut(fields)) {
+                // If all fields have been filled out, then the Enter key should start the game.
+                this.tryStartingGame();
+            } else {
+                // Otherwise, pressing Enter should switch focus to the first missing field
+                var firstMissingField = $.grep(fields, isFieldEmpty)[0];
+                if (firstMissingField !== undefined) {
+                    firstMissingField.focus();
+                }
             }
         },
 
