@@ -1,4 +1,3 @@
-
 define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
 
     var Character = Entity.extend({
@@ -178,6 +177,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
     		if(p[i][1] > p[i-1][1]) {
     			this.walk(Types.Orientations.DOWN);
     		}
+    		this.updatePositionOnGrid();
     	},
 
     	updatePositionOnGrid: function() {
