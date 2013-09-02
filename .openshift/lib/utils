@@ -1,0 +1,152 @@
+#!/bin/bash
+# This script was taken from https://github.com/ramr/nodejs-custom-version-openshift
+#
+#  Utility functions.
+#
+
+
+#  Returns the configured Node version - defaults to 0.8.9.
+function get_node_version() {
+   marker="$OPENSHIFT_REPO_DIR/.openshift/markers/NODEJS_VERSION"
+   nodejs_ver=$(egrep -v "^\s*#.*" "$marker" | egrep -v "^\s*$" | tail -1)
+   echo "${nodejs_ver:-"0.8.9"}"
+
+}  #  End of function  get_node_version.
+
+
+#  Returns the directory where Node is to be installed/is installed.
+function get_node_install_dir() {
+   echo "$OPENSHIFT_DATA_DIR"
+
+}  #  End of function  get_node_install_dir.
+
+
+#  Returns the path to the npm binary.
+function get_npm_bin_path() {
+   ver=${1:-"$(get_node_version)"}
+   echo "$(get_node_install_dir)/node-v$ver-linux-x64/bin"
+
+}  #  End of function  get_npm_bin_path.
+
+
+#  Returns the path to the node binary.
+function get_node_bin_path() {
+   echo "$(get_npm_bin_path $@)"
+
+}  #  End of function  get_node_bin_path.
+
+
+#  Returns the temporary directory we use for processing.
+function get_node_tmp_dir() {
+   ztmpdir="$OPENSHIFT_DATA_DIR/.nodejs.tmp"
+
+   #  Ensure temp directory is created.
+   [ -d "$ztmpdir" ]  ||  mkdir -p "$ztmpdir"
+
+   echo "$ztmpdir"
+
+}  #  End of function  get_node_tmp_dir.
+
+
+#
+#  Download and install the specified Node.js version.
+#
+function _install_nodejs() {
+   ver=${1:-"$(get_node_version)"}
+
+   # Sample download links:
+   #    http://nodejs.org/dist/v0.8.9/node-v0.8.9-linux-x64.tar.gz
+   #    http://nodejs.org/dist/v0.9.1/node-v0.9.1-linux-x64.tar.gz
+   zfile="node-v${ver}-linux-x64.tar.gz"
+   zlink="http://nodejs.org/dist/v${ver}/${zfile}"
+
+   instdir="$(get_node_install_dir)"
+
+   #  Download and extract the gzipped tarball.
+   dldir="$OPENSHIFT_DATA_DIR/downloads"
+   mkdir -p "$dldir"
+
+   echo "  - Downloading and extracting $zlink ... "
+
+   if ! curl -L -o "$dldir/$zfile" "$zlink"; then
+      echo "  - ERROR  -- download failed for $zlink"
+      echo "  - download uri = $dldir/$zfile"
+      return 1
+   fi
+
+   (cd "$instdir"; tar -zxf "$dldir/$zfile")
+   echo "  - Done installing Node.js version $ver"
+
+}  #  End of function  _install_nodejs.
+
+
+
+#  Ensure the shell env setup bits are added to user's .bash_profile.
+function _ensure_bash_profile_setup() {
+   dot_bash_profile=$OPENSHIFT_DATA_DIR/.bash_profile
+   pattern='\s*source(.*)\.openshift/lib/setup_custom_nodejs_env\s*(.*)\s*'
+   if ! egrep "$pattern" $dot_bash_profile > /dev/null 2>&1 ; then
+
+      cat >> $dot_bash_profile  <<SRCEOF
+
+#  Setup shell env for the custom Node[.js] version.
+source "\$OPENSHIFT_REPO_DIR/.openshift/lib/setup_custom_nodejs_env"
+SRCEOF
+
+      echo "  - Added source setup_custom_nodejs_env to .bash_profile"
+   fi
+
+}  #  End of function  _ensure_bash_profile_setup.
+
+
+#  Check and install custom Node[.js] version.
+function ensure_node_is_installed() {
+   ver=${1:-"$(get_node_version)"}
+
+   echo "  - Checking to see if Node.js version $ver is installed ... "
+
+   #
+   #  To re-download and reinstall Node.js, uncomment these lines.
+   #     rm -f downloads/node-v${ver}-linux-x64.tar.gz
+   #     rm -rf $OPENSHIFT_DATA_DIR/node-v${ver}-linux-x64/
+   #
+   #  Note:  This function could be run multiple times on every git push,
+   #         so use w/ caution (do once).
+   #
+
+   if [ -d  "$(get_node_bin_path)" ]; then
+      echo "  - Node.js version $ver is already installed"
+   else
+      _install_nodejs "$ver"
+   fi
+
+   #  Ensure .bash_profile sets up path for custom Node[.js] version.
+   _ensure_bash_profile_setup
+
+}  #  End of function  ensure_node_is_installed.
+
+
+#  Sets up PATH to include the custom node version binaries.
+function setup_path_for_custom_node_version() {
+   #  Get version.
+   ver=${1:-"$(get_node_version)"}
+
+   #  Get node binary path.
+   node_bin_path=$(get_node_bin_path "$ver")
+
+   #  Add the node binary path to the PATH.
+   export PATH="$node_bin_path:${PATH}"
+
+   if [ -n "$_SHOW_SETUP_PATH_MESSAGES" ]; then
+      echo "  - PATH set to include custom node version ($ver) from"
+      echo "       $node_bin_path "
+      echo "    PATH = $PATH"
+   fi
+
+}  #  End of function  setup_path_for_custom_node_version.
+
+
+
+#
+# EOF
+#

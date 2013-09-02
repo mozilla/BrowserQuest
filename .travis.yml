@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "0.6"
+  - "0.8"
+  - "0.10"
+
+deploy:
+  provider: openshift
+  user: "aa1ronham@gmail.com"
+  password:
+    - secure: "D4F+CKpbIG1WvJJQNYiHrWwFoNNouOPQgE4dV4h1AgTCRiSyV/x3nhn4LA9PvMPeQ8zranY8MCL6mEvOCzahd+NCbLIiauBeBlIazmySXei8OmESGr2lasEm+xDbOcM58uB/g9ascWZSSgcLTUK7TeZw64iO6A8XEBdsv+5u2Uo="
+  app: browserquest
+  domain: teambq
+
+notifications:
+  irc: "irc.synirc.net#browserquest"

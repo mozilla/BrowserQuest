@@ -1,0 +1,22 @@
+#!/bin/bash
+# This script was taken from https://github.com/ramr/nodejs-custom-version-openshift
+# This is a simple script and will be executed on your CI system if
+# available.  Otherwise it will execute while your application is stopped
+# before the build step.  This script gets executed directly, so it
+# could be python, php, ruby, etc.
+
+
+#  Source utility functions.
+source "$OPENSHIFT_REPO_DIR/.openshift/lib/utils"
+
+#  Ensure custom node version if not installed.
+echo ""
+ensure_node_is_installed
+
+
+#  We need to move the package.json file out of the way in pre_build, so
+#  that the OpenShift git post-receive hook doesn't try and use the old
+#  npm version to install the dependencies.
+mv  "${OPENSHIFT_REPO_DIR}/package.json"  "$(get_node_tmp_dir)"
+
+

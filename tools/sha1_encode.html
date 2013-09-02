@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>jsSHA - SHA Hashes in JavaScript</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="keywords" content="SHA, SHA-1, javascript, JS, Secure Hash Standard, hash, security, cryptography, FIPS 180-2" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script type="text/javascript" src="../client/js/lib/sha1.js"></script>
+	<script type="text/javascript">
+		function calcHash() {
+			try {
+				var hashInput = document.getElementById("hashInputText");
+				var hashInputType = document.getElementById("hashInputType");
+				var hashVariant = document.getElementById("hashVariant");
+				var hashOutputType = document.getElementById("hashOutputType");
+				var hashOutput = document.getElementById("hashOutputText");
+				var hashObj = new jsSHA(hashInput.value, hashInputType.options[hashInputType.selectedIndex].value);
+				hashOutput.value = hashObj.getHash(
+					hashVariant.options[hashVariant.selectedIndex].value,
+					hashOutputType.options[hashOutputType.selectedIndex].value
+				);
+			} catch(e) {
+				hashOutput.value = e
+			}
+		}
+
+		function calcHMAC() {
+			try {
+				var hmacText = document.getElementById("hmacInputText");
+				var hmacTextType = document.getElementById("hmacTextType");
+				var hmacKeyInput = document.getElementById("hmacInputKey");
+				var hmacKeyInputType = document.getElementById("hmacKeyType");
+				var hmacVariant = document.getElementById("hmacVariant");
+				var hmacOutputType = document.getElementById("hmacOutputType");
+				var hmacOutput = document.getElementById("hmacOutputText");
+				var hmacObj = new jsSHA(hmacText.value, hmacTextType.options[hmacTextType.selectedIndex].value);
+
+				hmacOutput.value = hmacObj.getHMAC(
+					hmacKeyInput.value,
+					hmacKeyInputType.options[hmacKeyInputType.selectedIndex].value,
+					hmacVariant.options[hmacVariant.selectedIndex].value,
+					hmacOutputType.options[hmacOutputType.selectedIndex].value
+				);
+			} catch(e) {
+				hmacOutput.value = e
+			}
+		}
+	</script>
+</head>
+<body onload="calcHash();calcHMAC()">
+	<div id="container">
+		<div>
+			<img src="logo.png" alt="jsSHA" style="margin: 0px auto" />
+			<h1>About</h1>
+			<p>This is meant to fill client/js/entrypoint.js, the code of this page comes from <a href="http://caligatio.github.com/jsSHA/">http://caligatio.github.com/jsSHA/</a> and was written by the author of the library.</p>
+			<form action="#" method="get">
+				<fieldset>
+					<legend>Hashing Demo</legend>
+					<p>
+						Simply insert your text to be hashed, input type, the SHA variant you wish to use, and the output format.<br />
+						<span style="font-size: 12px">Note: You may have to scroll the output text for longer length hashes</span>
+					</p>
+					<div>
+						<label for="hashInputText">Input Text:</label><input type="text" size="75" name="hashInputText" id="hashInputText" onkeyup="calcHash()" />
+					</div>
+					<div>
+						<label for="hashInputType">Input Type:</label>
+						<select name="hashInputType" id="hashInputType" onchange="calcHash()" disabled="disabled">
+							<option value="B64">Base-64</option>
+							<option selected="selected">TEXT</option>
+							<option>HEX</option>
+						</select>
+					</div>
+					<div>
+						<label for="hashVariant">SHA Variant:</label>
+						<select name="hashVariant" id="hashVariant" onchange="calcHash()" disabled="disabled">
+							<option selected="selected">SHA-1</option>
+							<option>SHA-224</option>
+							<option>SHA-256</option>
+							<option>SHA-384</option>
+							<option>SHA-512</option>
+						</select>
+					</div>
+					<div>
+						<label for="hashOutputType">Output Type:</label>
+						<select name="hashOutputType" id="hashOutputType" onchange="calcHash()" disabled="disabled">
+							<option value="B64" selected="selected">Base-64</option>
+							<option>HEX</option>
+						</select>
+					</div>
+					<div>
+						<label for="hashOutputText">Output Hash:</label>
+						<input type="text" size="75" name="hashOutputText" id="hashOutputText" style="background-color: #b1ceed" />
+					</div>
+				</fieldset>
+			</form>
+		</div>
+				<div id="copyright">
+			Copyright &copy; 2008-2012 <a href="https://github.com/Caligatio/">Brian Turek</a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-2442290-9']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</body>
+</html>

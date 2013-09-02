@@ -16,14 +16,15 @@ define(['character', 'timer'], function(Character, Timer) {
             this.updateAnimatedTiles();
             this.updateChatBubbles();
             this.updateInfos();
+            this.updateKeyboardMovement();
         },
 
         updateCharacters: function() {
             var self = this;
-        
+
             this.game.forEachEntity(function(entity) {
                 var isCharacter = entity instanceof Character;
-            
+
                 if(entity.isLoaded) {
                     if(isCharacter) {
                         self.updateCharacter(entity);
@@ -33,23 +34,23 @@ define(['character', 'timer'], function(Character, Timer) {
                 }
             });
         },
-        
+
         updatePlayerAggro: function() {
             var t = this.game.currentTime,
                 player = this.game.player;
-            
+
             // Check player aggro every 1s when not moving nor attacking
             if(player && !player.isMoving() && !player.isAttacking()  && this.playerAggroTimer.isOver(t)) {
                 player.checkAggro();
             }
         },
-    
+
         updateEntityFading: function(entity) {
             if(entity && entity.isFading) {
                 var duration = 1000,
                     t = this.game.currentTime,
                     dt = t - entity.startFadingTime;
-            
+
                 if(dt > duration) {
                     this.isFading = false;
                     entity.fadingAlpha = 1;
@@ -63,7 +64,7 @@ define(['character', 'timer'], function(Character, Timer) {
             var self = this,
                 m = null,
                 z = this.game.currentZoning;
-    
+
             this.game.forEachEntity(function(entity) {
                 m = entity.movement;
                 if(m) {
@@ -72,14 +73,14 @@ define(['character', 'timer'], function(Character, Timer) {
                     }
                 }
             });
-        
+
             if(z) {
                 if(z.inProgress) {
                     z.step(this.game.currentTime);
                 }
             }
         },
-    
+
         updateZoning: function() {
             var g = this.game,
                 c = g.camera,
@@ -87,13 +88,13 @@ define(['character', 'timer'], function(Character, Timer) {
                 s = 3,
                 ts = 16,
                 speed = 500;
-        
+
             if(z && z.inProgress === false) {
                 var orientation = this.game.zoningOrientation,
                     startValue = endValue = offset = 0,
                     updateFunc = null,
                     endFunc = null;
-            
+
                 if(orientation === Types.Orientations.LEFT || orientation === Types.Orientations.RIGHT) {
                     offset = (c.gridW - 2) * ts;
                     startValue = (orientation === Types.Orientations.LEFT) ? c.x - ts : c.x + ts;
@@ -111,7 +112,7 @@ define(['character', 'timer'], function(Character, Timer) {
                     offset = (c.gridH - 2) * ts;
                     startValue = (orientation === Types.Orientations.UP) ? c.y - ts : c.y + ts;
                     endValue = (orientation === Types.Orientations.UP) ? c.y - offset : c.y + offset;
-                    updateFunc = function(y) { 
+                    updateFunc = function(y) {
                         c.setPosition(c.x, y);
                         g.initAnimatedTiles();
                         g.renderer.renderStaticCanvases();
@@ -121,17 +122,17 @@ define(['character', 'timer'], function(Character, Timer) {
                         g.endZoning();
                     }
                 }
-            
+
                 z.start(this.game.currentTime, updateFunc, endFunc, startValue, endValue, speed);
             }
         },
 
         updateCharacter: function(c) {
             var self = this;
-    
+
             // Estimate of the movement distance for one update
             var tick = Math.round(16 / Math.round((c.moveSpeed / (1000 / this.game.renderer.FPS))));
-    
+
             if(c.isMoving() && c.movement.inProgress === false) {
                 if(c.orientation === Types.Orientations.LEFT) {
                     c.movement.start(this.game.currentTime,
@@ -195,35 +196,71 @@ define(['character', 'timer'], function(Character, Timer) {
                 }
             }
         },
+        
+        updateKeyboardMovement: function()
+        {           
+            if(!this.game.player || this.game.player.isMoving())
+                return;
+
+            var game = this.game;
+            var player = this.game.player;
+                
+            var pos = {
+                x: player.gridX,
+                y: player.gridY
+            };
+
+            if(player.moveUp)
+            {
+                pos.y -= 1;
+                game.keys(pos, Types.Orientations.UP);
+            }
+            else if(player.moveDown)
+            {
+                pos.y += 1;
+                game.keys(pos, Types.Orientations.DOWN);
+            }
+            else if(player.moveRight)
+            {
+                pos.x += 1;
+                game.keys(pos, Types.Orientations.RIGHT);
+            }
+            else if(player.moveLeft)
+            {
+                pos.x -= 1;
+                game.keys(pos, Types.Orientations.LEFT);
+            }
+        
+        },
 
         updateAnimations: function() {
             var t = this.game.currentTime;
-    
+
             this.game.forEachEntity(function(entity) {
                 var anim = entity.currentAnimation;
-                
+
                 if(anim) {
                     if(anim.update(t)) {
                         entity.setDirty();
                     }
                 }
             });
-        
+
             var sparks = this.game.sparksAnimation;
             if(sparks) {
                 sparks.update(t);
             }
-    
+
             var target = this.game.targetAnimation;
             if(target) {
                 target.update(t);
             }
         },
-    
+
         updateAnimatedTiles: function() {
             var self = this,
                 t = this.game.currentTime;
-        
+
             this.game.forEachAnimatedTile(function (tile) {
                 if(tile.animate(t)) {
                     tile.isDirty = true;
@@ -235,19 +272,19 @@ define(['character', 'timer'], function(Character, Timer) {
                 }
             });
         },
-    
+
         updateChatBubbles: function() {
             var t = this.game.currentTime;
-        
+
             this.game.bubbleManager.update(t);
         },
-    
+
         updateInfos: function() {
             var t = this.game.currentTime;
-        
+
             this.game.infoManager.update(t);
         }
     });
-    
+
     return Updater;
 });

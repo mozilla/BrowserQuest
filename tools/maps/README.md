@@ -11,32 +11,28 @@ Install the Tiled editor: http://www.mapeditor.org/
 
 Open the `tmx/map.tmx` file in Tiled and start editing.
 
-**Note:** there currently is no documentation on how to edit BrowserQuest-specific objects/layers in Tiled. Please refer to `tmx/map.tmx` as an example if you want to create your own map.
+**Note:** Some unexhaustive documentation can be found in the [wiki of the repository](https://github.com/browserquest/BrowserQuest/wiki/Create-a-map-using-tiled-map-editor).
 
+Editing the map
+---------------
+Pre-process map allows to create attributes patterns to reuse various times in your tilesheet. And also to create rectangles of tiles of same attributes…
 
 Using the exporter
 ------------------
 
-This tool is to be used from the command line after the TMX file has been saved from the Tiled editor.
-
-Note: This tool was written with OSX in mind. If you are using a different OS (eg. Windows), additional/different steps might be required.
-
-**Prerequisites:**
-
-- You need python and nodejs installed.
-- Install pip: http://www.pip-installer.org/en/latest/installing.html
-- Install lxml: `pip install lxml` (preferably within a virtualenv)
-- Optional: Install Growl + growlnotify if you are on OSX.
+This tool is to be used from the command line after the map has been exported in .json format from tiled map editor (the functionnality was added in v0.8, but should work with later versions if they do not change the specifications for json export).
 
 **Usage:**
 
 1. `cd tools/maps/`
 
-2. `./export.py client` or `./export.py server`
+2. `./exportmap.js tiled_exported_file.json [mode] [destination]`
 
-You must run both commands in order to export the client and server map files. There is no one-step export command for both map types yet.
-
-**Warning:** depending on the `.tmx` filesize, the exporting process can take up to several minutes.
+mode & destination values:
+* `direct` (default) → updates current server and map files (WARNING: SHOULD ONLY BE CALLED FROM `BrowserQuest/tools/maps` see 1);
+* `client destination_file` → will generate `destination_file.js` and `destination_file.json` for client side map;
+* `server destination_file.json` → will generate `destination_file.json` for server side map;
+* `both destination_directory` → will generate `world_client.js`, `world_client.json` and `world_server.json` in `destination_directory`, which must exist, otherwise an error is triggered.
 
 
 Things to know
@@ -50,13 +46,6 @@ The server map file contains data about static entity spawning points, spawning 
 
 Depending on what you want to change, it's therefore not always needed to export both maps. Also, each `world_server.json` file change requires a server restart.
 
-**How the exporting process works:**
-
-1. The Tiled map TMX file is converted to a temporary JSON file by `tmx2json.py`.
-2. This file is be processed by `processmap.js` and returned as an object. This object will have different properties depending on whether we are exporting the client or the server map.
-3. The processed map object is saved as the final world map JSON file(s) in the appropriate directories.
-4. The temporary file from step 1. is deleted.
-
 
 **Known bugs:**
  
@@ -69,8 +58,6 @@ Contributing / Ideas for improvement
 
 Here are a few ideas for anyone who might want to help make this tool better:
 
-- Remove hard-coded filenames from export.py (eg. `map.tmx`, `world_client.json`) in order to allow easier switching to different map files.
-
 - Fix known bugs (see section above)
 
 - Write documentation on how to use the exporter on Windows.
@@ -78,8 +65,6 @@ Here are a few ideas for anyone who might want to help make this tool better:
 - Write documentation about map editing in the Tiled editor (ie. editing BrowserQuest-specific properties of doors, chests, spawning areas, etc.)
 
 - Write documentation about the BrowserQuest map JSON format, both for client and server map types.
-
-- Get rid of the `tmx2json.py` step which can currently take up to several minutes. Note: There is a JSON exporter built in Tiled since version 0.8.0 which could be useful. We didn't use it because our tool was written before the 0.8.0 release.
 
 - A complete rewrite of this tool using a custom Tiled plugin would surely be a better approach than the current one. Being able to export directly from Tiled would be much easier to use. Also, the export process is currently too slow.
 

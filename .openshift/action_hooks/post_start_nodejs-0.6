@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# This script was taken from https://github.com/ramr/nodejs-custom-version-openshift
+# The pre_start_cartridge and pre_stop_cartridge hooks are *SOURCED*
+# immediately before (re)starting or stopping the specified cartridge.
+# They are able to make any desired environment variable changes as
+# well as other adjustments to the application environment.
+
+# The post_start_cartridge and post_stop_cartridge hooks are executed
+# immediately after (re)starting or stopping the specified cartridge.
+
+# Exercise caution when adding commands to these hooks.  They can
+# prevent your application from stopping cleanly or starting at all.
+# Application start and stop is subject to different timeouts
+# throughout the system.
+
+#  Source utility functions.
+source "$OPENSHIFT_REPO_DIR/.openshift/lib/utils"
+
+#  Get the node version.
+ver=$(get_node_version)
+
+
+#  Set URI to the custom sample /env route.
+app_uri="http://$OPENSHIFT_GEAR_DNS/env"
+
+#  Wait a bit to give the server time to come up.
+sleep 5
+
+#  Check if the app_uri is available - user code could have removed the
+#  one in the sample -- we just print this for sanity testing.
+zcode=$(curl --write-out %{http_code} -s -o /dev/null "$app_uri")
+
+if [ "$zcode" -eq 200 ]; then
+   echo ""
+   echo "  - Using Node.js version $ver, checking app URI ... "
+   echo "  - test URI = $app_uri"
+   echo "  - Version from test URI = $(curl -s $app_uri | grep 'Version')"
+   echo ""
+fi
+
+

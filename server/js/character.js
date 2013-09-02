@@ -1,42 +1,39 @@
+var Entity = require('./entity');
+var Messages = require('./message');
+var Utils = require('./utils');
 
-var cls = require("./lib/class"),
-    Messages = require("./message"),
-    Utils = require("./utils"),
-    Properties = require("./properties"),
-    Types = require("../../shared/js/gametypes");
-
-module.exports = Character = Entity.extend({
-    init: function(id, type, kind, x, y) {
+var Character = Entity.extend({
+    init: function (id, type, kind, x, y) {
         this._super(id, type, kind, x, y);
-        
+
         this.orientation = Utils.randomOrientation();
         this.attackers = {};
         this.target = null;
     },
-    
-    getState: function() {
+
+    getState: function () {
         var basestate = this._getBaseState(),
             state = [];
-        
+
         state.push(this.orientation);
-        if(this.target) {
+        if (this.target) {
             state.push(this.target);
         }
-        
+
         return basestate.concat(state);
     },
-    
-    resetHitPoints: function(maxHitPoints) {
+
+    resetHitPoints: function (maxHitPoints) {
         this.maxHitPoints = maxHitPoints;
         this.hitPoints = this.maxHitPoints;
     },
-    
-    regenHealthBy: function(value) {
+
+    regenHealthBy: function (value) {
         var hp = this.hitPoints,
             max = this.maxHitPoints;
-            
-        if(hp < max) {
-            if(hp + value <= max) {
+
+        if (hp < max) {
+            if (hp + value <= max) {
                 this.hitPoints += value;
             }
             else {
@@ -44,51 +41,54 @@ module.exports = Character = Entity.extend({
             }
         }
     },
-    
-    hasFullHealth: function() {
+
+    hasFullHealth: function () {
         return this.hitPoints === this.maxHitPoints;
     },
-    
-    setTarget: function(entity) {
+
+    setTarget: function (entity) {
         this.target = entity.id;
     },
-    
-    clearTarget: function() {
+
+    clearTarget: function () {
         this.target = null;
     },
-    
-    hasTarget: function() {
+
+    hasTarget: function () {
         return this.target !== null;
     },
-    
-    attack: function() {
+
+    attack: function () {
         return new Messages.Attack(this.id, this.target);
     },
-    
-    health: function() {
+
+    health: function () {
         return new Messages.Health(this.hitPoints, false);
     },
-    
-    regen: function() {
+
+    regen: function () {
         return new Messages.Health(this.hitPoints, true);
     },
-    
-    addAttacker: function(entity) {
-        if(entity) {
+
+    addAttacker: function (entity) {
+        if (entity) {
             this.attackers[entity.id] = entity;
         }
     },
-    
-    removeAttacker: function(entity) {
-        if(entity && entity.id in this.attackers) {
+
+    removeAttacker: function (entity) {
+        if (entity && entity.id in this.attackers) {
             delete this.attackers[entity.id];
-            log.debug(this.id +" REMOVED ATTACKER "+ entity.id);
+            log.debug(this.id + ' REMOVED ATTACKER ' + entity.id);
         }
     },
-    
-    forEachAttacker: function(callback) {
-        for(var id in this.attackers) {
+
+    forEachAttacker: function (callback) {
+        for (var id = 0; id < this.attackers.length; id++) {
             callback(this.attackers[id]);
         }
     }
 });
+
+module.exports = Character;
+

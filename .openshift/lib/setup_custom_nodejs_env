@@ -1,0 +1,41 @@
+#  This script was taken from https://github.com/ramr/nodejs-custom-version-openshift
+#  Utility functions for bash session - sourced in via the user's
+#  bash profile ($OPENSHIFT_DATA_DIR/.bash_profile).
+
+#  Source utility functions.
+source $OPENSHIFT_REPO_DIR/.openshift/lib/utils
+
+
+#  Internal function to setup path and remove the wrappers.
+function _setup_path_and_remove_wrappers() {
+   #  First invocation of npm or node, so setup the custom path and
+   #  unset the wrappers. Add the custom node binaries to the PATH.
+   [ -z "$ZDEBUG" ]  ||  echo "Setting path to include custom Node version"
+   setup_path_for_custom_node_version
+   unset node
+   unset npm
+   unset _setup_path_and_remove_wrappers
+
+}  #  End of function  _setup_path_and_remove_wrappers.
+
+
+#  Temporary wrapper function to setup path before invoking npm.
+function npm() {
+   #  Setup path, remove wrappers and reinvoke npm.
+   _setup_path_and_remove_wrappers
+   npm "$@"
+
+}  #  End of function  npm.
+
+
+#  Temporary wrapper function to setup path before invoking node.
+function node() {
+   #  Setup path, remove wrappers and reinvoke node.
+   _setup_path_and_remove_wrappers
+   node "$@"
+
+}  #  End of function  node.
+
+
+#
+# EOF

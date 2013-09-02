@@ -12,7 +12,7 @@ var Properties = {
         armor: 1,
         weapon: 1
     },
-    
+
     skeleton: {
         drops: {
             flask: 40,
@@ -24,7 +24,7 @@ var Properties = {
         armor: 2,
         weapon: 2
     },
-    
+
     goblin: {
         drops: {
             flask: 50,
@@ -36,7 +36,7 @@ var Properties = {
         armor: 2,
         weapon: 1
     },
-    
+
     ogre: {
         drops: {
             burger: 10,
@@ -49,7 +49,7 @@ var Properties = {
         armor: 3,
         weapon: 2
     },
-    
+
     spectre: {
         drops: {
             flask: 30,
@@ -61,7 +61,7 @@ var Properties = {
         armor: 2,
         weapon: 4
     },
-    
+
     deathknight: {
         drops: {
             burger: 95,
@@ -71,7 +71,7 @@ var Properties = {
         armor: 3,
         weapon: 3
     },
-    
+
     crab: {
         drops: {
             flask: 50,
@@ -83,7 +83,7 @@ var Properties = {
         armor: 2,
         weapon: 1
     },
-    
+
     snake: {
         drops: {
             flask: 50,
@@ -95,7 +95,7 @@ var Properties = {
         armor: 3,
         weapon: 2
     },
-    
+
     skeleton2: {
         drops: {
             flask: 60,
@@ -107,7 +107,7 @@ var Properties = {
         armor: 3,
         weapon: 3
     },
-    
+
     eye: {
         drops: {
             flask: 50,
@@ -119,7 +119,7 @@ var Properties = {
         armor: 3,
         weapon: 3
     },
-    
+
     bat: {
         drops: {
             flask: 50,
@@ -130,7 +130,7 @@ var Properties = {
         armor: 2,
         weapon: 1
     },
-    
+
     wizard: {
         drops: {
             flask: 50,
@@ -141,7 +141,7 @@ var Properties = {
         armor: 2,
         weapon: 6
     },
-    
+
     boss: {
         drops: {
             goldensword: 100
@@ -161,6 +161,7 @@ Properties.getArmorLevel = function(kind) {
         }
     } catch(e) {
         log.error("No level found for armor: "+Types.getKindAsString(kind));
+        log.error('Error stack: ' + e.stack);
     }
 };
 
@@ -173,11 +174,15 @@ Properties.getWeaponLevel = function(kind) {
         }
     } catch(e) {
         log.error("No level found for weapon: "+Types.getKindAsString(kind));
+        log.error('Error stack: ' + e.stack);
     }
 };
 
 Properties.getHitPoints = function(kind) {
     return Properties[Types.getKindAsString(kind)].hp;
+};
+Properties.getExp = function(kind){
+    return Properties[Types.getKindAsString(kind)].exp;
 };
 
 module.exports = Properties;

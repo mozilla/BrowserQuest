@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# This script was taken from https://github.com/ramr/nodejs-custom-version-openshift
+# The pre_start_cartridge and pre_stop_cartridge hooks are *SOURCED*
+# immediately before (re)starting or stopping the specified cartridge.
+# They are able to make any desired environment variable changes as
+# well as other adjustments to the application environment.
+
+# The post_start_cartridge and post_stop_cartridge hooks are executed
+# immediately after (re)starting or stopping the specified cartridge.
+
+# Exercise caution when adding commands to these hooks.  They can
+# prevent your application from stopping cleanly or starting at all.
+# Application start and stop is subject to different timeouts
+# throughout the system.
+
+
+#  Source utility functions.
+source "$OPENSHIFT_REPO_DIR/.openshift/lib/utils"
+
+#  Setup path to include the custom Node[.js] version.
+ver=$(get_node_version)
+echo ""
+echo "  - pre_start_nodejs: Adding Node.js version $ver binaries to path"
+_SHOW_SETUP_PATH_MESSAGES="true" setup_path_for_custom_node_version
+

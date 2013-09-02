@@ -9,7 +9,7 @@ define(function() {
 
         isOver: function(time) {
             var over = false;
-       
+
             if((time - this.lastTime) > this.duration) {
                 over = true;
                 this.lastTime = time;
