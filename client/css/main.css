@@ -1230,3 +1230,44 @@ footer, header, hgroup, menu, nav, section {
     .opera #achievements.active, .opera #instructions.active { z-index: 30000;}
     .opera #coinsparks {display:none;}
     .opera #death, .opera #about, .opera #credits, .opera #error, .opera #confirmation, .opera #loadcharacter { z-index: -30000; }
+
+/** HUD */
+#target-hud {
+  position: absolute;
+  top: 12px;
+  z-index: 20;
+  width: 182px;
+  height: 54px;
+  display: none;
+}
+#hud-target {
+  position: absolute;
+  top: 0;
+  font-family: "GraphicPixel";
+  color: #fff;
+  width: 100%;
+  height: 32px;
+  opacity: 0.7;
+}
+#hud-target-icon {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+}
+#hud-target-name {
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 4px;
+  padding-top: 8px;
+}
+#target-healthbar {
+  background: url('../img/1/barsheet.png') repeat scroll 0 0 rgba(0, 0, 0, 0);
+  background-position: 0 -34px;
+  background-size: 860px auto;
+  background-color: #f00;
+  width: 100%;
+  height: 22px;
+  position: absolute;
+  bottom: 0;
+  image-rendering: -moz-crisp-edges;
+}
