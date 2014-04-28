@@ -73,7 +73,7 @@ Messages.Health = Message.extend({
     serialize: function() {
         var health = [Types.Messages.HEALTH,
                       this.points];
-        
+
         if(this.isRegen) {
             health.push(1);
         }
@@ -183,7 +183,7 @@ Messages.List = Message.extend({
     },
     serialize: function() {
         var list = this.ids;
-        
+
         list.unshift(Types.Messages.LIST);
         return list;
     }
@@ -206,5 +206,19 @@ Messages.Blink = Message.extend({
     serialize: function() {
         return [Types.Messages.BLINK,
                 this.item.id];
+    }
+});
+
+Messages.TargetHealth = Message.extend({
+    init: function(mob) {
+        this.mob = mob;
+    },
+    serialize: function() {
+        var health = [Types.Messages.TARGETHEALTH,
+                      this.mob.id,
+                      this.mob.kind,
+                      this.mob.hitPoints,
+                      this.mob.maxHitPoints];
+        return health;
     }
 });

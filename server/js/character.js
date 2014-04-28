@@ -8,33 +8,34 @@ var cls = require("./lib/class"),
 module.exports = Character = Entity.extend({
     init: function(id, type, kind, x, y) {
         this._super(id, type, kind, x, y);
-        
+
         this.orientation = Utils.randomOrientation();
         this.attackers = {};
+        this.targeters = {};
         this.target = null;
     },
-    
+
     getState: function() {
         var basestate = this._getBaseState(),
             state = [];
-        
+
         state.push(this.orientation);
         if(this.target) {
             state.push(this.target);
         }
-        
+
         return basestate.concat(state);
     },
-    
+
     resetHitPoints: function(maxHitPoints) {
         this.maxHitPoints = maxHitPoints;
         this.hitPoints = this.maxHitPoints;
     },
-    
+
     regenHealthBy: function(value) {
         var hp = this.hitPoints,
             max = this.maxHitPoints;
-            
+
         if(hp < max) {
             if(hp + value <= max) {
                 this.hitPoints += value;
@@ -44,51 +45,66 @@ module.exports = Character = Entity.extend({
             }
         }
     },
-    
+
     hasFullHealth: function() {
         return this.hitPoints === this.maxHitPoints;
     },
-    
+
     setTarget: function(entity) {
         this.target = entity.id;
     },
-    
+
+    removeTargeterBinding: function(player_id) {
+        delete this.targeters[player_id];
+    },
+
+    addTargeterBinding: function(player_id) {
+        this.targeters[player_id] = true;
+    },
+
     clearTarget: function() {
         this.target = null;
     },
-    
+
     hasTarget: function() {
         return this.target !== null;
     },
-    
+
     attack: function() {
         return new Messages.Attack(this.id, this.target);
     },
-    
+
     health: function() {
         return new Messages.Health(this.hitPoints, false);
     },
-    
+
     regen: function() {
         return new Messages.Health(this.hitPoints, true);
     },
-    
+
     addAttacker: function(entity) {
         if(entity) {
             this.attackers[entity.id] = entity;
         }
     },
-    
+
     removeAttacker: function(entity) {
         if(entity && entity.id in this.attackers) {
             delete this.attackers[entity.id];
             log.debug(this.id +" REMOVED ATTACKER "+ entity.id);
         }
     },
-    
+
     forEachAttacker: function(callback) {
         for(var id in this.attackers) {
             callback(this.attackers[id]);
         }
+    },
+
+    forEachTargeter: function(callback) {
+        for (var id in this.targeters) {
+            callback(id);
+        }
     }
+
 });
