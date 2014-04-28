@@ -325,3 +325,12 @@ Types.EntityKindNameById = function(kind_id) {
     }
     return "";
 }
+
+Types.EntityIconById = function(kind_id) {
+    for (var kind_name in Types.Entities) {
+        if (Types.Entities[kind_name] === kind_id) {
+            return "img/common/hud-icon.png";
+        }
+    }
+    return "";
+}

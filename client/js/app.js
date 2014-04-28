@@ -155,11 +155,13 @@ define(['jquery', 'storage'], function($, Storage) {
         initTargetHealthBar: function() {
             var healthMaxWidth = $("#target-healthbar").width();
 
-            this.game.onTargetHealthChange(function(kind, hp, maxHp) {
+            this.game.onTargetHealthChange(function(kind, icon, hp, maxHp) {
                 var barWidth = hp / (maxHp >= 0 ? maxHp : 1);
                 barWidth = barWidth <= 100 ? barWidth : 100;
                 barWidth = healthMaxWidth * (barWidth);
 
+                log.error("SET SRC: " + icon);
+                $("#hud-target-icon").attr("src", icon);
                 $("#target-healthbar").css("width", barWidth + "px");
                 $("#hud-target-name").text(kind);
             });

@@ -1488,10 +1488,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     if (!self.player.hasTarget()) {
                         return;
                     }
+                    var icon = Types.EntityIconById(kind);
                     kind = Types.EntityKindNameById(kind);
                     if (id === self.player.target.id) {
                         if (self.targethp_callback) {
-                            self.targethp_callback(kind, hp, maxHp);
+                            self.targethp_callback(kind, icon, hp, maxHp);
                         }
                     }
                 });
