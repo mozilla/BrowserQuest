@@ -219,7 +219,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
         removeAttacker: function(character) {
             this._super(character);
-            if (character.id === this.target.id) {
+            if (this.target && character.id === this.target.id) {
               this.removeTarget();
             }
         },
