@@ -164,6 +164,15 @@ define(['jquery', 'storage'], function($, Storage) {
                 $("#hud-target-name").text(kind);
             });
 
+            this.game.onTargetChange(function(visible) {
+                var $el = $("#target-hud");
+                if (visible) {
+                    $el.show();
+                }
+                else {
+                    $el.hide();
+                }
+            });
         },
 
         blinkHealthBar: function() {

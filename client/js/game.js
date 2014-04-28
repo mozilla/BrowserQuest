@@ -119,10 +119,15 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 this.player.setWeaponName(this.storage.data.player.weapon);
             }
 
-        	this.player.setSprite(this.sprites[this.player.getSpriteName()]);
-        	this.player.idle();
+            var self = this;
+            this.player.onTarget(function(player) {
+                self.updateTargetHUD(player.hasTarget());
+            });
 
-    	    log.debug("Finished initPlayer");
+            this.player.setSprite(this.sprites[this.player.getSpriteName()]);
+            this.player.idle();
+
+            log.debug("Finished initPlayer");
         },
 
         initShadows: function() {
@@ -2289,6 +2294,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.equipment_callback = callback;
         },
 
+        onTargetChange: function(callback) {
+            this.targethud_callback = callback;
+        },
+
         onTargetHealthChange: function(callback) {
             this.targethp_callback = callback;
         },
@@ -2322,6 +2331,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(this.player && this.playerhp_callback) {
                 this.playerhp_callback(this.player.hitPoints, this.player.maxHitPoints);
             }
+        },
+
+        updateTargetHUD: function(visible) {
+            if (!this.targethud_callback) {
+                return;
+            }
+            this.targethud_callback(visible);
         },
 
         getDeadMobPosition: function(mobId) {

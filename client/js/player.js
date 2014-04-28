@@ -179,6 +179,10 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             this.invincible_callback = callback;
         },
 
+        onTarget: function(callback) {
+            this.target_callback = callback;
+        },
+
         startInvincibility: function() {
             var self = this;
 
@@ -214,22 +218,24 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         },
 
         removeAttacker: function(character) {
-          this._super(character);
-          if (character.id === this.target.id) {
-            this.removeTarget();
-          }
+            this._super(character);
+            if (character.id === this.target.id) {
+              this.removeTarget();
+            }
         },
 
         removeTarget: function(character) {
-          this._super(character);
-          // Trigger for app to manage this...
-          $("#target-hud").hide();
+            this._super(character);
+            if (this.target_callback) {
+                this.target_callback(this);
+            }
         },
 
         setTarget: function(character) {
-          this._super(character);
-          // Trigger for app to manage this...
-          $("#target-hud").show();
+            this._super(character);
+            if (this.target_callback) {
+                this.target_callback(this);
+            }
         }
     });
 
