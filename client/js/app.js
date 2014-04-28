@@ -160,7 +160,6 @@ define(['jquery', 'storage'], function($, Storage) {
                 barWidth = barWidth <= 100 ? barWidth : 100;
                 barWidth = healthMaxWidth * (barWidth);
 
-                log.error("SET SRC: " + icon);
                 $("#hud-target-icon").attr("src", icon);
                 $("#target-healthbar").css("width", barWidth + "px");
                 $("#hud-target-name").text(kind);
