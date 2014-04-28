@@ -153,7 +153,7 @@ define(['jquery', 'storage'], function($, Storage) {
         },
 
         initTargetHealthBar: function() {
-            var healthMaxWidth = $("#healthbar").width();
+            var healthMaxWidth = $("#target-healthbar").width();
 
             this.game.onTargetHealthChange(function(kind, hp, maxHp) {
                 var barWidth = hp / (maxHp >= 0 ? maxHp : 1);

@@ -222,11 +222,13 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
 
         removeTarget: function(character) {
           this._super(character);
+          // Trigger for app to manage this...
           $("#target-hud").hide();
         },
 
         setTarget: function(character) {
           this._super(character);
+          // Trigger for app to manage this...
           $("#target-hud").show();
         }
     });
