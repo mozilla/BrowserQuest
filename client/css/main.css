@@ -61,11 +61,11 @@ footer, header, hgroup, menu, nav, section {
 
     @font-face {
         font-family: 'GraphicPixel';
-        src: url('../fonts/graphicpixel-webfont.eot');
-        src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
-             url('../fonts/graphicpixel-webfont.woff') format('woff'),
-             url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
-             url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+        src: url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.eot');
+        src: url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+             url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.woff') format('woff'),
+             url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.ttf') format('truetype'),
+             url('http://cdn.mozilla.net/browserquest/fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
         font-weight: normal;
         font-style: normal;
 
@@ -73,11 +73,11 @@ footer, header, hgroup, menu, nav, section {
     
     @font-face {
         font-family: 'AdvoCut';
-        src: url('../fonts/advocut-webfont.eot');
-        src: url('../fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
-             url('../fonts/advocut-webfont.woff') format('woff'),
-             url('../fonts/advocut-webfont.ttf') format('truetype'),
-             url('../fonts/advocut-webfont.svg#AndinaRegular') format('svg');
+        src: url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.eot');
+        src: url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.eot?#iefix') format('embedded-opentype'),
+             url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.woff') format('woff'),
+             url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.ttf') format('truetype'),
+             url('http://cdn.mozilla.net/browserquest/fonts/advocut-webfont.svg#AndinaRegular') format('svg');
         font-weight: normal;
         font-style: normal;
 
@@ -128,9 +128,9 @@ footer, header, hgroup, menu, nav, section {
     body.upscaled.game {background:#000;}
     .game #logo {display:none;-moz-animation:none;-webkit-animation:none;-o-animation:none;-ms-animation:none;animation:none;}
         
-    #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, #tilt, .parchment-left, .parchment-middle, .parchment-right, .avatar, .facebook, .twitter, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background:url('../img/1/spritesheet.png');image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;}
+    #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, #tilt, .parchment-left, .parchment-middle, .parchment-right, .avatar, .facebook, .twitter, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background:url('http://cdn.mozilla.net/browserquest/img/1/spritesheet.png');image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;}
     
-    #moztab {height:49px;width:118px;position:fixed;top:0;right:15%;background:url('../img/1/spritesheet.png') no-repeat -229px -204px;display:block;}
+    #moztab {height:49px;width:118px;position:fixed;top:0;right:15%;background:url('http://cdn.mozilla.net/browserquest/img/1/spritesheet.png') no-repeat -229px -204px;display:block;}
 
     #vignetting {height:100%;width:100%;position:absolute;top:0;left:0;pointer-events:none;}
     #logosparks {display:block;position:absolute;top:0;left:0;}
@@ -147,8 +147,8 @@ footer, header, hgroup, menu, nav, section {
 
     #mask {height:100%;width:100%;position:fixed;top:0;left:0;background:rgba(20,20,20,1);opacity:1;z-index:20;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;pointer-events:none;}
 
-    #bar-container {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:relative;width:100%;z-index:10;}
-    #healthbar {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;}
+    #bar-container {background:url('http://cdn.mozilla.net/browserquest/img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:relative;width:100%;z-index:10;}
+    #healthbar {background:url('http://cdn.mozilla.net/browserquest/img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;}
 	#hitpoints {background:#d83939;-moz-transition:.5s width ease;-webkit-transition:.5s width ease;-o-transition:.5s width ease;-ms-transition:.5s width ease;transition:.5s width ease;}
     #hitpoints.white {-moz-animation:flash 0.5s linear 1;-webkit-animation:flash 0.5s linear 1;-o-animation:flash 0.5s linear 1;-ms-animation:flash 0.5s linear 1;animation:flash 0.5s linear 1;}
 	#hitpoints.invincible {-moz-animation:invincible 0.3s steps(3, end) alternate infinite;-webkit-animation:invincible 0.3s steps(3, end) alternate infinite;-o-animation:invincible 0.3s steps(3, end) alternate infinite;-ms-animation:invincible 0.3s steps(3, end) alternate infinite;}
@@ -161,13 +161,13 @@ footer, header, hgroup, menu, nav, section {
     
     #playercount {font-family:'GraphicPixel';color:#e3e3e3;position:absolute;}
     #playercount:hover {cursor:pointer;color:#FCE045;}
-    #population {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;font-family:'GraphicPixel';color:#fff;text-align:center;opacity:0;pointer-events:none;-moz-transition:0.2s opacity linear, 0.2s height ease;-webkit-transition:0.2s opacity linear, 0.2s height ease;-o-transition:0.2s opacity linear, 0.2s height ease;-ms-transition:0.2s opacity linear, 0.2s height ease;transition:0.2s opacity linear, 0.2s height ease;height:0;overflow:hidden;}
+    #population {background:url('http://cdn.mozilla.net/browserquest/img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;font-family:'GraphicPixel';color:#fff;text-align:center;opacity:0;pointer-events:none;-moz-transition:0.2s opacity linear, 0.2s height ease;-webkit-transition:0.2s opacity linear, 0.2s height ease;-o-transition:0.2s opacity linear, 0.2s height ease;-ms-transition:0.2s opacity linear, 0.2s height ease;transition:0.2s opacity linear, 0.2s height ease;height:0;overflow:hidden;}
     #population span:nth-child(1) {color:#FCE045;}
     #population.visible {opacity:1;pointer-events:auto;}
     
-    .barbutton {background:url('../img/1/barsheet.png');image-rendering:-moz-crispt-edges;position:absolute;}
+    .barbutton {background:url('http://cdn.mozilla.net/browserquest/img/1/barsheet.png');image-rendering:-moz-crispt-edges;position:absolute;}
     
-    #chatbox {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;left:50%;z-index:5;-moz-transition:0.2s bottom ease;-webkit-transition:0.2s bottom ease;-o-transition:0.2s bottom ease;-ms-transition:0.2s bottom ease;transition:0.2s bottom ease;}
+    #chatbox {background:url('http://cdn.mozilla.net/browserquest/img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;left:50%;z-index:5;-moz-transition:0.2s bottom ease;-webkit-transition:0.2s bottom ease;-o-transition:0.2s bottom ease;-ms-transition:0.2s bottom ease;transition:0.2s bottom ease;}
     .bubble p {-moz-user-select:none;-webkit-user-select:none;}
     
     #instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
@@ -175,7 +175,7 @@ footer, header, hgroup, menu, nav, section {
     
     #weapon, #armor {image-rendering:-moz-crisp-edges;}
 
-    #achievements, #achievements li, .coin, #achievement-notification, #coinsparks, .achievement-sharing a, #previous, #next {background:url('../img/1/achievements.png');image-rendering:-moz-crisp-edges;}
+    #achievements, #achievements li, .coin, #achievement-notification, #coinsparks, .achievement-sharing a, #previous, #next {background:url('http://cdn.mozilla.net/browserquest/img/1/achievements.png');image-rendering:-moz-crisp-edges;}
     #achievements {font-family:'GraphicPixel'; position:absolute;top:50%;left:50%;z-index:1000;opacity:0;pointer-events:none;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
     #achievements li {clear:both;position:relative;}
     #achievements li .coin, #achievements li .achievement-name {float:left;}
@@ -423,7 +423,7 @@ footer, header, hgroup, menu, nav, section {
 	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/3/achievements.png');}
 	    
 	    
-        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood2.png') no-repeat 1587px 138px, url('../img/1/wood2.png') no-repeat 51px 519px, url('../img/1/wood3.png') no-repeat 228px 219px, url('../img/1/wood.png') repeat, #000; background-size:auto, 15px auto, 15px auto, 60px auto, 384px;}
+        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('http://cdn.mozilla.net/browserquest/img/1/wood2.png') no-repeat 1587px 138px, url('http://cdn.mozilla.net/browserquest/img/1/wood2.png') no-repeat 51px 519px, url('http://cdn.mozilla.net/browserquest/img/1/wood3.png') no-repeat 228px 219px, url('http://cdn.mozilla.net/browserquest/img/1/wood.png') repeat, #000; background-size:auto, 15px auto, 15px auto, 60px auto, 384px;}
         body {background:-webkit-gradient(radial, center center, 360, center center, 1200, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/3/wood2.png') no-repeat 1587px 138px, url('../img/3/wood2.png') no-repeat 51px 519px, url('../img/3/wood3.png') no-repeat 228px 219px, url('../img/3/wood.png') repeat, #000; background-size:auto, 15px auto, 15px auto, 60px auto, 384px;}
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:1266px auto;}
         #logo {height:126px;width:687px;position:absolute;top:10%;left:50%;margin-left:-344px;z-index:3;}
@@ -580,12 +580,12 @@ footer, header, hgroup, menu, nav, section {
 
 	@media screen and (max-width: 1500px) {
 
-	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
-	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('../img/2/barsheet.png');}
-	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/2/achievements.png');}
+	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('http://cdn.mozilla.net/browserquest/img/2/spritesheet.png');}
+	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('http://cdn.mozilla.net/browserquest/img/2/barsheet.png');}
+	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('http://cdn.mozilla.net/browserquest/img/2/achievements.png');}
 
-        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
-        body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/2/wood.png') repeat, #000; background-size:auto, 256px;}
+        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('http://cdn.mozilla.net/browserquest/img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
+        body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('http://cdn.mozilla.net/browserquest/img/2/wood.png') repeat, #000; background-size:auto, 256px;}
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
         #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
         #logosparks {width:458px;height:84px;z-index:4;-moz-animation:logo2 .8s steps(6, end) infinite;-webkit-animation:logo2 .8s steps(6, end) infinite;-o-animation:logo2 .8s steps(6, end) infinite;-ms-animation:logo2 .8s steps(6, end) infinite;}
@@ -614,7 +614,7 @@ footer, header, hgroup, menu, nav, section {
         .button.delete:active {background-position:0 -1452px;}
         
 		#container {width:980px;margin:0 auto;position:absolute;top:50%;margin-top:-252px;left:50%;margin-left:-490px;}
-		#canvasborder {padding:10px;background:url('../img/2/border.png') no-repeat;}
+		#canvasborder {padding:10px;background:url('http://cdn.mozilla.net/browserquest/img/2/border.png') no-repeat;}
 		#canvas {width:100%;height:448px;}
 		#fade {width:960px;height:448px;top:10px;left:10px;}
 
@@ -741,12 +741,12 @@ footer, header, hgroup, menu, nav, section {
 	
 	@media screen and (max-height: 870px) {
 
-	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
-	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('../img/2/barsheet.png');}
-	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/2/achievements.png');}
+	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('http://cdn.mozilla.net/browserquest/img/2/spritesheet.png');}
+	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('http://cdn.mozilla.net/browserquest/img/2/barsheet.png');}
+	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('http://cdn.mozilla.net/browserquest/img/2/achievements.png');}
 
-        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
-        body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/2/wood.png') repeat, #000; background-size:auto, 256px;}
+        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('http://cdn.mozilla.net/browserquest/img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
+        body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('http://cdn.mozilla.net/browserquest/img/2/wood.png') repeat, #000; background-size:auto, 256px;}
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
         #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
         #logosparks {width:458px;height:84px;z-index:4;-moz-animation:logo2 .8s steps(6, end) infinite;-webkit-animation:logo2 .8s steps(6, end) infinite;-o-animation:logo2 .8s steps(6, end) infinite;-ms-animation:logo2 .8s steps(6, end) infinite;}
@@ -775,7 +775,7 @@ footer, header, hgroup, menu, nav, section {
         .button.delete:active {background-position:0 -1452px;}
         
 		#container {width:980px;margin:0 auto;position:absolute;top:50%;margin-top:-252px;left:50%;margin-left:-490px;}
-		#canvasborder {padding:10px;background:url('../img/2/border.png') no-repeat;}
+		#canvasborder {padding:10px;background:url('http://cdn.mozilla.net/browserquest/img/2/border.png') no-repeat;}
 		#canvas {width:100%;height:448px;}
 		#fade {width:960px;height:448px;top:10px;left:10px;}
 
@@ -902,8 +902,8 @@ footer, header, hgroup, menu, nav, section {
 	@media screen and (max-width: 1000px) {
 
         canvas {image-rendering:optimizeSpeed;}
-        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
-        body {background:-webkit-gradient(radial, center center, 200, center center, 600, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
+        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('http://cdn.mozilla.net/browserquest/img/1/wood.png') repeat, #000; background-size:auto, 128px;}
+        body {background:-webkit-gradient(radial, center center, 200, center center, 600, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('http://cdn.mozilla.net/browserquest/img/1/wood.png') repeat, #000; background-size:auto, 128px;}
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:422px auto;}
         #logo {height:42px;width:229px;position:absolute;top:10%;left:50%;margin-left:-114px;z-index:3;}
         #logosparks {width:229px;height:42px;z-index:4;-moz-animation:logo1 .8s steps(6, end) infinite;-webkit-animation:logo1 .8s steps(6, end) infinite;-o-animation:logo1 .8s steps(6, end) infinite;-ms-animation:logo1 .8s steps(6, end) infinite;}
@@ -932,7 +932,7 @@ footer, header, hgroup, menu, nav, section {
         .button.delete:active {background-position:0 -726px;}
         
 		#container {width:490px;margin:0 auto;position:absolute;top:50%;margin-top:-126px;left:50%;margin-left:-245px;}
-		#canvasborder {padding:5px;background:url('../img/1/border.png') no-repeat;}
+		#canvasborder {padding:5px;background:url('http://cdn.mozilla.net/browserquest/img/1/border.png') no-repeat;}
 		#canvas {width:100%;height:224px;}
 		#fade {width:480px;height:224px;top:5px;left:5px;}
 		
@@ -1061,7 +1061,7 @@ footer, header, hgroup, menu, nav, section {
 
         body {border-top:0px;}
         .intro #container, .game #logo, .game #parchment {display:none;}
-        .game.about #parchment {display:block;left:50%;background:url('../img/1/spritesheet.png') no-repeat 0 -527px;height:172px;width:417px;top:50%;margin-left:-208px;margin-top:-98px;position:absolute;}
+        .game.about #parchment {display:block;left:50%;background:url('http://cdn.mozilla.net/browserquest/img/1/spritesheet.png') no-repeat 0 -527px;height:172px;width:417px;top:50%;margin-left:-208px;margin-top:-98px;position:absolute;}
         .game.about .parchment-middle {top:50%;left:50%;color:#000;position:absolute;}
         #about .right {width:34%;}
         #about #game-desc {margin:8px auto 16px;line-height:12px;}
@@ -1075,8 +1075,8 @@ footer, header, hgroup, menu, nav, section {
         
         canvas {image-rendering:optimizeSpeed;}
         #moztab {display:none;}
-        body.intro {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
-        body.intro {background:-webkit-gradient(radial, center center, 120, center center, 400, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
+        body.intro {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('http://cdn.mozilla.net/browserquest/img/1/wood.png') repeat, #000; background-size:auto, 128px;}
+        body.intro {background:-webkit-gradient(radial, center center, 120, center center, 400, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('http://cdn.mozilla.net/browserquest/img/1/wood.png') repeat, #000; background-size:auto, 128px;}
         body {background:#000;}
         #logosparks {-moz-animation:none;-webkit-animation:none;-o-animation:none;-ms-animation:none;display:none;}
 		#container {height:258px;width:480px;position:relative;left:50%;top:50%;margin:-128px auto 0 -240px;}
@@ -1180,7 +1180,7 @@ footer, header, hgroup, menu, nav, section {
 
         #instructions, #achievements, #lists, #about {-webkit-transition:none;-moz-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
 
-		.game.death #death {height:172px;width:417px;margin-left:-208px;margin-top:-93px;color:#373737;background:url('../img/1/spritesheet.png') 0 -527px;margin:-10px 0 0 0;}
+		.game.death #death {height:172px;width:417px;margin-left:-208px;margin-top:-93px;color:#373737;background:url('http://cdn.mozilla.net/browserquest/img/1/spritesheet.png') 0 -527px;margin:-10px 0 0 0;}
         #respawn { background-position: -204px -1398px; background-size: 844px auto; width: 204px; height: 54px;}
 		#respawn:active {background-position:-408px -1398px;}
 
