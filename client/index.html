@@ -39,6 +39,16 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
         <![endif]-->
         <script src="js/detect.js" type="text/javascript"></script>
         <title>BrowserQuest</title>
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-35433268-23']);
+          _gaq.push(['_trackPageview']);
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
 	</head>
     <!--[if lt IE 9]>
 	<body class="intro upscaled">
@@ -75,6 +85,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                              <div></div>
                          </div>
                          <form action="none" method="get" accept-charset="utf-8">
+                             <label id="name-tooltip" for="player">Try to think of a cool nickname!</label>
                              <input type="text" id="nameinput" class="stroke" name="player-name" placeholder="Name your character" maxlength="15">
                          </form>
                          <div class="play button disabled">
@@ -104,7 +115,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                              <img src="img/common/spinner.gif" alt="">
                          </div>
                          <div id="create-new">
-                            <span><span>or</span> create a new character</span>
+                            <span><span>or</span> reset your character</span>
                          </div>
                     </article>
                     <article id="confirmation">
@@ -203,6 +214,19 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                              In order to play, we recommend using the latest version of Firefox, Chrome or Safari.
                          </p>
                     </article>
+                    <article id="legal">
+          	           <h1>
+          	               <span class="left-ornament"></span>
+          	               Privacy
+          	               <span class="right-ornament"></span>
+                         </h1>
+                         <p>
+                             BrowserQuest stores your character name, game achievements and equipment in your browser and does not send them to Mozilla. We do collect server log data (such as IP address) as well as web analytics data. We handle info we receive about you as explained in our <a class="clickable" target="_blank" href="http://www.mozilla.org/en-US/privacy-policy">Privacy Policy</a>.
+                         </p>
+ 	                    <div id="close-legal">
+ 	                        <span>- click anywhere to close -</span>
+                         </div>
+                    </article>
 	            </div>
 	            <div class="parchment-right"></div>
 	        </section>
@@ -283,7 +307,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
     			</div>
 				<div id="chatbox">
 				    <form action="none" method="get" accept-charset="utf-8">
-					    <input id="chatinput" class="gp" type="text" maxlength="60">
+					    <input id="chatinput" class="gp placeholder" type="text" maxlength="60" placeholder="What do you want to say? (Remember to protect your privacy!)">
 				    </form>
 				</div>
                 <div id="population">
@@ -302,8 +326,14 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
               <a href="http://twitter.com/share?url=http%3A%2F%2Fbrowserquest.mozilla.org&amp;text=Mozilla%27s%20BrowserQuest%3A%20HTML5%20massively%20multiplayer%20adventure%20game%20%23demo%20%23websockets&amp;related=glecollinet:Creators%20of%20BrowserQuest%2Cwhatthefranck" class="twitter"></a>
               <a href="http://www.facebook.com/share.php?u=http://browserquest.mozilla.org/" class="facebook"></a>
 		    </div>
+		    <div id="privacy-link" class="clickable">
+		      <span class="dash">&ndash;</span> <span id="toggle-legal">Privacy</span>
+		    </div>
+		    <div id="legal-link" class="clickable">
+		      <span class="dash">&ndash;</span> <a class="clickable" target="_blank" href="http://www.mozilla.org/en-US/about/legal.html">Legal notices</a>
+		    </div>
 		    <div id="credits-link" class="clickable">
-		      – <span id="toggle-credits">Credits</span>
+		      <span class="dash">&ndash;</span> <span id="toggle-credits">Credits</span>
 		    </div>
 		</footer>
 		
@@ -345,6 +375,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                 target = document.getElementById("intro");
                 document.body.insertBefore(alert, target);
             } else if(localStorage && localStorage.data) {
+                document.body.className += " returning";
                 parchment.className = "loadcharacter";
             }
         </script>
