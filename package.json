@@ -1,14 +1,14 @@
 {
-    "name": "BrowserQuest"
+  "name": "BrowserQuest"
   , "version": "0.0.1"
-  , "private": false 
+  , "private": false
   , "dependencies": {
-    "underscore": ">0"
-    , "log": ">0"
-    , "bison": ">0"
-    , "websocket": ">0"
-    , "websocket-server": ">0"
-    , "sanitizer": ">0"
-    , "memcache": ">0"
+    "underscore": "latest"
+    , "log": "latest"
+    , "bison": "latest"
+    , "websocket": "latest"
+    , "websocket-server": "git://github.com/miksago/node-websocket-server#dae6bed226ccfccf3939973155570b39dc8b3df0"
+    , "sanitizer": "latest"
+    , "memcache": "latest"
   }
 }
