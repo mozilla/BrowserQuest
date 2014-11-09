@@ -2,4 +2,5 @@
 
 #container {display:none;}
 body {background:url('../img/2/wood.png') repeat;}
-.no-opacity #credits, .no-opacity #loadcharacter, .no-opacity #createcharacter, .no-opacity #death, .no-opacity #confirmation, .no-opacity #about {display:none;}
+.no-opacity #credits, .no-opacity #loadcharacter, .no-opacity #createcharacter, 
+.no-opacity #death, .no-opacity #confirmation, .no-opacity #about {display:none;}
