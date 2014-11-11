@@ -13,7 +13,7 @@ define(['entity', 'transition', 'timer'], function(Entity, Transition, Timer) {
     		this.orientation = Types.Orientations.DOWN;
 		
     		// Speeds
-            this.atkSpeed = 50;
+            this.atkSpeed = 500;
     		this.moveSpeed = 120;
     		this.walkSpeed = 100;
     		this.idleSpeed = 450;
