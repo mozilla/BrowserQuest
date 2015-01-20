@@ -10,13 +10,13 @@ Detect.userAgentContains = function(string) {
 };
 
 Detect.isTablet = function(screenWidth) {
-    if(screenWidth > 640) {
-        if((Detect.userAgentContains('Android') && Detect.userAgentContains('Firefox'))
-        || Detect.userAgentContains('Mobile')) {
-            return true;
-        }
-    }
-    return false;
+    return
+        screenWidth > 640
+        &&
+        (
+            (Detect.userAgentContains('Android') && Detect.userAgentContains('Firefox'))
+            || Detect.userAgentContains('Mobile')
+        );
 };
 
 Detect.isWindows = function() {
