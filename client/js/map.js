@@ -27,7 +27,7 @@ define(['jquery', 'area'], function($, Area) {
 
         _loadMap: function(useWorker) {
         	var self = this,
-        	    filepath = "maps/world_client.json";
+        	    filepath = "http://cdn.mozilla.net/browserquest/maps/world_client.json";
         	
         	if(useWorker) {
         	    log.info("Loading map with web worker.");
@@ -55,19 +55,19 @@ define(['jquery', 'area'], function($, Area) {
         },
         
         _initTilesets: function() {
-            var tileset1, tileset2, tileset3;
+            var tileset1, tileset2, tileset3, CDN = "http://cdn.mozilla.net/browserquest/";
             
             if(!this.loadMultiTilesheets) {
                 this.tilesetCount = 1;
-                tileset1 = this._loadTileset('img/1/tilesheet.png');
+                tileset1 = this._loadTileset(CDN + 'img/1/tilesheet.png');
             } else {
                 if(this.game.renderer.mobile || this.game.renderer.tablet) {
                     this.tilesetCount = 1;
-                    tileset2 = this._loadTileset('img/2/tilesheet.png');
+                    tileset2 = this._loadTileset(CDN + 'img/2/tilesheet.png');
                 } else {
                     this.tilesetCount = 2;
-                    tileset2 = this._loadTileset('img/2/tilesheet.png');
-                    tileset3 = this._loadTileset('img/3/tilesheet.png');
+                    tileset2 = this._loadTileset(CDN + 'img/2/tilesheet.png');
+                    tileset3 = this._loadTileset(CDN + 'img/3/tilesheet.png');
                 }
             }
         
@@ -126,6 +126,7 @@ define(['jquery', 'area'], function($, Area) {
         	var self = this;
     	    var tileset = new Image();
     	
+    	    tileset.crossOrigin = "Anonymous";
         	tileset.src = filepath;
     
             log.info("Loading tileset: "+filepath);

@@ -5,13 +5,17 @@ define(['jquery', 'storage'], function($, Storage) {
         init: function() {
             this.currentPage = 1;
             this.blinkInterval = null;
-            this.previousState = null;
             this.isParchmentReady = true;
             this.ready = false;
             this.storage = new Storage();
             this.watchNameInputInterval = setInterval(this.toggleButton.bind(this), 100);
             this.$playButton = $('.play'),
             this.$playDiv = $('.play div');
+            this.frontPage = 'createcharacter';
+            
+            if(localStorage && localStorage.data) {
+                this.frontPage = 'loadcharacter';
+            }
         },
         
         setGame: function(game) {
@@ -232,7 +236,7 @@ define(['jquery', 'storage'], function($, Storage) {
         initEquipmentIcons: function() {
             var scale = this.game.renderer.getScaleFactor();
             var getIconPath = function(spriteName) {
-                    return 'img/'+ scale +'/item-' + spriteName + '.png';
+                    return 'http://cdn.mozilla.net/browserquest/img/'+ scale +'/item-' + spriteName + '.png';
                 },
                 weapon = this.game.player.getWeaponName(),
                 armor = this.game.player.getSpriteName(),
@@ -255,10 +259,13 @@ define(['jquery', 'storage'], function($, Storage) {
         	    $('#helpbutton').removeClass('active');
         	}
         	if($('body').hasClass('credits')) {
-        	    this.closeInGameCredits();
+        	    this.closeInGameScroll('credits');
+        	}
+        	if($('body').hasClass('legal')) {
+        	    this.closeInGameScroll('legal');
         	}
         	if($('body').hasClass('about')) {
-        	    this.closeInGameAbout();
+        	    this.closeInGameScroll('about');
         	}
         },
 
@@ -352,76 +359,41 @@ define(['jquery', 'storage'], function($, Storage) {
             $el.find('.achievement-description').html(desc);
         },
 
-        toggleCredits: function() {
+        toggleScrollContent: function(content) {
             var currentState = $('#parchment').attr('class');
 
             if(this.game.started) {
-                $('#parchment').removeClass().addClass('credits');
+                $('#parchment').removeClass().addClass(content);
                 
-                $('body').toggleClass('credits');
+                $('body').removeClass('credits legal about').toggleClass(content);
                     
                 if(!this.game.player) {
                     $('body').toggleClass('death');
                 }
-                if($('body').hasClass('about')) {
-                    this.closeInGameAbout();
+                
+                if(content !== 'about') {
                     $('#helpbutton').removeClass('active');
                 }
             } else {
                 if(currentState !== 'animate') {
-                    if(currentState === 'credits') {
-                        this.animateParchment(currentState, this.previousState);
+                    if(currentState === content) {
+                        this.animateParchment(currentState, this.frontPage);
                     } else {
-            	        this.animateParchment(currentState, 'credits');
-            	        this.previousState = currentState;
-            	    }
-                }
-            }
-        },
-        
-        toggleAbout: function() {
-            var currentState = $('#parchment').attr('class');
-
-            if(this.game.started) {
-                $('#parchment').removeClass().addClass('about');
-                $('body').toggleClass('about');
-                if(!this.game.player) {
-                    $('body').toggleClass('death');
-                }
-                if($('body').hasClass('credits')) {
-                    this.closeInGameCredits();
-                }
-            } else {
-                if(currentState !== 'animate') {
-                    if(currentState === 'about') {
-                        if(localStorage && localStorage.data) {
-                            this.animateParchment(currentState, 'loadcharacter');
-                        } else {
-                            this.animateParchment(currentState, 'createcharacter');
-                        }
-                    } else {
-            	        this.animateParchment(currentState, 'about');
-            	        this.previousState = currentState;
+            	        this.animateParchment(currentState, content);
             	    }
                 }
             }
         },
 
-        closeInGameCredits: function() {
-            $('body').removeClass('credits');
-            $('#parchment').removeClass('credits');
+        closeInGameScroll: function(content) {
+            $('body').removeClass(content);
+            $('#parchment').removeClass(content);
             if(!this.game.player) {
                 $('body').addClass('death');
             }
-        },
-        
-        closeInGameAbout: function() {
-            $('body').removeClass('about');
-            $('#parchment').removeClass('about');
-            if(!this.game.player) {
-                $('body').addClass('death');
+            if(content === 'about') {
+                $('#helpbutton').removeClass('active');
             }
-            $('#helpbutton').removeClass('active');
         },
         
         togglePopulationInfo: function() {
