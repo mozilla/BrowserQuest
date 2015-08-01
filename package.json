@@ -6,9 +6,9 @@
     "underscore": ">0"
     , "log": ">0"
     , "bison": ">0"
-    , "websocket": ">0"
-    , "websocket-server": ">0"
-    , "sanitizer": ">0"
-    , "memcache": ">0"
+    , "express": ">0"
+    , "socket.io": ">0"
+    , "sanitizer": "0.1.2"
+    , "memcache": "0.3.0"
   }
 }

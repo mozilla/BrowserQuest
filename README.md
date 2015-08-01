@@ -1,6 +1,50 @@
 BrowserQuest
 ============
 
+![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/1.png)
+
+
+This is my take on Mozilla's amazing multiplayer open source game.
+
+I've yet to find any other game that's so well done from graphics and implementation and features point of view (did I mention open source, multiplayer and browser based?).
+
+![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/2.png)
+
+I've wanted to use the game for a while for a little project of mine and found many of its dependencies to deprecated and even obsolete.
+
+I've taken the time to understand the code and thank you guys for making it so structured.
+
+![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/3.png)
+
+This now works on the latest Socket.IO implementation. Everything should work just as in the original game. 
+
+I've spent the morning rewriting everything until I understood exactly the way they've nested the code. So I've started from scratch and done it the proper way, editing as little of the code as possible and keeping everything well insulated.
+
+Main changes were made to ws.js and gameclient.js
+
+Enjoy this amazing open source browser based role playing multiplayer 2D game!
+
+And a big thank you to the original developers is in order! THANK YOU!
+
+HOW TO RUN?
+============
+Run from a console:
+
+Make sure you have NodeJS installed.
+
+npm install
+node server/js/main.js
+
+Then go inside the Client folder and open index.html.
+
+You might want to use a webserver and open index.html from there.
+
+Also read the original README files you'll find inside the Client and Server folders to learn the basics of configuring (it's preconfigured right now).
+
+
+
+Original README
+============
 BrowserQuest is a HTML5/JavaScript multiplayer game experiment.
 
 

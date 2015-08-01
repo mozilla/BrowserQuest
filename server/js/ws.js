@@ -1,9 +1,9 @@
 
 var cls = require("./lib/class"),
     url = require('url'),
-    wsserver = require("websocket-server"),
-    miksagoConnection = require('websocket-server/lib/ws/connection'),
-    worlizeRequest = require('websocket').request,
+   // wsserver = require("websocket-server"),
+   // miksagoConnection = require('websocket-server/lib/ws/connection'),
+   // worlizeRequest = require('websocket').request,
     http = require('http'),
     Utils = require('./utils'),
     _ = require('underscore'),
@@ -18,6 +18,9 @@ module.exports = WS;
  * Abstract Server and Connection classes
  */
 var Server = cls.Class.extend({
+    _connections: {},
+    _counter: 0,
+
     init: function(port) {
         this.port = port;
     },
@@ -85,6 +88,103 @@ var Connection = cls.Class.extend({
     }
 });
 
+/***************
+    SOCKET.IO
+    Author: Nenu Adrian
+            http://nenuadrian.com
+            http://codevolution.com
+ ***************/
+
+WS.socketIOServer = Server.extend({
+    init: function(port) {
+        self = this;
+        self.port = port;
+        var app = require('express')();
+        var http = require('http').Server(app);
+        self.io = require('socket.io')(http);
+
+        self.io.on('connection', function(connection){
+          log.info('a user connected');
+
+          connection.remoteAddress = connection.handshake.address.address
+
+          if (this.connection_callback)
+              this.connection_callback(connection)
+
+          var c = new WS.socketIOConnection(self._createId(), connection, self);
+            
+          if(self.connection_callback) {
+                self.connection_callback(c);
+          }
+          self.addConnection(c);
+
+        });
+
+        self.io.on('error', function (err) { 
+            log.error(err.stack); 
+            self.error_callback()
+
+         })
+
+        http.listen(port, function(){
+          log.info('listening on *:' + port);
+        });
+    },
+
+    _createId: function() {
+        return '5' + Utils.random(99) + '' + (this._counter++);
+    },
+    
+    
+    broadcast: function(message) {
+        self.io.emit("message", message)
+    },
+
+    onRequestStatus: function(status_callback) {
+        this.status_callback = status_callback;
+    }
+    
+
+
+});
+
+WS.socketIOConnection = Connection.extend({
+    init: function(id, connection, server) {
+
+        var self = this
+
+        this._super(id, connection, server);
+
+        connection.on("message", function (message) {
+            log.info("Received: " + message)
+            if (self.listen_callback)
+                self.listen_callback(message)
+        });
+
+        connection.on("disconnect", function (socket) {
+            if(self.close_callback) {
+                self.close_callback();
+            }
+            delete self._server.removeConnection(self.id);
+        });
+
+    },
+    
+    broadcast: function(message) {
+        throw "Not implemented";
+    },
+    
+    send: function(message) {
+        this._connection.emit("message", message);
+    },
+    
+    sendUTF8: function(data) {
+        this.send(data)
+    },
+    
+
+
+});
 
 
 /**
@@ -93,6 +193,7 @@ var Connection = cls.Class.extend({
  * Websocket server supporting draft-75, draft-76 and version 08+ of the WebSocket protocol.
  * Fallback for older protocol versions borrowed from https://gist.github.com/1219165
  */
+ /*
 WS.MultiVersionWebsocketServer = Server.extend({
     worlizeServerConfig: {
         // All options *except* 'httpServer' are required when bypassing
@@ -194,12 +295,13 @@ WS.MultiVersionWebsocketServer = Server.extend({
         this.status_callback = status_callback;
     }
 });
-
+*/
 
 /**
  * Connection class for Websocket-Node (Worlize)
  * https://github.com/Worlize/WebSocket-Node
  */
+ /*
 WS.worlizeWebSocketConnection = Connection.extend({
     init: function(id, connection, server) {
         var self = this;
@@ -248,12 +350,13 @@ WS.worlizeWebSocketConnection = Connection.extend({
         this._connection.sendUTF(data);
     }
 });
-
+*/
 
 /**
  * Connection class for websocket-server (miksago)
  * https://github.com/miksago/node-websocket-server
  */
+ /*
 WS.miksagoWebSocketConnection = Connection.extend({
     init: function(id, connection, server) {
         var self = this;
@@ -292,3 +395,4 @@ WS.miksagoWebSocketConnection = Connection.extend({
         this._connection.send(data);
     }
 });
+*/
