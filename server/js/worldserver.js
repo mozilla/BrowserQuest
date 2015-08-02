@@ -58,7 +58,7 @@ module.exports = World = cls.Class.extend({
                 }
             });
         });
-        
+         
         this.onPlayerEnter(function(player) {
             log.info(player.name + " has joined "+ self.id);
             
@@ -67,7 +67,10 @@ module.exports = World = cls.Class.extend({
             }
             
             // Number of players in this world
-            self.pushToPlayer(player, new Messages.Population(self.playerCount));
+            // and in the overall server world
+            //self.pushToPlayer(player, new Messages.Population(self.playerCount, self.server.connectionsCount()));
+            self.updatePopulation();
+
             self.pushRelevantEntityListTo(player);
     
             var move_callback = function(x, y) {
@@ -541,7 +544,7 @@ module.exports = World = cls.Class.extend({
             if(entity.type === "mob") {
                 var mob = entity,
                     item = this.getDroppedItem(mob);
-
+                
                 this.pushToPlayer(attacker, new Messages.Kill(mob));
                 this.pushToAdjacentGroups(mob.group, mob.despawn()); // Despawn must be enqueued before the item drop
                 if(item) {
@@ -851,6 +854,9 @@ module.exports = World = cls.Class.extend({
     },
     
     updatePopulation: function(totalPlayers) {
-        this.pushBroadcast(new Messages.Population(this.playerCount, totalPlayers ? totalPlayers : this.playerCount));
+        totalPlayers = totalPlayers ? totalPlayers : this.server.connectionsCount();
+        
+        log.info("Updating population: " + this.playerCount + " " + totalPlayers)
+        this.pushBroadcast(new Messages.Population(this.playerCount, totalPlayers));
     }
 });

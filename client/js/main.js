@@ -304,8 +304,7 @@ define(['jquery', 'app'], function($, App) {
             });
 
             $(document).keydown(function(e) {
-            	var key = e.which,
-                    $chat = $('#chatinput');
+            	var key = e.which;
 
                 if(key === 13) {
                     if($('#chatbox').hasClass('active')) {
@@ -318,14 +317,13 @@ define(['jquery', 'app'], function($, App) {
             
             $('#chatinput').keydown(function(e) {
                 var key = e.which,
-                    $chat = $('#chatinput');
+                    chat_el = $('#chatinput');
 
                 if(key === 13) {
-                    if($chat.attr('value') !== '') {
+                    if(chat_el.val().replace(/\s/g, '').length) {
                         if(game.player) {
-                            game.say($chat.attr('value'));
+                            game.say(chat_el.val());
                         }
-                        $chat.attr('value', '');
                         app.hideChat();
                         $('#foreground').focus();
                         return false;
@@ -333,6 +331,7 @@ define(['jquery', 'app'], function($, App) {
                         app.hideChat();
                         return false;
                     }
+                    chat_el.val("");
                 }
                 
                 if(key === 27) {

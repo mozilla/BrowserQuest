@@ -48,7 +48,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
              var url = "http://" + this.host + ":" + this.port + "/",
                 self = this;
 
-
+             
             this.connection = io(url, {'force new connection':true});
             this.connection.on('connection', function(socket){
                 log.info("Connected to server " + url);

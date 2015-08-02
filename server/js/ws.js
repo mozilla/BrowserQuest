@@ -51,6 +51,11 @@ var Server = cls.Class.extend({
     
     getConnection: function(id) {
         return this._connections[id];
+    },
+
+    connectionsCount: function()
+    {
+        return Object.keys(this._connections).length
     }
 });
 
@@ -104,14 +109,13 @@ WS.socketIOServer = Server.extend({
         var http = require('http').Server(app);
         self.io = require('socket.io')(http);
 
+
         self.io.on('connection', function(connection){
           log.info('a user connected');
 
           connection.remoteAddress = connection.handshake.address.address
 
-          if (this.connection_callback)
-              this.connection_callback(connection)
-
+  
           var c = new WS.socketIOConnection(self._createId(), connection, self);
             
           if(self.connection_callback) {
@@ -190,6 +194,11 @@ WS.socketIOConnection = Connection.extend({
     sendUTF8: function(data) {
         this.send(data)
     },
+
+    close: function(logError) {
+        log.info("Closing connection to socket"+". Error: " + logError);
+        this._connection.disconnect();
+    }
     
 
 
