@@ -145,7 +145,7 @@ define(['jquery', 'app'], function($, App) {
     		}
     		
     		$('.play div').click(function(event) {
-                var nameFromInput = $('#nameinput').attr('value'),
+                var nameFromInput = $('#nameinput').val(),
                     nameFromStorage = $('#playername').html(),
                     name = nameFromInput || nameFromStorage;
                 
@@ -241,7 +241,7 @@ define(['jquery', 'app'], function($, App) {
 	
             app.initHealthBar();
 	
-            $('#nameinput').attr('value', '');
+            $('#nameinput').val('');
     		$('#chatbox').attr('value', '');
     		
         	if(game.renderer.mobile || game.renderer.tablet) {
@@ -304,8 +304,7 @@ define(['jquery', 'app'], function($, App) {
             });
 
             $(document).keydown(function(e) {
-            	var key = e.which,
-                    $chat = $('#chatinput');
+            	var key = e.which;
 
                 if(key === 13) {
                     if($('#chatbox').hasClass('active')) {
@@ -318,14 +317,13 @@ define(['jquery', 'app'], function($, App) {
             
             $('#chatinput').keydown(function(e) {
                 var key = e.which,
-                    $chat = $('#chatinput');
+                    chat_el = $('#chatinput');
 
                 if(key === 13) {
-                    if($chat.attr('value') !== '') {
+                    if(chat_el.val().replace(/\s/g, '').length) {
                         if(game.player) {
-                            game.say($chat.attr('value'));
+                            game.say(chat_el.val());
                         }
-                        $chat.attr('value', '');
                         app.hideChat();
                         $('#foreground').focus();
                         return false;
@@ -333,6 +331,7 @@ define(['jquery', 'app'], function($, App) {
                         app.hideChat();
                         return false;
                     }
+                    chat_el.val("");
                 }
                 
                 if(key === 27) {
@@ -342,13 +341,14 @@ define(['jquery', 'app'], function($, App) {
             });
 
             $('#nameinput').keypress(function(event) {
-                var $name = $('#nameinput'),
-                    name = $name.attr('value');
+                var name_el = $('#nameinput'),
+                    name = name_el.val();
+
 
                 if(event.keyCode === 13) {
                     if(name !== '') {
                         app.tryStartingGame(name, function() {
-                            $name.blur(); // exit keyboard on mobile
+                            name_el.blur(); // exit keyboard on mobile
                         });
                         return false; // prevent form submit
                     } else {

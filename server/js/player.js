@@ -25,9 +25,10 @@ module.exports = Player = Character.extend({
         this.disconnectTimeout = null;
         
         this.connection.listen(function(message) {
+
             var action = parseInt(message[0]);
             
-            log.debug("Received: "+message);
+            log.debug("Received: " + message);
             if(!check(message)) {
                 self.connection.close("Invalid "+Types.getMessageTypeAsString(action)+" message format: "+message);
                 return;
@@ -124,6 +125,7 @@ module.exports = Player = Character.extend({
             }
             else if(action === Types.Messages.HIT) {
                 var mob = self.server.getEntityById(message[1]);
+
                 if(mob) {
                     var dmg = Formulas.dmg(self.weaponLevel, mob.armorLevel);
                     
@@ -138,7 +140,7 @@ module.exports = Player = Character.extend({
                 var mob = self.server.getEntityById(message[1]);
                 if(mob && self.hitPoints > 0) {
                     self.hitPoints -= Formulas.dmg(mob.weaponLevel, self.armorLevel);
-                    self.server.handleHurtEntity(self);
+                    self.server.handleHurtEntity(self, mob);
                     
                     if(self.hitPoints <= 0) {
                         self.isDead = true;
