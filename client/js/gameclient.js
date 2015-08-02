@@ -47,36 +47,34 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         connect: function(dispatcherMode) {
              var url = "http://" + this.host + ":" + this.port + "/",
                 self = this;
-            /*
-            var url = "ws://"+ this.host +":"+ this.port +"/",
-                self = this;
-            
-            log.info("Trying to connect to server : "+url);
 
-            if(window.MozWebSocket) {
-                this.connection = new MozWebSocket(url);
-            } else {
-                this.connection = new WebSocket(url);
-            }
-            */
-            this.connection = io(url);
+
+            this.connection = io(url, {'force new connection':true});
             this.connection.on('connection', function(socket){
                 log.info("Connected to server " + url);
             });
 
+            /******
+                Dispatcher is a system where you could have another server you connect to first
+                which then provides an IP and port for the client to connect to the game server
+             ******/
             if(dispatcherMode) {
-                this.connection.on("message", function(reply) {
+
+                this.connection.emit("dispatch", true)
+
+                this.connection.on("dispatched", function(reply) {
+                    console.log("Dispatched: ")
+                    console.log(reply)
                     if(reply.status === 'OK') {
                         self.dispatched_callback(reply.host, reply.port);
                     } else if(reply.status === 'FULL') {
-                        alert("BrowserQuest is currently at maximum player population. Please retry later.");
+                        console.log("BrowserQuest is currently at maximum player population. Please retry later.");
                     } else {
-                        alert("Unknown error while connecting to BrowserQuest.");
+                        console.log("Unknown error while connecting to BrowserQuest.");
                     }
                 });
                 
             } else {
-
 
                 this.connection.on("message", function(data) {
 

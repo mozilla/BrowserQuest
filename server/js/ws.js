@@ -96,8 +96,9 @@ var Connection = cls.Class.extend({
  ***************/
 
 WS.socketIOServer = Server.extend({
-    init: function(port) {
+    init: function(host, port) {
         self = this;
+        self.host = host;
         self.port = port;
         var app = require('express')();
         var http = require('http').Server(app);
@@ -119,6 +120,8 @@ WS.socketIOServer = Server.extend({
           self.addConnection(c);
 
         });
+
+        
 
         self.io.on('error', function (err) { 
             log.error(err.stack); 
@@ -155,13 +158,19 @@ WS.socketIOConnection = Connection.extend({
 
         this._super(id, connection, server);
 
+        // HANDLE DISPATCHER IN HERE
+        connection.on("dispatch", function (message) {
+            console.log("Received dispatch request")
+            self._connection.emit("dispatched",  { "status" : "OK", host : server.host, port : server.port } )
+        });
+
         connection.on("message", function (message) {
             log.info("Received: " + message)
             if (self.listen_callback)
                 self.listen_callback(message)
         });
 
-        connection.on("disconnect", function (socket) {
+        connection.on("disconnect", function () {
             if(self.close_callback) {
                 self.close_callback();
             }
