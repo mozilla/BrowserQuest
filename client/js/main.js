@@ -145,7 +145,7 @@ define(['jquery', 'app'], function($, App) {
     		}
     		
     		$('.play div').click(function(event) {
-                var nameFromInput = $('#nameinput').attr('value'),
+                var nameFromInput = $('#nameinput').val(),
                     nameFromStorage = $('#playername').html(),
                     name = nameFromInput || nameFromStorage;
                 
@@ -241,7 +241,7 @@ define(['jquery', 'app'], function($, App) {
 	
             app.initHealthBar();
 	
-            $('#nameinput').attr('value', '');
+            $('#nameinput').val('');
     		$('#chatbox').attr('value', '');
     		
         	if(game.renderer.mobile || game.renderer.tablet) {
@@ -342,13 +342,14 @@ define(['jquery', 'app'], function($, App) {
             });
 
             $('#nameinput').keypress(function(event) {
-                var $name = $('#nameinput'),
-                    name = $name.attr('value');
+                var name_el = $('#nameinput'),
+                    name = name_el.val();
+
 
                 if(event.keyCode === 13) {
                     if(name !== '') {
                         app.tryStartingGame(name, function() {
-                            $name.blur(); // exit keyboard on mobile
+                            name_el.blur(); // exit keyboard on mobile
                         });
                         return false; // prevent form submit
                     } else {
