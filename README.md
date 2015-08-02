@@ -1,4 +1,4 @@
-BrowserQuest
+BrowserQuest [with Socket.IO]
 ============
 
 ![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/1.png)
