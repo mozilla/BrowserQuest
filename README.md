@@ -1,8 +1,22 @@
-BrowserQuest [with Socket.IO]
+BrowserQuest [updated & with Socket.IO]
 ============
 
-![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/1.png)
+Changes
+============
+  * Updated backend and frontend to use Socket.IO server and Client
+  * Main changes were made to ws.js and gameclient.js.
+  * Updated dependencies such as requirejs and jQuery to their latest versions
+  * Fixed build script
+  * Created a mini-dispatcher on the server side that provides the IP and Port in the configs as the ones for the game server.
+  * Added a demo to http://browserquest.codevolution.com
+  * A few minor edits to server side handling
 
+TODO
+============
+  * Quest system and more awesome features
+  * 
+
+![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/1.png)
 
 This is my take on Mozilla's amazing multiplayer open source game.
 
@@ -10,19 +24,13 @@ I've yet to find any other game that's so well done from graphics, implementatio
 
 ![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/2.png)
 
-I've wanted to use the game for a while for a little project of mine and found many of its dependencies to be deprecated or even obsolete.
+I've wanted to use the game for a while and found many of its dependencies to be deprecated and even obsolete.
 
-I've taken the time to understand the code and thank you guys for making it so well structured.
+I've just taken the time to understand the code and thank you guys for making it so well structured.
 
 ![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/3.png)
 
-This now works on the latest Socket.IO implementation. Everything should work just as in the original developers intended.
-
-I've spent the morning rewriting everything until I understood exactly the way they've nested the code. So I've started from scratch and done it the proper way, editing as little of the code as possible and keeping everything well insulated.
-
-Main changes were made to ws.js and gameclient.js.
-
-Updated most dependencies and fixed build script. Created a mini-dispatcher on the server side that provides the IP and Port in the configs as the ones for the game server.
+This now works on the latest Socket.IO. Everything should work just as in the original developers intended.
 
 Enjoy this amazing open source browser based role playing multiplayer 2D game!
 
