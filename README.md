@@ -1,6 +1,8 @@
 BrowserQuest [updated & with Socket.IO]
 ============
 
+![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/1.png)
+
 Changes
 ============
   * Updated backend and frontend to use Socket.IO server and Client
@@ -18,7 +20,6 @@ TODO
 
 
 
-![alt tag](https://raw.github.com/nenuadrian/BrowserQuest/master/screens/1.png)
 
 This is my take on Mozilla's amazing multiplayer open source game.
 
