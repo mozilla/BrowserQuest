@@ -180,7 +180,7 @@ footer, header, hgroup, menu, nav, section {
     #achievements li {clear:both;position:relative;}
     #achievements li .coin, #achievements li .achievement-name {float:left;}
     #achievements li .coin {opacity:0;}
-    #achievements li.unlocked .achievement-name {color:#fce045;}
+    #achievements li.unlocked .achievement-name {color:#fce040;}
     #achievements li.unlocked .coin {opacity:1;}
     #achievements .achievement-name {color:#fff;}
     #achievements .achievement-description {float:right;width:65%;}
@@ -192,9 +192,9 @@ footer, header, hgroup, menu, nav, section {
     #achievements li.unlocked:hover .achievement-sharing {display:block;}
     .achievement-sharing a {display:block;float:left;}
     
-	#bubbles a {pointer-events:auto;text-decoration:none;color:#fcda5c;}
+	#bubbles a {pointer-events:auto;text-decoration:none;color:#fcda6c;}
 
-    #create-new span:hover, #cancel span:hover {cursor:pointer;color:#d83939;}
+    #create-new span:hover, #cancel span:hover {cursor:pointer;color:#d83934;}
     #create-new span span {color:#b2af9b;}
     #create-new span span:hover {color:#b2af9b;}
     #playername {color:#fff;}
@@ -214,7 +214,7 @@ footer, header, hgroup, menu, nav, section {
 
     #portrait {display:none;}
 
-    #about .link a:hover {color:#d83939;}
+    #about .link a:hover {color:#d83934;}
 
     footer {font-family:'GraphicPixel';position:absolute;bottom:5%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
     .upscaled.game footer {color:#8a8a8a;}
@@ -239,7 +239,7 @@ footer, header, hgroup, menu, nav, section {
     
     .ribbon {position:absolute;}
     .ribbon:hover {cursor:pointer;}
-    .ribbon .top {-moz-transition:0.25s height ease;-webkit-transition:0.25s height ease;-o-transition:0.25s height ease;-ms-transition:0.25s height ease;transition:0.25s height ease;}
+    .ribbon .top {-moz-transition:0.20s height ease;-webkit-transition:0.20s height ease;-o-transition:0.20s height ease;-ms-transition:0.20s height ease;transition:0.20s height ease;}
     
 	.bubble {background:rgba(45,45,45,0.8);padding:0px 12px 0px 12px;border-radius:8px;color:rgba(255,255,255,0.8);display:inline-block;text-align:center;position:absolute;}
 	.thingy {height:10px;width:11px;background:url('../img/common/thingy.png');margin:0 auto;margin-top:-10px;top:10px;position:relative;}
