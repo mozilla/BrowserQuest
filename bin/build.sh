@@ -12,7 +12,7 @@ rm -rf $BUILDDIR
 
 echo "Building client with RequireJS"
 cd $PROJECTDIR
-node ../../bin/r.js -o build.js
+nodejs ../../bin/r.js -o build.js
 cd $CURDIR
 
 echo "Removing unnecessary js files from the build directory"
