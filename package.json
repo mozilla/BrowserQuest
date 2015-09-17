@@ -7,8 +7,8 @@
     , "log": ">0"
     , "bison": ">0"
     , "websocket": ">0"
-    , "websocket-server": ">0"
-    , "sanitizer": ">0"
-    , "memcache": ">0"
+    , "websocketserver": ">0"
+    , "sanitizer": ">0.1.0"
+    , "memcache": ">0.2.0"
   }
 }
