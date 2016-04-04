@@ -3,12 +3,12 @@
   , "version": "0.0.1"
   , "private": false 
   , "dependencies": {
-    "underscore": ">0"
-    , "log": ">0"
-    , "bison": ">0"
-    , "websocket": ">0"
-    , "websocket-server": ">0"
-    , "sanitizer": ">0"
-    , "memcache": ">0"
+    "underscore": ">0.0.0"
+    , "log": ">0.0.0"
+    , "bison": ">0.0.0"
+    , "websocket": ">0.0.0"
+    , "node-websocket-server": ">0.0.0"
+    , "sanitizer": ">0.0.0"
+    , "memcache": ">0.0.0"
   }
 }
