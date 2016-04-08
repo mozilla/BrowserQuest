@@ -168,6 +168,8 @@ footer, header, hgroup, menu, nav, section {
     .barbutton {background:url('../img/1/barsheet.png');image-rendering:-moz-crispt-edges;position:absolute;}
     
     #chatbox {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;left:50%;z-index:5;-moz-transition:0.2s bottom ease;-webkit-transition:0.2s bottom ease;-o-transition:0.2s bottom ease;-ms-transition:0.2s bottom ease;transition:0.2s bottom ease;}
+    #chatinput {color:#eee;}
+    #chatinput.placeholder {color:#aaa;}
     .bubble p {-moz-user-select:none;-webkit-user-select:none;}
     
     #instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
@@ -199,7 +201,7 @@ footer, header, hgroup, menu, nav, section {
     #create-new span span:hover {color:#b2af9b;}
     #playername {color:#fff;}
 
-    #credits, #loadcharacter, #confirmation, #death, #error, #about {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel', sans-serif;z-index:1000;}
+    #credits, #loadcharacter, #confirmation, #death, #error, #about, #legal {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel', sans-serif;z-index:1000;}
     
     #playerimage {image-rendering: -moz-crisp-edges; image-rendering: -webkit-optimize-contrast;}
     
@@ -214,7 +216,7 @@ footer, header, hgroup, menu, nav, section {
 
     #portrait {display:none;}
 
-    #about .link a:hover {color:#d83939;}
+    #about .link a:hover, #legal a:hover {color:#d83939;}
 
     footer {font-family:'GraphicPixel';position:absolute;bottom:5%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
     .upscaled.game footer {color:#8a8a8a;}
@@ -228,8 +230,9 @@ footer, header, hgroup, menu, nav, section {
     #sharing .twitter {height:22px;width:32px;background-position:-770px -224px;margin:0 12px 0 0;}
     #sharing .twitter:hover {background-position:-770px -224px;}
     #sharing .gplus {height:22px;width:22px;background:url('../img/common/gplus.png');margin:0 12px 0 0px;}
-    #credits-link span {display:inline-block;margin-left:12px;}
-    #credits-link span:hover {color:#fcda5c;cursor:pointer;}
+    #toggle-credits {display:inline-block;margin-left:12px;}
+    #legal-link a {text-decoration:none;color:inherit;}
+    #credits-link span:hover, #privacy-link span:hover, #legal-link a:hover {color:#fcda5c;cursor:pointer;}
     
     #sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
     #sharing a:active {-moz-transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);transform:scale(1);}
@@ -252,6 +255,20 @@ footer, header, hgroup, menu, nav, section {
     #resize-check {position:absolute;height:0;top:0;left:0;-moz-transition:0.001s height ease;-webkit-transition:0.001s height ease;-o-transition:0.001s height ease;-ms-transition:0.001s height ease;transition:0.001s height ease;}
 
     #death p em {display:block;font-style:normal;}
+    
+    #legal p {width:75%;font-size:25px;line-height:35px;}
+    #legal p a {color:#2e7fdd;text-decoration:none;}
+    #close-legal {font-size:20px;margin-top:30px;}
+    #toggle-legal, #legal-link a {padding:0 10px;}
+    
+    #createcharacter form {position:relative;}
+    
+    #name-tooltip {width:400px;height:30px;padding:10px 0;font-size:20px;background:#373737;position:absolute;left:50%;margin-left:-200px;color:#fff;border-radius:8px;line-height:30px;top:-40px;opacity:0;-moz-transition:0.25s opacity ease;-webkit-transition:0.25s opacity ease;-o-transition:0.25s opacity ease;-ms-transition:0.25s opacity ease;transition:0.25s opacity ease;pointer-events:none;}
+    #name-tooltip:after {content:url('../img/common/arrow.png');width:28px;height:16px;position:absolute;bottom:-8px;left:50%;margin-left:-14px;}
+    #name-tooltip.visible {opacity:.9;}
+    
+    .opera #name-tooltip {display:none;}
+    .opera #name-tooltip.visible {display:block;}
 
 /* Magic Parchment */
 
@@ -261,8 +278,8 @@ footer, header, hgroup, menu, nav, section {
     .animate .parchment-left {-moz-animation:parchleft 1s ease 1;-webkit-animation:parchleft 1s ease 1;-o-animation:parchleft 1s ease 1;-ms-animation:parchleft 1s ease 1;animation:parchleft 1s ease 1;}
     .animate .parchment-right {-moz-animation:parchright 1s ease 1;-webkit-animation:parchright 1s ease 1;-o-animation:parchright 1s ease 1;-ms-animation:parchright 1s ease 1;animation:parchright 1s ease 1;}
 
-    #credits, #createcharacter, #loadcharacter, #confirmation, #death, #error, #about {opacity:0;pointer-events:none;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
-    .credits #credits, .createcharacter #createcharacter, .loadcharacter #loadcharacter, .confirmation #confirmation, .death #death, .error #error, .about #about {opacity:1;pointer-events:auto;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;}
+    #credits, #createcharacter, #loadcharacter, #confirmation, #death, #error, #about, #legal {opacity:0;pointer-events:none;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
+    .credits #credits, .createcharacter #createcharacter, .loadcharacter #loadcharacter, .confirmation #confirmation, .death #death, .error #error, .about #about, .legal #legal {opacity:1;pointer-events:auto;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;}
 
 /* States & Transitions */
 
@@ -274,13 +291,13 @@ footer, header, hgroup, menu, nav, section {
 
     .game #parchment {z-index:0;-moz-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-webkit-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-o-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-ms-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;top:50%;}
     .game #credits, .game #death, .game #about {opacity:0;-moz-transition:0s opacity linear 0s;-webkit-transition:0s opacity linear 0s;-o-transition:0s opacity linear 0s;-ms-transition:0s opacity linear 0s;transition:0s opacity linear 0s;}
-    .game.credits #credits, .game.death #death, .game.about #about {opacity:1;-moz-transition:0.5s opacity linear 0.5s;-webkit-transition:0.5s opacity linear 0.5s;-o-transition:0.5s opacity linear 0.5s;-ms-transition:0.5s opacity linear 0.5s;transition:0.5s opacity linear 0.5s;}
-    .game.credits #parchment, .game.death #parchment, .game.about #parchment {opacity:1;-moz-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-webkit-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-o-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-ms-transition:0.5s opacity linear 0s, 0s z-index linear 0s;transition:0.5s opacity linear 0s, 0s z-index linear 0s;z-index:200;}
+    .game.credits #credits, .game.death #death, .game.about #about, .game.legal #legal {opacity:1;-moz-transition:0.5s opacity linear 0.5s;-webkit-transition:0.5s opacity linear 0.5s;-o-transition:0.5s opacity linear 0.5s;-ms-transition:0.5s opacity linear 0.5s;transition:0.5s opacity linear 0.5s;}
+    .game.credits #parchment, .game.death #parchment, .game.about #parchment, .game.legal #parchment {opacity:1;-moz-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-webkit-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-o-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-ms-transition:0.5s opacity linear 0s, 0s z-index linear 0s;transition:0.5s opacity linear 0s, 0s z-index linear 0s;z-index:200;}
     .game .parchment-left {-moz-transition:0.5s left ease;-webkit-transition:0.5s left ease;-o-transition:0.5s left ease;-ms-transition:0.5s left ease;transition:0.5s left ease;left:41%;}
     .game .parchment-right {-moz-transition:0.5s right ease;-webkit-transition:0.5s right ease;-o-transition:0.5s right ease;-ms-transition:0.5s right ease;transition:0.5s right ease;right:41%;}
     .game .parchment-middle {-moz-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-webkit-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-o-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-ms-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;width:0px;margin-left:0px;}
-    .game.credits .parchment-left, .game.death .parchment-left, .game.about .parchment-left {left:0%;}
-    .game.credits .parchment-right, .game.death .parchment-right, .game.about .parchment-right {right:0%;}
+    .game.credits .parchment-left, .game.death .parchment-left, .game.about .parchment-left, .game.legal .parchment-left {left:0%;}
+    .game.credits .parchment-right, .game.death .parchment-right, .game.about .parchment-right, .game.legal .parchment-right {right:0%;}
 
     #container {z-index:100;background:rgba(0,0,0,0.2);-moz-transition:1s opacity linear 0.5s;-webkit-transition:1s opacity linear 0.5s;-o-transition:1s opacity linear 0.5s;-ms-transition:1s opacity linear 0.5s;transition:1s opacity linear 0.5s;}
     .intro #container {opacity:0;pointer-events:none;}
@@ -428,7 +445,7 @@ footer, header, hgroup, menu, nav, section {
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:1266px auto;}
         #logo {height:126px;width:687px;position:absolute;top:10%;left:50%;margin-left:-344px;z-index:3;}
         #logosparks {width:687px;height:126px;z-index:4;-moz-animation:logo3 .8s steps(6, end) infinite;-webkit-animation:logo3 .8s steps(6, end) infinite;-o-animation:logo3 .8s steps(6, end) infinite;-ms-animation:logo3 .8s steps(6, end) infinite;}
-        #parchment, #loadcharacter, #confirmation, #error {width:1266px;height:546px;position:absolute;top:55%;left:50%;margin-left:-633px;margin-top:-273px;font-size:30px;text-align:center;z-index:2;}
+        #parchment, #loadcharacter, #confirmation, #error, #legal {width:1266px;height:546px;position:absolute;top:55%;left:50%;margin-left:-633px;margin-top:-273px;font-size:30px;text-align:center;z-index:2;}
         #parchment h1 {margin-top:60px;font-weight:normal;}
         .left-ornament, .right-ornament {height:36px;width:93px;display:inline-block;margin:0 20px;position:relative;top:12px;}
         .left-ornament {background-position:-1062px 0;}
@@ -444,10 +461,11 @@ footer, header, hgroup, menu, nav, section {
         .play.loading img {margin-top:-16px;margin-left:-16px;height:32px;width:32px;}
         .stroke, .achievement-name {text-shadow:3px 3px 0 #373737, 3px -3px 0 #373737, 0 3px 0 #373737, 3px 0 0 #373737, -3px 3px 0 #373737, -3px -3px 0 #373737, 0 -3px 0 #373737, 0 3px 0 #373737, -3px 0 0 #373737;}
 
-        #loadcharacter h1, #confirmation h1, #error h1 {margin-top:30px;}
+        #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {margin-top:30px;}
         #playername {margin-top:15px;}
         .loadcharacter .play, .confirmation .delete {margin:15px auto 15px auto;}
         #confirmation p, #error p {font-size:30px;margin-top:60px;line-height:40px;}
+        #legal p {margin:50px auto 0;}
         #error p {width:70%;margin:60px auto 0;}
         .button.delete {background-position:-687px -153px;}
         .button.delete:active {background-position:0 -2178px;}
@@ -529,7 +547,7 @@ footer, header, hgroup, menu, nav, section {
         
         #chatbox {height:48px;width:1182px;background-size:1440px;background-position:0 -96px;margin-left:-591px;bottom:18px;}
         #chatbox.active {bottom:66px;}
-		#chatbox input {font-size:20px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:16px 0;}
+		#chatbox input {font-size:20px;background:none;width:90%;border:0;margin-left:2%;padding:16px 0;}
 		
 		/*Credits*/
         #credits, #death, #about {width:1266px;height:546px;margin-left:-633px;margin-top:-273px;font-size:30px;}
@@ -572,13 +590,13 @@ footer, header, hgroup, menu, nav, section {
         .animate .parchment-middle {-moz-animation:parchmiddle3 1s ease 1;-webkit-animation:parchmiddle3 1s ease 1;-o-animation:parchmiddle3 1s ease 1;-ms-animation:parchmiddle3 1s ease 1;}
 
         .game .parchment-middle {background-position: -633px -882px;}
-        .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle {width:1038px;margin-left:-519px;background-position: -114px -882px;}
+        .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:1038px;margin-left:-519px;background-position: -114px -882px;}
         
 	    footer {font-size:20px;}
         #resize-check {height:3px;}
 	}
 
-	@media screen and (max-width: 1500px) {
+	@media screen and (max-width: 1500px), screen and (max-height: 870px) {
 
 	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
 	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('../img/2/barsheet.png');}
@@ -589,7 +607,7 @@ footer, header, hgroup, menu, nav, section {
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
         #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
         #logosparks {width:458px;height:84px;z-index:4;-moz-animation:logo2 .8s steps(6, end) infinite;-webkit-animation:logo2 .8s steps(6, end) infinite;-o-animation:logo2 .8s steps(6, end) infinite;-ms-animation:logo2 .8s steps(6, end) infinite;}
-        #parchment, #loadcharacter, #confirmation, #error {width:844px;height:364px;position:absolute;top:55%;left:50%;margin-left:-422px;margin-top:-182px;font-size:20px;text-align:center; z-index:2;}
+        #parchment, #loadcharacter, #confirmation, #error, #legal {width:844px;height:364px;position:absolute;top:55%;left:50%;margin-left:-422px;margin-top:-182px;font-size:20px;text-align:center; z-index:2;}
         #parchment h1 {margin-top:40px;font-weight:normal;}
         .left-ornament, .right-ornament {height:24px;width:62px;display:inline-block;margin:0 15px;position:relative;top:7px;}
         .left-ornament {background-position:-708px 0;}
@@ -605,10 +623,11 @@ footer, header, hgroup, menu, nav, section {
         .play.loading img {margin-top:-12px;margin-left:-12px;height:24px;width:24px;}
         .stroke, .achievement-name {text-shadow:2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;}
         
-        #loadcharacter h1, #confirmation h1, #error h1 {margin-top:20px;}
+        #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {margin-top:20px;}
         #playername {margin-top:10px;}
         .loadcharacter .play, .confirmation .delete {margin:10px auto 10px auto;}
         #confirmation p, #error p {font-size:20px;margin-top:40px;line-height:30px;}
+        #legal p {margin:30px auto 0;font-size:16px;line-height:24px;}
         #error p {width:70%;margin:40px auto 0;}
         .button.delete {background-position:-458px -102px;}
         .button.delete:active {background-position:0 -1452px;}
@@ -640,6 +659,8 @@ footer, header, hgroup, menu, nav, section {
         .ribbon:hover .bottom {background-position:-798px -370px;}
         #createcharacter .ribbon {right:20px;top:8px;}
         #loadcharacter .ribbon {right:99px;top:-8px;}
+        
+        #close-legal {font-size:14px;margin-top:30px;}
         
         /*Death & Respawn*/
         #death p {font-size:20px;margin-top:90px;}
@@ -689,7 +710,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#chatbox {height:32px;width:788px;background-size:960px;background-position:0 -64px;margin-left:-394px;bottom:12px;}
 		#chatbox.active {bottom:44px;}
-		#chatbox input {font-size:20px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:7px 0;}
+		#chatbox input {font-size:14px;background:none;width:90%;border:0;margin-left:2%;padding:8px 0;}
 		
 		/*Credits*/
         #credits, #death, #about {width:844px;height:364px;margin-left:-422px;margin-top:-182px;font-size:20px;}
@@ -733,172 +754,17 @@ footer, header, hgroup, menu, nav, section {
         .animate .parchment-middle {-moz-animation:parchmiddle2 1s ease 1;-webkit-animation:parchmiddle2 1s ease 1;-o-animation:parchmiddle2 1s ease 1;-ms-animation:parchmiddle2 1s ease 1;}
 
         .game .parchment-middle {background-position: -422px -588px;}
-        .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
+        .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
         
 	    footer {font-size:16px;}
         #resize-check {height:2px;}
+        
+        #toggle-legal, #legal-link a {padding:0 8px;}
+        
+        #name-tooltip {font-size:14px;width:280px;margin-left:-140px;height:20px;line-height:18px;top:-30px;}
+        #name-tooltip:after {bottom:-8px;}
 	}
 	
-	@media screen and (max-height: 870px) {
-
-	    .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
-	    .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('../img/2/barsheet.png');}
-	    .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/2/achievements.png');}
-
-        body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
-        body {background:-webkit-gradient(radial, center center, 240, center center, 800, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/2/wood.png') repeat, #000; background-size:auto, 256px;}
-        #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
-        #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
-        #logosparks {width:458px;height:84px;z-index:4;-moz-animation:logo2 .8s steps(6, end) infinite;-webkit-animation:logo2 .8s steps(6, end) infinite;-o-animation:logo2 .8s steps(6, end) infinite;-ms-animation:logo2 .8s steps(6, end) infinite;}
-        #parchment, #loadcharacter, #confirmation, #error {width:844px;height:364px;position:absolute;top:55%;left:50%;margin-left:-422px;margin-top:-182px;font-size:20px;text-align:center; z-index:2;}
-        #parchment h1 {margin-top:40px;font-weight:normal;}
-        .left-ornament, .right-ornament {height:24px;width:62px;display:inline-block;margin:0 15px;position:relative;top:7px;}
-        .left-ornament {background-position:-708px 0;}
-        .right-ornament {background-position:-770px 0;}
-        #character {height:42px;width:24px;margin:0 auto;background-position:-708px -24px;margin-top:30px;position:relative;}
-        #character div {height:42px;width:24px;position:absolute;top:0;left:0;background-position:-732px -24px;opacity:1;}
-        #character.disabled div {opacity:0;pointer-events:none;}
-        #parchment input {margin-top:20px; padding:0 10px; border:2px dashed #b2af9b; font-size:20px;border-radius:6px;height:41px;}
-        .button {height:102px;width:250px;background-position:-458px -204px;margin:20px auto 0 auto;position:relative;}
-        .play div {height:102px;width:250px;background-position:-458px 0px;}
-        .play div:active {background-position:-458px -306px;}
-        .play.loading div {background-position:-454px -1452px;}
-        .play.loading img {margin-top:-12px;margin-left:-12px;height:24px;width:24px;}
-        .stroke, .achievement-name {text-shadow:2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;}
-        
-        #loadcharacter h1, #confirmation h1, #error h1 {margin-top:20px;}
-        #playername {margin-top:10px;}
-        .loadcharacter .play, .confirmation .delete {margin:10px auto 10px auto;}
-        #confirmation p, #error p {font-size:20px;margin-top:40px;line-height:30px;}
-        #error p {width:70%;margin:40px auto 0;}
-        .button.delete {background-position:-458px -102px;}
-        .button.delete:active {background-position:0 -1452px;}
-        
-		#container {width:980px;margin:0 auto;position:absolute;top:50%;margin-top:-252px;left:50%;margin-left:-490px;}
-		#canvasborder {padding:10px;background:url('../img/2/border.png') no-repeat;}
-		#canvas {width:100%;height:448px;}
-		#fade {width:960px;height:448px;top:10px;left:10px;}
-
-		#instructions {height:344px;width:834px;background-position:0 -1054px;margin-left:-416px;margin-top:-186px;color:#373737;}
-		#instructions h1 {font-size:30px;text-align:center;margin:40px 0;}
-        #instructions ul {font-size:20px;margin-top:40px;}
-        #instructions ul li {margin:20px 0; clear:left;}
-        #instructions li:nth-child(1) span {height:58px;width:30px;background-position:-756px -24px; display:block;float:left;margin: 0 20px 6px 40px;position: relative;top: -26px;}
-        #instructions li:nth-child(2) span {height:32px;width:26px;background-position:-786px -24px; display:block;float:left;margin: 0 24px 28px 40px;position: relative;top: -6px;}
-        #instructions li:nth-child(3) span {height:42px;width:32px;background-position:-812px -24px; display:block;float:left;margin: 0 18px 0 40px;position: relative;top: -12px;}
-        #instructions p {text-align:center;font-family:'GraphicPixel';font-size:20px;clear:left;margin-top:20px;}
-
-        #playerimage {height: 64px; width: 64px;}
-        
-        .close {height:32px;width:32px;top:-8px;right:-10px;background-position:-708px -252px;}
-        .close:hover {background-position:-740px -252px;}
-        .close:active {background-position:-772px -252px;}
-        
-        .ribbon {width:36px;right:20px;top:8px;}
-        .ribbon .top {width:100%;height:12px;background-position:-762px -344px;}
-        .ribbon .bottom {width:100%;height:44px;background-position:-762px -370px;}
-        .ribbon:hover .top {height:20px;}
-        .ribbon:hover .bottom {background-position:-798px -370px;}
-        #createcharacter .ribbon {right:20px;top:8px;}
-        #loadcharacter .ribbon {right:99px;top:-8px;}
-        
-        /*Death & Respawn*/
-        #death p {font-size:20px;margin-top:90px;}
-        #death p em {margin-top:30px;}
-		#respawn {width:250px;height:102px;margin:40px auto 0 auto;background-position: 0 -952px;}
-		#respawn:active {background-position:-250px -952px;}
-		
-        /*Bubbles*/
-		#bubbles {width:960px;height:448px;margin-bottom:-448px;position:relative;top:-448px;pointer-events:none;}
-		p {font-family:arial, sans-serif;font-size:12px;margin:0;padding:0;}
-	    .bubble p {font-family:"GraphicPixel"; font-size:14px;line-height:35px;}
-	    
-	    /*GUI Bar*/
-		#bar-container {height:34px;top:-2px;background-size:960px;}
-
-		#healthbar {height:26px;background-position:0 -34px;width:204px;top:6px;background-size:960px;z-index:20;}
-		#hitpoints {width:0px;height:22px;top:8px;left:22px;z-index:10;position:absolute;}
-
-        #armor, #weapon {width:32px;height:32px;position:absolute;background-size:192px;background-position:-64px;}
-        #weapon {left:208px;top:2px;}
-        #armor {left:242px;top:2px;}
-
-        #notifications {width:392px;margin-left:-196px;font-size:16px;color:#eee;top:2px;height:30px;}
-        #notifications div.top {top:-30px;}
-        #notifications span {line-height:30px;height:30px;}
-        .windows #notifications span {line-height:34px;}
-
-        #playercount {font-size:16px;left:717px;top:10px;width:114px;text-align:center;}
-        #population {background-size:960px;right:70px;bottom:44px;width:262px;background-position:-480px -96px;font-size:14px;line-height:20px;}
-        #population.visible {height:64px;}
-        #instance-population {padding-top:12px;}
-
-        .barbutton {background-size:960px;height:30px;width:28px;}
-        #chatbutton {background-position:-204px -34px;top:2px;left:840px;}
-        #chatbutton:hover {background-position:-232px -34px;}
-        #chatbutton.active {background-position:-260px -34px;}
-        #achievementsbutton {background-position:-288px -34px;top:2px;left:870px;}
-        #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-316px -34px;}
-        #achievementsbutton.blink {background-position:-576px -34px;}
-        #achievementsbutton.active {background-position:-344px -34px;}
-        #helpbutton {background-position:-372px -34px;top:2px;left:900px;}
-        #helpbutton:hover {background-position:-400px -34px;}
-        #helpbutton.active {background-position:-428px -34px;}
-        #mutebutton {background-position:-456px -34px;top:2px;left:930px;}
-        #mutebutton:hover {background-position:-484px -34px;}
-        #mutebutton.active {background-position:-512px -34px;}
-
-		#chatbox {height:32px;width:788px;background-size:960px;background-position:0 -64px;margin-left:-394px;bottom:12px;}
-		#chatbox.active {bottom:44px;}
-		#chatbox input {font-size:20px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:7px 0;}
-		
-		/*Credits*/
-        #credits, #death, #about {width:844px;height:364px;margin-left:-422px;margin-top:-182px;font-size:20px;}
-        .parchment-left, .parchment-right, .parchment-middle {background-size:844px;}
-        .parchment-left {width:76px;height:364px;background-position:0 -588px;}
-        .parchment-right {width:76px;height:364px;background-position:-768px -588px;}
-        .parchment-middle {height:364px;background-position:-76px -588px;width:692px;margin-left:-346px;}
-
-        #credits h1, #about h1 {margin-top:25px;font-weight:normal;}
-        #credits h1 a {font-size:24px;}
-        #credits h1 span.title {max-width:200px;display:inline-block;line-height:26px;margin-top:-60px;position:relative;top:24px;}
-        #authors {clear:both;margin-top:70px;}
-        #guillaume, #franck {width:47%;line-height:26px;}
-        #guillaume {float:left;text-align:right;}
-        #franck {float:right;text-align:left;}
-        .avatar {height:50px;width:26px;}
-        #guillaume .avatar {float:right;background-position:-708px -202px;margin-left:40px;}
-        #franck .avatar {float:left;background-position:-734px -202px;margin-right:40px;}
-        #seb {margin:180px auto 0 auto;width:52%;color:#373737;font-size:16px;}
-        #seb a {color:#373737;text-decoration:none;}
-        #seb a:hover {color:#397cd8;}
-        #note {float:left;background-position:-802px -224px;height:22px;width:20px;}
-        #close-credits {margin:20px auto 0 auto;text-align:center;clear:both;font-size:14px;}
-        #sharing {width:202px;}
-        
-        /*About*/
-        #about h1 span.title {max-width:400px;display:inline-block;line-height:24px;margin-top:-90px;position:relative;}
-        #close-about {margin:153px auto 0 auto;text-align:center;clear:both;font-size:14px;color:#373737;}
-        #about #game-desc {font-size:18px;text-align:center;max-width:70%;margin:25px auto;line-height:24px;}
-        #about .left p, #about .right p {font-size:14px;text-align:left;line-height:20px;padding:0;margin-top:-8px;}
-        .windows #about .left p, .windows #about .right p {font-size:13px;text-align:left;line-height:20px;padding:0;margin-top:-10px;}
-        #about .left {width:31%;float:left;margin-left:12%;}
-        #about .right {width:37%;float:right;margin-right:12%;}
-        #about .left .img {height:60px;width:54px;float:left;background-position:-708px -344px;margin-right:14px;}
-        #about .right .img {height:60px;width:112px;float:left;background-position:-708px -284px;margin-right:14px;}
-        #about .link {clear:both;font-size:14px;margin:20px 0;display:block;text-align:left;line-height:10px;}
-        #about .link a {color:#2e7fdd;text-decoration:none;}
-        #about .link .ext-link {height:12px;width:12px;background-position:-798px -344px;display:block;float:left;margin-right:7px;}
-        
-        .animate .parchment-middle {-moz-animation:parchmiddle2 1s ease 1;-webkit-animation:parchmiddle2 1s ease 1;-o-animation:parchmiddle2 1s ease 1;-ms-animation:parchmiddle2 1s ease 1;}
-
-        .game .parchment-middle {background-position: -422px -588px;}
-        .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
-        
-	    footer {font-size:16px;}
-        #resize-check {height:2px;}
-	}
-
 	@media screen and (max-width: 1000px) {
 
         canvas {image-rendering:optimizeSpeed;}
@@ -907,7 +773,7 @@ footer, header, hgroup, menu, nav, section {
         #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:422px auto;}
         #logo {height:42px;width:229px;position:absolute;top:10%;left:50%;margin-left:-114px;z-index:3;}
         #logosparks {width:229px;height:42px;z-index:4;-moz-animation:logo1 .8s steps(6, end) infinite;-webkit-animation:logo1 .8s steps(6, end) infinite;-o-animation:logo1 .8s steps(6, end) infinite;-ms-animation:logo1 .8s steps(6, end) infinite;}
-        #parchment, #loadcharacter, #confirmation, #error {width:422px;height:182px;position:absolute;top:50%;left:50%;margin-left:-211px;margin-top:-91px;font-size:10px;text-align:center;z-index:2;}
+        #parchment, #loadcharacter, #confirmation, #error, #legal {width:422px;height:182px;position:absolute;top:50%;left:50%;margin-left:-211px;margin-top:-91px;font-size:10px;text-align:center;z-index:2;}
         #parchment h1, #instructions h1 {margin-top:20px;font-weight:normal;}
         .left-ornament, .right-ornament {height:12px;width:31px;display:inline-block;margin:0 10px;position:relative;top:3px;}
         .left-ornament {background-position:-354px 0;}
@@ -923,10 +789,11 @@ footer, header, hgroup, menu, nav, section {
         .play.loading img {margin-top:-8px;margin-left:-8px;height:16px;width:16px;}
         .stroke, .achievement-name {text-shadow:1px 1px 0 #373737, 1px -1px 0 #373737, 0 1px 0 #373737, 1px 0 0 #373737, -1px 1px 0 #373737, -1px -1px 0 #373737, 0 -1px 0 #373737, 0 1px 0 #373737, -1px 0 0 #373737;}
         
-        #loadcharacter h1, #confirmation h1, #error h1 {margin-top:20px;}
+        #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {margin-top:20px;}
         #playername {margin-top:5px;}
         .loadcharacter .play, .confirmation .delete {margin:5px auto 5px auto;}
-        #confirmation p, #error p {font-size:10px;margin-top:20px;line-height:20px;}
+        #confirmation p, #error p, #legal p {font-size:10px;margin-top:20px;line-height:20px;}
+        #legal p {margin:20px auto 0;line-height:12px;}
         #error p {width:70%;margin:40px auto 0;}
         .button.delete {background-position:-229px -51px;}
         .button.delete:active {background-position:0 -726px;}
@@ -960,6 +827,8 @@ footer, header, hgroup, menu, nav, section {
         .ribbon:hover .bottom {background-position:-399px -185px;}
         #createcharacter .ribbon {right:10px;top:4px;}
         #loadcharacter .ribbon {right:50px;top:4px;}
+        
+        #close-legal {font-size:10px;margin-top:10px;}
         
         /*Death & Respawn*/
         #death p {font-size:10px;margin-top:45px;}
@@ -1008,7 +877,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#chatbox {height:16px;width:394px;background-size:480px;background-position:0 -32px;margin-left:-197px;bottom:6px;}
 		#chatbox.active {bottom:22px;}
-		#chatbox input {font-size:10px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:0;}
+		#chatbox input {font-size:10px;background:none;width:90%;border:0;margin-left:2%;padding:0;}
 		
 		/*Credits*/
         #credits, #death, #about {width:422px;height:182px;top:50%;margin-left:-211px;margin-top:-91px;font-size:10px;}
@@ -1052,9 +921,12 @@ footer, header, hgroup, menu, nav, section {
         .animate .parchment-middle {-moz-animation:parchmiddle1 1s ease 1;-webkit-animation:parchmiddle1 1s ease 1;-o-animation:parchmiddle1 1s ease 1;-ms-animation:parchmiddle1 1s ease 1;}
         
         .game .parchment-middle {background-position: -211px -294px;}
-        .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle {width:346px;margin-left:-173px;background-position: -38px -294px;}
+        .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:346px;margin-left:-173px;background-position: -38px -294px;}
 
         #resize-check {height:1px;}
+        
+        #name-tooltip {font-size:10px;width:180px;margin-left:-90px;height:10px;line-height:10px;top:-30px;border-radius:4px;}
+        #name-tooltip:after {bottom:-8px;}
 	}
 
 	@media screen and (max-width: 800px) {
@@ -1069,7 +941,7 @@ footer, header, hgroup, menu, nav, section {
         .game #container {display:block;padding:0;}
         #mask, #fade {display:none;}
         .game.death #parchment {display:block;}
-        .game .createcharacter #createcharacter, .game .loadcharacter #loadcharacter, .game .confirmation #confirmation, .game .error #error {display:none;}
+        .game .createcharacter #createcharacter, .game .loadcharacter #loadcharacter, .game .confirmation #confirmation, .game .error #error, .game .legal #legal {display:none;}
         
 		.ribbon {display:none;}
         
@@ -1113,14 +985,14 @@ footer, header, hgroup, menu, nav, section {
 		
 		#parchment.animate {-moz-animation:none;-webkit-animation:none;-o-animation:none;-webkit-animation:none;}
 		
-		#loadcharacter, #confirmation, #createcharacter, #error {display:none;margin-top:0;margin-left:0;left:0;width:auto;}
-		.loadcharacter #loadcharacter, .confirmation #confirmation, .createcharacter #createcharacter, .error #error {display:block;width:100%;}
+		#loadcharacter, #confirmation, #createcharacter, #error, #legal {display:none;margin-top:0;margin-left:0;left:0;width:auto;}
+		.loadcharacter #loadcharacter, .confirmation #confirmation, .createcharacter #createcharacter, .error #error, .legal #legal {display:block;width:100%;}
 		
-		#loadcharacter h1, #confirmation h1, #error h1 {font-size:12px;font-weight:normal;}
+		#loadcharacter h1, #confirmation h1, #error h1, #legal h1 {font-size:12px;font-weight:normal;}
 		
-		#loadcharacter, #confirmation, #error {height:auto;}
+		#loadcharacter, #confirmation, #error, #legal {height:auto;}
 	
-	    #loadcharacter h1, #confirmation h1, #createcharacter h1, #error h1 {font-size:12px;}
+	    #loadcharacter h1, #confirmation h1, #createcharacter h1, #error h1, #legal h1 {font-size:12px;}
 	    #createcharacter{padding-bottom:20px;}
 		#playername {font-size:20px;margin:10px 0px;}
 		#create-new {margin:20px 0px;font-size:16px;}
@@ -1164,7 +1036,7 @@ footer, header, hgroup, menu, nav, section {
 
 		#chatbox {height:32px;width:480px;background-size:960px;background-position:0 -64px;margin-left:-240px;bottom:2px;}
 		#chatbox.active {bottom:34px;}
-		#chatbox input {font-size:20px;color:#eee;background:none;width:90%;border:0;margin-left:2%;padding:0px 0;}
+		#chatbox input {font-size:14px;background:none;width:90%;border:0;margin-left:2%;padding:4px 0;}
 		
 		/*Credits*/
         .parchment-left, .upscaled .parchment-left, .parchment-middle, .upscaled .parchment-middle, .parchment-right, .upscaled .parchment-right {background:none;}
@@ -1184,8 +1056,19 @@ footer, header, hgroup, menu, nav, section {
         #respawn { background-position: -204px -1398px; background-size: 844px auto; width: 204px; height: 54px;}
 		#respawn:active {background-position:-408px -1398px;}
 
-        footer {display:none;}
+        #sharing, #credits-link, .dash {display:none;}
+        #legal-link .dash {display:inline;}
         #bubbles {overflow:hidden;}
+        
+        .intro footer, .intro footer {display:block;}
+        footer {display:none;position:absolute;top:260px;left:0;z-index:9000;height:30px;width:100%;bottom:auto;}
+        .returning footer, .returning footer {top:300px;}
+        #close-legal {display:none;}
+        
+        #privacy-link span:hover, #legal-link span:hover {color:#C6C0A3;}
+        #legal p {font-size:12px;width:80%;line-height:14px;}
+        
+        #name-tooltip {display:none;}
 	}
 
 	@media screen and (max-width: 800px) and (orientation: portrait) {
@@ -1197,6 +1080,8 @@ footer, header, hgroup, menu, nav, section {
         #portrait p {color:#eee;font-family:'GraphicPixel', sans-serif;font-size:20px;text-align:center;}
         
         #tilt {height:120px;width:132px;background-position:-710px -82px;background-size:844px;margin:25px auto 0 auto;}
+        
+        .intro #toggle-legal, #toggle-legal, .intro #legal-link, #legal-link {display:none;}
     }
     
     @media screen and (max-width: 640px) and (orientation: portrait) {
@@ -1218,15 +1103,15 @@ footer, header, hgroup, menu, nav, section {
 /* Workarounds for chrome windows bugs */
 
     .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
-    .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, 
-    .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows .bubble p, .windows #population {font-family:'AdvoCut';}
+    .windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, .windows #legal, 
+    .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows .bubble p, .windows #population, .windows #chatinput {font-family:'AdvoCut';}
 
 /* Workarounds for opera's lack of pointer-events support */
 
     .opera.intro #bubbles, .opera.intro #canvas, .opera.intro #container { z-index: -30000;}
     .opera .credits #credits, .opera .createcharacter #createcharacter, .opera .loadcharacter #loadcharacter, .opera .confirmation #confirmation, .opera .death #death, 
-    .opera .error #error, .opera .about #about { z-index: 30000; }
+    .opera .error #error, .opera .about #about, .opera .legal #legal { z-index: 30000; }
     .opera #instructions, .opera #achievements { z-index: -30000;}
     .opera #achievements.active, .opera #instructions.active { z-index: 30000;}
     .opera #coinsparks {display:none;}
-    .opera #death, .opera #about, .opera #credits, .opera #error, .opera #confirmation, .opera #loadcharacter { z-index: -30000; }
+    .opera #death, .opera #about, .opera #credits, .opera #error, .opera #confirmation, .opera #loadcharacter, .opera #legal { z-index: -30000; }
