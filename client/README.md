@@ -10,7 +10,7 @@ Edit the contents of this file to change host/port settings.
 
 2) Run the following commands from the project root:
 
-(Note: nodejs is required to run the build script)
+(Note: [nodejs](https://nodejs.org/en/download/) is required to run the build script)
 
 * cd bin
 * chmod +x build.sh
