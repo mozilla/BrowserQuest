@@ -55,6 +55,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.cursors = {};
 
             this.sprites = {};
+
+            // Global chats
+            this.chats = 0;
+            this.maxChats = 6;
+            this.globalChatColor = '#A6FFF9';
         
             // tile animation
             this.animatedTiles = null;
@@ -1459,8 +1464,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
                 self.client.onChatMessage(function(entityId, message) {
                     var entity = self.getEntityById(entityId);
-                    self.createBubble(entityId, message);
-                    self.assignBubbleTo(entity);
+                    if(!self.parseChatCommands(entity, message)) {
+                        self.createBubble(entityId, message);
+                        self.assignBubbleTo(entity);
+                    }
                     self.audioManager.playSound("chat");
                 });
             
@@ -2223,9 +2230,30 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
             
                 y = ((character.y - this.camera.y) * s) - (t * 2) - offsetY;
-            
                 bubble.element.css('left', x - offset + 'px');
                 bubble.element.css('top', y + 'px');
+            }
+        },
+
+        assignGlobalBubble: function(id) {
+            var bubble = this.bubbleManager.getBubbleById(id);
+
+            if(bubble) {
+                if(this.chats >= this.maxChats) {
+                    this.chats = 0;
+                }
+                var s = this.renderer.scale,
+                    ts = 16,
+                    t = ts * s,
+                    startX = t * 27,
+                    startY = t * 10,
+                    x = (this.camera.gridW - 2) * t - startX,
+                    y = (this.camera.gridH - 2) * t - startY;
+                y = y + (this.chats++ * t * 2);
+
+                bubble.element.css('left', x + 'px');
+                bubble.element.css('top', y + 'px');
+                bubble.element.css('color', this.globalChatColor);
             }
         },
     
@@ -2447,6 +2475,26 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     this.renderer.targetRect = targetRect;
                 }
             }
+        },
+
+        /**
+         * Handles special chat commands.  Return true to disable character chat bubble.
+         *
+         * @param entity
+         * @param message
+         * @return boolean
+         */
+        parseChatCommands: function(entity, message) {
+            switch (message.substr(0, 3)) {
+                case '/w ':
+                    chatMessage = entity.name + ": " + message.substr(3);
+                    log.debug("/w " + chatMessage);
+                    messageId = Math.floor(Math.random() * 10000);
+                    this.createBubble(messageId, chatMessage);
+                    this.assignGlobalBubble(messageId);
+                    return true;
+            }
+            return false;
         }
     });
     
