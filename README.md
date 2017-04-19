@@ -19,8 +19,6 @@ TODO
  
 
 
-
-
 This is my take on Mozilla's amazing multiplayer open source game.
 
 I've yet to find any other game that's so well done from graphics, implementation and features point of view (did I mention open source, multiplayer and browser based?).
@@ -41,17 +39,15 @@ And a big thank you to the original developers is in order! THANK YOU!
 
 HOW TO RUN?
 ============
-Run from a console:
 
-Make sure you have NodeJS installed.
-
+```
 npm install
-
 node server/js/main.js
+```
 
 Then go inside the Client folder and open index.html.
 
-You might want to use a webserver and open index.html from there.
+You might want to host a webserver and open index.html in that (e.g. 127.0.0.1/index.html).
 
 Also read the original README files you'll find inside the Client and Server folders to learn the basics of configuring (it's preconfigured right now).
 
