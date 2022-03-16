@@ -137,101 +137,147 @@
         return enc;
     }
 
+    function _add_decoded_sec(frame, encoding, key=null) {
+        if(frame instanceof Array) {
+            frame.push(encoding);
+        }else{
+            frame[key] = encoding;
+        }
+    }
+
+    function _decode_string(data, pos, frame, key) {
+        e = 0;
+        while (data.charCodeAt(pos) === 65535) {
+            e += 65535;
+            pos++;
+        }
+        e += data.charCodeAt(pos++);
+
+        _add_decoded_sec(frame, data.substr(pos, e), key);
+
+        pos += e;
+
+        return pos;
+    }
+
+    function _decode_floats(data, t, pos, f, key) {
+        if (((t - 13) / 2 | 0) === 0) {
+            r = data.charCodeAt(pos);
+            if (r > 127) {
+                e = 0;
+                r -= 128;
+                pos++;
+
+            } else {
+                e = data.charCodeAt(pos + 1);
+                pos += 2;
+            }
+
+        } else {
+            e = (data.charCodeAt(pos) << 16) + data.charCodeAt(pos + 1);
+            r = data.charCodeAt(pos + 2);
+            pos += 3;
+        }
+
+        e = t % 2 ? e + r * 0.01 : 0 - (e + r * 0.01);
+        _add_decoded_sec(f, e, key);
+
+        return pos;
+    }
+
+    function _decode_fixed(frame, type, key) {
+        type = type - 17;
+        if (type > 115) {
+            encoding = 0 - type + 116;
+        } else {
+            encoding = type + 1;
+        }
+        _add_decoded_sec(frame, encoding, key);
+    }
+
+
+
     function decode(data) {
-        var p = 0, l = data.length;
-        var stack = [], dec = undefined, f = null, t = 0, i = -1;
+        var pos = 0;
+        data_len = data.length;
+        var stack = [];
+        var dec = undefined;
+        var frame = null;
+        var t = 0;
+        var i = -1;
         var dict = false, set = false;
         var key = '', e = null, r = 0;
-        while (p < l) {
-            t = data.charCodeAt(p++);
-            f = stack[i];
+
+        while (pos < data_len) {
+            t = data.charCodeAt(pos++);
+            frame = stack[i];
 
             // Keys
             if (dict && set && t > 16) {
-                key = data.substring(p, p + t - 17);
-                p += t - 17;
+                key = data.substring(pos, pos + t - 17);
+                pos += t - 17;
                 set = false;
-
             // Array / Objects
-            } else if (t === 8 || t === 10) {
-                e = t === 8 ? new Array() : new Object();
-                set = dict = t === 10;
-                dec !== undefined ? f instanceof Array ? f.push(e)
-                                                       : f[key] = e : dec = e;
-
+            } else if (t === 8){
+                e = new Array();
+                set = false;
+                dict = false;
+                if(dec !== undefined){
+                    _add_decoded_sec(frame, e, key);
+                } else {
+                    dec = e;
+                }
                 stack.push(e);
                 i++;
-
+            } else if(t === 10) {
+                e = new Object();
+                set = true;
+                dict = true;
+                if(dec !== undefined){
+                    _add_decoded_sec(frame, e, key);
+                } else {
+                    dec = e;
+                }
+                stack.push(e);
+                i++;
             } else if (t === 11 || t === 9) {
                 stack.pop();
                 set = dict = !(stack[--i] instanceof Array);
-
             // Fixed
             } else if (t > 16) {
-                t = t - 17;
-                t = t > 115 ? (0 - t + 116) : t + 1;
-                f instanceof Array ? f.push(t) : f[key] = t;
+                _decode_fixed(frame, t, key);
                 set = true;
 
             } else if (t > 0 && t < 5) {
                 if (((t - 1) / 2 | 0) === 0) {
-                    e = data.charCodeAt(p);
-                    p++;
+                    e = data.charCodeAt(pos);
+                    pos++;
 
                 } else {
-                    e = (data.charCodeAt(p) << 16) + data.charCodeAt(p + 1);
-                    p += 2;
+                    e = (data.charCodeAt(pos) << 16) + data.charCodeAt(pos + 1);
+                    pos += 2;
                 }
                 e = t % 2 ? e + 1 : 0 - e;
-                f instanceof Array ? f.push(e) : f[key] = e;
+                _add_decoded_sec(frame, e, key);
                 set = true;
 
             // Floats
             } else if (t > 12 && t < 17) {
-                if (((t - 13) / 2 | 0) === 0) {
-                    r = data.charCodeAt(p);
-                    if (r > 127) {
-                        e = 0;
-                        r -= 128;
-                        p++;
-
-                    } else {
-                        e = data.charCodeAt(p + 1);
-                        p += 2;
-                    }
-
-                } else {
-                    e = (data.charCodeAt(p) << 16) + data.charCodeAt(p + 1);
-                    r = data.charCodeAt(p + 2);
-                    p += 3;
-                }
-
-                e = t % 2 ? e + r * 0.01 : 0 - (e + r * 0.01);
-                f instanceof Array ? f.push(e) : f[key] = e;
+                pos = _decode_floats(data, t, pos, frame, key);
                 set = true;
-
             // Booleans
             } else if (t > 4 && t < 7) {
-                f instanceof Array ? f.push(t === 5) : f[key] = t === 5;
+                _add_decoded_sec(frame, t === 5, key);
                 set = true;
 
             // Null
             } else if (t === 0) {
-                f instanceof Array ? f.push(null) : f[key] = null;
+                _add_decoded_sec(frame, null, key);
                 set = true;
 
             // Strings
             } else if (t === 7) {
-                e = 0;
-                while (data.charCodeAt(p) === 65535) {
-                    e += 65535;
-                    p++;
-                }
-                e += data.charCodeAt(p++);
-                f instanceof Array ? f.push(data.substr(p, e))
-                                   : f[key] = data.substr(p, e);
-
-                p += e;
+                pos = _decode_string(data, pos, frame, key);
                 set = true;
             }
         }
