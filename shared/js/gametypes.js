@@ -188,16 +188,21 @@ Types.getArmorRank = function(armorKind) {
     return _.indexOf(Types.rankedArmors, armorKind);
 };
 
+//creating variable for kind.getType
+
+const getKinds = kinds.getType(kind);
+
+
 Types.isPlayer = function(kind) {
-    return kinds.getType(kind) === "player";
+    return getKinds === "player";
 };
 
 Types.isMob = function(kind) {
-    return kinds.getType(kind) === "mob";
+    return getKinds === "mob";
 };
 
 Types.isNpc = function(kind) {
-    return kinds.getType(kind) === "npc";
+    return getKinds === "npc";
 };
 
 Types.isCharacter = function(kind) {
@@ -205,15 +210,15 @@ Types.isCharacter = function(kind) {
 };
 
 Types.isArmor = function(kind) {
-    return kinds.getType(kind) === "armor";
+    return getKinds === "armor";
 };
 
 Types.isWeapon = function(kind) {
-    return kinds.getType(kind) === "weapon";
+    return getKinds === "weapon";
 };
 
 Types.isObject = function(kind) {
-    return kinds.getType(kind) === "object";
+    return getKinds === "object";
 };
 
 Types.isChest = function(kind) {
