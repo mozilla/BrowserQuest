@@ -13,7 +13,7 @@ Documentation is located in client and server directories.
 License
 -------
 
-Code is licensed under MPL 2.0. Content is licensed under CC-BY-SA 3.0.
+The code is licensed under MPL 2.0. Content is licensed under CC-BY-SA 3.0.
 See the LICENSE file for details.
 
 
